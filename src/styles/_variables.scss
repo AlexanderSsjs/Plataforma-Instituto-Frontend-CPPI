@@ -1,0 +1,201 @@
+// =================================================
+// 1️⃣ CSS VARIABLES (THEME TOKENS)
+// =================================================
+
+:root {
+    /* Brand */
+    --color-primary: #dc2626;
+    --color-primary-hover: #b91c1c;
+
+    --color-accent: #facc15;
+    --color-accent-hover: #eab308;
+
+    /* Backgrounds */
+    --color-bg-main: #ffffff;
+    --color-bg-light: #f9fafb;
+    --color-bg-dark: #111827;
+
+    /* Text */
+    --color-text-primary: #171717;
+    --color-text-secondary: #6b7280;
+    --color-text-muted: #9ca3af;
+
+    /* Borders */
+    --color-border: #f3f4f6;
+
+    /* Surfaces */
+    --color-card: #ffffff;
+}
+
+// =================================================
+// 🌙 DARK MODE
+// =================================================
+
+body.dark {
+    --color-bg-main: #0f172a;
+    --color-bg-light: #1e293b;
+
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #cbd5f5;
+    --color-text-muted: #94a3b8;
+
+    --color-border: #1f2937;
+
+    --color-card: #1e293b;
+
+    /* accent se mantiene para mantener identidad */
+}
+
+// =================================================
+// 2️⃣ SCSS VARIABLES (alias para usar en módulos)
+// =================================================
+
+$primary: var(--color-primary);
+$primary-hover: var(--color-primary-hover);
+
+$accent: var(--color-accent);
+$accent-hover: var(--color-accent-hover);
+
+$bg-main: var(--color-bg-main);
+$bg-light: var(--color-bg-light);
+$bg-dark: var(--color-bg-dark);
+
+$text-dark: var(--color-text-primary);
+$text-light: var(--color-text-secondary);
+$text-muted: var(--color-text-muted);
+
+$border-color: var(--color-border);
+$bg-card: var(--color-card);
+
+// =================================================
+// 3️⃣ LAYOUT
+// =================================================
+
+$nav-height: 65px;
+$sidebar-width: 260px;
+$container-max: 1200px;
+
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 20px;
+
+// =================================================
+// 4️⃣ SPACING SYSTEM (MUY IMPORTANTE)
+// =================================================
+
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+$space-2xl: 48px;
+
+// =================================================
+// 5️⃣ ANIMACIONES
+// =================================================
+
+$ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+$transition-fast: 150ms ease-out;
+$transition: 300ms $ease-standard;
+
+// =================================================
+// 6️⃣ BREAKPOINTS
+// =================================================
+
+$sm: 480px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
+
+// =================================================
+// 7️⃣ TIPOGRAFÍA
+// =================================================
+
+// pesos
+$font-weight-thin: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// tamaños
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.5rem;
+$font-size-2xl: 2rem;
+$font-size-3xl: 2.5rem;
+
+// =================================================
+// 8️⃣ MIXINS RESPONSIVOS
+// =================================================
+
+@mixin tablet {
+    @media (min-width: #{$md}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$lg}) {
+        @content;
+    }
+}
+
+@mixin large-desktop {
+    @media (min-width: #{$xl}) {
+        @content;
+    }
+}
+
+@mixin mobile-only {
+    @media (max-width: #{$md - 1px}) {
+        @content;
+    }
+}
+
+@mixin mobile-mini {
+    @media (max-width: #{$sm}) {
+        @content;
+    }
+} 
+
+// =================================================
+// 9️⃣ MIXIN DE ANIMACIÓN
+// =================================================
+
+@mixin fade-in-up($delay: 0s) {
+    opacity: 0;
+    transform: translateY(20px);
+
+    animation: fadeInUp 0.6s $ease-standard $delay forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// --- 3. Animación ---
+$transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast: 0.15s ease-out;
+$transition-premium: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Mixin para animaciones de entrada
+@mixin animation-fade-in-up($delay: 0s) {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s $transition-premium $delay forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

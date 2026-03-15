@@ -1,0 +1,73 @@
+.dashboardWrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: $sidebar-width; // Usamos la variable de 260px
+    color: white;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+
+    .logo {
+        font-weight: $font-weight-bold;
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        color: $accent; // Un toque de amarillo para resaltar
+    }
+
+    ul {
+        li {
+            margin-bottom: 0.5rem;
+            
+            a {
+                color: rgba(white, 0.8);
+                padding: 0.8rem 1.2rem;
+                border-radius: $radius-md; // Usamos tu variable de bordes
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                transition: $transition;
+
+                &:hover {
+                    background: rgba(white, 0.1);
+                    color: white;
+                    transform: translateX(5px); // Pequeña animación de empuje
+                }
+            }
+        }
+    }
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; // Permite que el contenido haga scroll independientemente
+}
+
+.topbar {
+    height: $nav-height; // Consistencia con el header público
+    background: white;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
+.pageBody {
+    padding: 2rem;
+    flex: 1;
+    // Aquí es donde caerá el contenido de cada vista (Dashboard, Perfil, etc.)
+}
+
+// Responsive: Ocultar sidebar en móviles (Opcional)
+@include mobile-only {
+    .sidebar {
+        display: none; // Luego podrías hacer un menú hamburguesa lateral
+    }
+}

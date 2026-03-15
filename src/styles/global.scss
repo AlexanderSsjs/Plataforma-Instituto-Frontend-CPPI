@@ -1,0 +1,189 @@
+@use 'variables' as *;
+
+/* =================================================
+   1. RESET GLOBAL
+================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: $bg-main;
+    color: $text-dark;
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    overflow-x: clip;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* =================================================
+   2. ELEMENTOS BASE
+================================================= */
+
+img,
+picture,
+video,
+canvas {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
+img {
+    user-select: none;
+    pointer-events: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+
+    transition: color $transition;
+
+    &:hover {
+        color: $primary;
+    }
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+    }
+}
+
+/* =================================================
+   3. TIPOGRAFÍA
+================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.1;
+    font-weight: $font-weight-bold;
+    color: $text-dark;
+}
+
+p {
+    line-height: 1.6;
+    color: $text-light;
+}
+
+/* =================================================
+   4. LAYOUT
+================================================= */
+
+.container {
+    width: 100%;
+    max-width: $container-max;
+    margin-inline: auto;
+
+    padding-inline: clamp(1.2rem, 5vw, 2.5rem);
+}
+
+/* =================================================
+   5. FORMULARIOS
+================================================= */
+
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: $font-size-md;
+
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+
+    padding: 0.6rem;
+
+    transition:
+        border-color $transition-fast,
+        box-shadow $transition-fast;
+
+    &:focus {
+        outline: none;
+        border-color: $primary;
+    }
+}
+
+/* =================================================
+   6. HELPERS
+================================================= */
+
+.text-primary {
+    color: $primary;
+}
+
+.text-accent {
+    color: $accent;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* =================================================
+   7. ANIMACIONES GLOBALES
+================================================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =================================================
+   8. FIX NAVBAR MOBILE
+================================================= */
+
+body.menu-open header {
+    backdrop-filter: blur(0px);
+    background: rgba(255, 255, 255, 1);
+}

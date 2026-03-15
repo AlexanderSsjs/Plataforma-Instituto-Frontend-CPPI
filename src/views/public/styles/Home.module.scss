@@ -1,0 +1,101 @@
+// Si usas variables, defínelas arriba, si no, usa los valores fijos abajo
+$primary: #e11d48; // Un rojo profesional (puedes cambiarlo a tu gusto)
+$accent: #f59e0b;
+$text-dark: #111827;
+$text-light: #4b5563;
+
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background: radial-gradient(circle at top right, rgba(225, 29, 72, 0.05), transparent),
+                radial-gradient(circle at bottom left, rgba(245, 158, 11, 0.05), transparent);
+    padding: clamp(4rem, 10vw, 8rem) 1.5rem;
+    overflow: hidden;
+    background-color: #ffffff; // Fondo base
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .badge {
+        background-color: rgba($primary, 0.1);
+        color: $primary;
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px; // Estilo píldora
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        
+        // Sustituyendo el mixin por animación nativa
+        animation: fadeInUp 0.6s ease forwards;
+    }
+
+    h1 {
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+        font-weight: 900;
+        color: $text-dark;
+        line-height: 1.1;
+        max-width: 900px;
+        margin: 0;
+        animation: fadeInUp 0.8s ease forwards 0.2s;
+        opacity: 0; // Para que la animación se note
+
+        span { color: $primary; }
+    }
+
+    p {
+        font-size: 1.125rem;
+        color: $text-light;
+        max-width: 600px;
+        line-height: 1.6;
+        margin: 0;
+        animation: fadeInUp 0.8s ease forwards 0.4s;
+        opacity: 0;
+    }
+
+    .cta {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        animation: fadeInUp 0.8s ease forwards 0.6s;
+        opacity: 0;
+
+        .btnMain {
+            background-color: $primary;
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba($primary, 0.2);
+
+            &:hover {
+                background-color: #111827; // Casi negro
+                transform: translateY(-3px);
+                box-shadow: 0 15px 30px rgba(17, 24, 39, 0.3);
+            }
+        }
+    }
+}
+
+// Definición de la animación de entrada
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
