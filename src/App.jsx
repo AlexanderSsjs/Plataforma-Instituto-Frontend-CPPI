@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout/PublicLayout';
 import PrivateLayout from './layouts/PrivateLayout/PrivateLayout';
+import ScrollToTop from './components/common/scrollTop';
+
 import Home from './views/public/Home';
 import Courses from './views/public/Courses';
 
@@ -12,6 +14,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* --- GRUPO 1: VISTAS PÚBLICAS --- */}
         <Route element={<PublicLayout />}>
