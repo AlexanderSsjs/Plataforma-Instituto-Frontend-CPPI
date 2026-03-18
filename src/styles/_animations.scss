@@ -1,0 +1,142 @@
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@mixin animation-fade-in-up($delay: 0s, $duration: 0.6s) {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+}
+
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@mixin animation-fade-in-right($delay: 0s, $duration: 0.5s) {
+    opacity: 0;
+    transform: translateX(30px);
+    animation: fadeInRight $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+}
+
+@keyframes fadeInLeft { 
+    from {
+        opacity: 0;
+        transform: translateX(-30px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0); 
+    }
+}
+
+@mixin animation-fade-in-left($delay: 0s, $duration: 0.6s) {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: fadeInLeft $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+}
+
+@mixin stagger-children($count: 5, $start-delay: 0.1s, $step: 0.1s) {
+    @for $i from 1 through $count {
+        &:nth-child(#{$i}) {
+            animation-delay: $start-delay + ($i * $step);
+        }
+    }
+}
+
+@keyframes blurReveal {
+    from {
+        opacity: 0;
+        filter: blur(12px);
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+@mixin animation-blur-reveal($delay: 0s, $duration: 0.8s) {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(15px);
+    animation: blurReveal $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@mixin animation-scale-up($delay: 0s, $duration: 0.5s) {
+    opacity: 0;
+    transform: scale(0.92);
+    animation: scaleUp $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@mixin animation-fade-in-down($delay: 0s, $duration: 0.6s) {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInDown $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+}
+@keyframes fadeInUpBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.01); /* 👈 saltito */
+    }
+
+    80% {
+        transform: translateY(2px) scale(0.995);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+@keyframes smoothReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

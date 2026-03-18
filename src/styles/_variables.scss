@@ -3,27 +3,17 @@
 // =================================================
 
 :root {
-    /* Brand */
     --color-primary: #dc2626;
     --color-primary-hover: #b91c1c;
-
     --color-accent: #facc15;
     --color-accent-hover: #eab308;
-
-    /* Backgrounds */
     --color-bg-main: #ffffff;
     --color-bg-light: #f9fafb;
     --color-bg-dark: #111827;
-
-    /* Text */
     --color-text-primary: #171717;
     --color-text-secondary: #6b7280;
     --color-text-muted: #9ca3af;
-
-    /* Borders */
-    --color-border: #f3f4f6;
-
-    /* Surfaces */
+    --color-border: #c1c3c8;
     --color-card: #ffffff;
 }
 
@@ -34,16 +24,11 @@
 body.dark {
     --color-bg-main: #0f172a;
     --color-bg-light: #1e293b;
-
     --color-text-primary: #f9fafb;
     --color-text-secondary: #cbd5f5;
     --color-text-muted: #94a3b8;
-
     --color-border: #1f2937;
-
     --color-card: #1e293b;
-
-    /* accent se mantiene para mantener identidad */
 }
 
 // =================================================
@@ -52,18 +37,14 @@ body.dark {
 
 $primary: var(--color-primary);
 $primary-hover: var(--color-primary-hover);
-
 $accent: var(--color-accent);
 $accent-hover: var(--color-accent-hover);
-
 $bg-main: var(--color-bg-main);
 $bg-light: var(--color-bg-light);
 $bg-dark: var(--color-bg-dark);
-
 $text-dark: var(--color-text-primary);
 $text-light: var(--color-text-secondary);
 $text-muted: var(--color-text-muted);
-
 $border-color: var(--color-border);
 $bg-card: var(--color-card);
 
@@ -74,7 +55,6 @@ $bg-card: var(--color-card);
 $nav-height: 65px;
 $sidebar-width: 260px;
 $container-max: 1200px;
-
 $radius-sm: 6px;
 $radius-md: 8px;
 $radius-lg: 20px;
@@ -95,24 +75,12 @@ $space-2xl: 48px;
 // =================================================
 
 $ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-
-$transition-fast: 150ms ease-out;
-$transition: 300ms $ease-standard;
-
-// =================================================
-// 6️⃣ BREAKPOINTS
-// =================================================
-
-$sm: 480px;
-$md: 768px;
-$lg: 1024px;
-$xl: 1280px;
+$transition-fast: 10ms ease-out;
+$transition: 100ms $ease-standard;
 
 // =================================================
 // 7️⃣ TIPOGRAFÍA
 // =================================================
-
-// pesos
 $font-weight-thin: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
@@ -130,6 +98,20 @@ $font-size-2xl: 2rem;
 $font-size-3xl: 2.5rem;
 
 // =================================================
+// 6️⃣ BREAKPOINTS
+// =================================================
+
+$sm: 420px;
+$sd: 600px;
+$md: 768px;
+$ms: 900px;
+$lg: 1024px;
+$xl: 1280px;
+
+$blur-premium: blur(10px);
+$shadow-elegant: -10px 0 40px rgba(0, 0, 0, 0.05);
+
+// =================================================
 // 8️⃣ MIXINS RESPONSIVOS
 // =================================================
 
@@ -138,7 +120,11 @@ $font-size-3xl: 2.5rem;
         @content;
     }
 }
-
+@mixin max-tablet {
+    @media (max-width: #{$md}) {
+        @content;
+    }
+}
 @mixin desktop {
     @media (min-width: #{$lg}) {
         @content;
@@ -163,6 +149,29 @@ $font-size-3xl: 2.5rem;
     }
 } 
 
+
+@mixin min-mobile-mini {
+    @media (min-width: #{$sm}) {
+        @content;
+    }
+} 
+
+@mixin max-tablet {
+    @media (max-width: #{$md}) {
+        @content;
+    }
+}
+@mixin max-Large-tablet {
+    @media (max-width: #{$ms}) {
+        @content;
+    }
+}
+@mixin max-mobile {
+    @media (max-width: #{$sd}) {
+        @content;
+    }
+}
+
 // =================================================
 // 9️⃣ MIXIN DE ANIMACIÓN
 // =================================================
@@ -181,21 +190,7 @@ $font-size-3xl: 2.5rem;
     }
 }
 
-// --- 3. Animación ---
 $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 $transition-fast: 0.15s ease-out;
 $transition-premium: cubic-bezier(0.4, 0, 0.2, 1);
 
-// Mixin para animaciones de entrada
-@mixin animation-fade-in-up($delay: 0s) {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s $transition-premium $delay forwards;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}

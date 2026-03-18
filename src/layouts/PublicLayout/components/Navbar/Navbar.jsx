@@ -1,39 +1,75 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import styles from './Navbar.module.scss';
 
 const Navbar = ({ links, children }) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    // Hook para bloquear el scroll del body
-    // Hook mejorado para bloquear el scroll del body y html
+    const [activeSection, setActiveSection] = useState('');
+    const location = useLocation();
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden'; // Clave para móviles
+            document.documentElement.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = '';
             document.documentElement.style.overflow = '';
         }
-
         return () => {
             document.body.style.overflow = '';
             document.documentElement.style.overflow = '';
         };
     }, [isOpen]);
-
+    useEffect(() => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '-40% 0px -40% 0px',
+            threshold: 0,
+        };
+        const observerCallback = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        links.forEach((link) => {
+            if (link.href.startsWith('#')) {
+                const sectionId = link.href.replace('#', '');
+                const element = document.getElementById(sectionId);
+                if (element) observer.observe(element);
+            }
+        });
+        return () => observer.disconnect();
+    }, [links]);
+    const isLinkActive = useCallback(
+        (href) => {
+            if (href.startsWith('#')) {
+                return activeSection === href.replace('#', '');
+            }
+            return location.pathname === href;
+        },
+        [activeSection, location.pathname],
+    );
+    useEffect(() => {
+        setIsOpen(false);
+    }, [location]);
     return (
         <>
-            {/* Navegación Desktop */}
+            {/* Desktop Navigation */}
             <nav className={styles.navDesktop}>
                 {links.map((link) => (
-                    <a key={link.name} href={link.href} className={styles.link}>
+                    <Link
+                        key={link.name}
+                        to={link.href}
+                        className={`${styles.link} ${isLinkActive(link.href) ? styles.active : ''}`}
+                    >
                         {link.name}
-                    </a>
+                    </Link>
                 ))}
             </nav>
-
-            {/* 1. Botón Hamburguesa (Solo abre el menú) */}
+            {/* Toggle Button */}
             <button
                 className={styles.mobileToggle}
                 onClick={() => setIsOpen(true)}
@@ -41,17 +77,14 @@ const Navbar = ({ links, children }) => {
             >
                 <Menu size={24} />
             </button>
-
-            {/* Overlay: Cierra el menú al hacer clic fuera */}
+            {/* Overlay */}
             <div
                 className={`${styles.overlay} ${isOpen ? styles.overlayOpen : ''}`}
                 onClick={() => setIsOpen(false)}
-            ></div>
-
-            {/* Menú Móvil Desplegable (Slide-in) */}
-            <div className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ''}`}>
-
-                {/* 2. NUEVO: Botón de Cerrar (X) dentro del propio menú */}
+                aria-hidden="true"
+            />
+            {/* Mobile Menu */}
+            <aside className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ''}`}>
                 <button
                     className={styles.closeButton}
                     onClick={() => setIsOpen(false)}
@@ -59,24 +92,21 @@ const Navbar = ({ links, children }) => {
                 >
                     <X size={24} />
                 </button>
-
-                {links.map((link) => (
-                    <a
-                        key={link.name}
-                        href={link.href}
-                        className={styles.mobileLink}
-                        onClick={() => setIsOpen(false)}
-                    >
-                        {link.name}
-                    </a>
-                ))}
-
-                {children && (
-                    <div className={styles.mobileCtaWrapper}>
-                        {children}
-                    </div>
-                )}
-            </div>
+                <div className={styles.mobileLinksContainer}>
+                    {links.map((link, index) => (
+                        <Link
+                            key={`${link.name}-${index}`}
+                            to={link.href}
+                            className={`${styles.mobileLink} ${isLinkActive(link.href) ? styles.mobileActive : ''}`}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            {link.icon && <link.icon size={22} className={styles.navIcon} />}
+                            <span>{link.name}</span>
+                        </Link>
+                    ))}
+                </div>
+                {children && <div className={styles.mobileCtaWrapper}>{children}</div>}
+            </aside>
         </>
     );
 };

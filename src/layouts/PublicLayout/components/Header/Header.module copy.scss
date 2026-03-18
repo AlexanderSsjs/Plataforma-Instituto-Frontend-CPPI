@@ -1,14 +1,20 @@
 :root {
+    /* Brand */
     --primary-500: #ef4444;
     --primary-600: #dc2626;
     --primary-700: #b91c1c;
+
+    /* Glass / surfaces */
     --glass-bg: rgba(255, 255, 255, 0.6);
     --glass-bg-strong: rgba(255, 255, 255, 0.85);
     --glass-border: rgba(255, 255, 255, 0.25);
     --glass-border-dark: rgba(0, 0, 0, 0.06);
+
+    /* Text */
     --text-primary: #0f172a;
     --text-secondary: #64748b;
 
+    /* Shadows (MUY importante para premium) */
     --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
     --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
@@ -89,6 +95,7 @@
         @include animation-fade-in-right(0.5s);
     }
 }
+
 .btn {
     background: linear-gradient(
         135deg,
@@ -107,10 +114,12 @@
     transition: all 0.3s ease;
     &:hover {
         transform: translateY(-2px) scale(1.02);
+
         box-shadow:
             0 10px 30px rgba(239, 68, 68, 0.35),
             inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
+
     &:active {
         transform: translateY(0) scale(0.98);
     }

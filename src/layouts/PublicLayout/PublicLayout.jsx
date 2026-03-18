@@ -1,4 +1,5 @@
 // src/layouts/PublicLayout/PublicLayout.jsx
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -9,7 +10,7 @@ const PublicLayout = () => {
         <div className={styles.layout}>
             <Header />
             <main className={styles.main}>
-                <Outlet /> {/* Aquí es donde el Hero aparecerá cuando estés en "/" */}
+                <Outlet /> 
             </main>
             <Footer />
         </div>

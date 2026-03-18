@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout/PublicLayout';
 import PrivateLayout from './layouts/PrivateLayout/PrivateLayout';
 import Home from './views/public/Home';
+import Courses from './views/public/Courses';
 
 const LoginPage = () => <div style={{padding: '100px', textAlign: 'center'}}><h1>Formulario de Acceso</h1></div>;
 const DashboardHome = () => <h1>Bienvenido al Panel de Control (Privado)</h1>;
@@ -15,7 +16,7 @@ function App() {
         {/* --- GRUPO 1: VISTAS PÚBLICAS --- */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
-          {/* IMPORTANTE: Agrega la ruta de login aquí para que el redireccionamiento funcione */}
+          <Route path="/cursos" element={<Courses />} />
           <Route path="/login" element={<LoginPage />} />
         </Route>
 

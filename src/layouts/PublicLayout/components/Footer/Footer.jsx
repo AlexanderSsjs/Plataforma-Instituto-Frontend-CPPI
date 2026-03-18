@@ -1,30 +1,43 @@
+import { useEffect, useRef, useState } from 'react';
 import styles from './Footer.module.scss';
 import { AnimatedIcon } from '../../../../components/Icon/AnimatedIcon';
-import {
-    MessageCircle,
-    Phone,
-    Mail,
-    BookCheck,
-    GraduationCap,
-    Facebook,
-    Users,
-    Home,
-    ExternalLink
-} from 'lucide-react';
+import { MessageCircle, Phone, Mail, BookCheck, GraduationCap, Facebook, Users, Home, ExternalLink } from 'lucide-react';
 
 const Footer = () => {
+    const footerRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            {
+                threshold: 0.1
+            }
+        );
+
+        if (footerRef.current) {
+            observer.observe(footerRef.current);
+        }
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <footer className={styles.footer}>
+        <footer
+            ref={footerRef}
+            className={`${styles.footer} ${isVisible ? styles.visible : ''}`}
+        >
             <div className={styles.grid}>
                 <div className={styles.col}>
-                    <div className={styles.logoText} style={{ marginBottom: '15px' }}>
+                    <div className={styles.logoText}>
                         CCIP
                     </div>
                     <p className={styles.description}>
                         Centro de Capacitación e Innovación Profesional. 4 años formando expertos con convenios internacionales.
                     </p>
                     <div className={styles.stats}>
-                        <span style={{ marginLeft: '8px' }}>
+                        <span>
                             <AnimatedIcon color="#facc15">
                                 <GraduationCap size={20} />
                             </AnimatedIcon>
@@ -36,15 +49,14 @@ const Footer = () => {
                     <h4>Plataforma</h4>
                     <ul>
                         <li>
-                            <a href="#inicio-section" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                            >
+                            <a href="/" >
                                 <AnimatedIcon color="#1877F2">
                                     <Home size={18} />
                                 </AnimatedIcon>
                                 Inicio</a>
                         </li>
                         <li>
-                            <a href="#cursos" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <a href="/cursos">
                                 <AnimatedIcon color="#facc15">
                                     <BookCheck size={18} />
                                 </AnimatedIcon>
@@ -56,7 +68,6 @@ const Footer = () => {
                                 href="https://www.facebook.com/ccip.org.pe"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                             >
                                 <AnimatedIcon color="#1877F2">
                                     <Facebook size={18} />
@@ -74,7 +85,6 @@ const Footer = () => {
                                 href="https://fieuna.blogspot.com/2024/05/practicas-pre-profesionales-y.html"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                             >
                                 <ExternalLink size={16} />
                                 Prácticas Pre/Profesionales
@@ -85,7 +95,6 @@ const Footer = () => {
                                 href="https://chat.whatsapp.com/K3AEYyxA4wWE7sHmQeCGbS"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                             >
                                 <AnimatedIcon color="#25D366">
                                     <MessageCircle size={18} />
@@ -94,7 +103,7 @@ const Footer = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="#nosotros" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <a href="#nosotros">
                                 <AnimatedIcon color="#facc15">
                                     <Users size={18} />
                                 </AnimatedIcon>
@@ -107,7 +116,7 @@ const Footer = () => {
                     <h4>Contacto</h4>
                     <ul className={styles.contactList}>
                         <li>
-                            <a href="https://wa.me/51930449016" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <a href="https://wa.me/51930449016" >
                                 <AnimatedIcon color="#25D366">
                                     <MessageCircle size={18} />
                                 </AnimatedIcon>
@@ -115,7 +124,7 @@ const Footer = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="tel:+51959280078" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <a href="tel:+51959280078" >
                                 <AnimatedIcon color="#facc15">
                                     <Phone size={18} />
                                 </AnimatedIcon>
@@ -123,11 +132,14 @@ const Footer = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="mailto:tuportalacademico@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <a href="mailto:tuportalacademico@gmail.com">
                                 <AnimatedIcon color="#dc2626">
                                     <Mail size={18} />
                                 </AnimatedIcon>
-                                tuportalacademico@gmail.com
+                                <div className={styles.emailLink}>
+                                    tuportalacademico
+                                    <span>@gmail.com</span>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -135,6 +147,9 @@ const Footer = () => {
             </div>
             <div className={styles.bottom}>
                 <p>© 2026 CCIP - Todos los derechos reservados.</p>
+                <div style={{ display: 'none' }}>
+                    <p>Hecho por Alexander Piélago Quiroz</p>
+                </div>
             </div>
         </footer>
     );
