@@ -33,6 +33,32 @@ const COURSES_DATA = [
         features: ['Clases en vivo', 'Material descargable'],
     },
     {
+    id: 45,
+    title: 'Sistemas de Control Interno Gubernamental',
+    type: 'vivo',
+    price: 110,
+    rating: 4.9,
+    duration: '40 hrs',
+    date: '2026-03-21T09:00:00', // Mañana a las 9 AM
+    schedule: 'Sábados 9:00am - 1:00pm',
+    image: 'https://picsum.photos/seed/control/400/300',
+    requirements: ['Conocimientos básicos de administración', 'Laptop'],
+    features: ['Certificación oficial', 'Material digital'],
+},
+{
+    id: 46,
+    title: 'Planeamiento Estratégico para el Sector Público',
+    type: 'vivo',
+    price: 130,
+    rating: 4.7,
+    duration: '50 hrs',
+    date: '2026-03-21T15:00:00', // Mañana a las 3 PM
+    schedule: 'Sábados 3:00pm - 7:00pm',
+    image: 'https://picsum.photos/seed/strategy/400/300',
+    requirements: ['Acceso a plataforma Zoom', 'Ficha de inscripción'],
+    features: ['Casos prácticos', 'Interacción en vivo'],
+},
+    {
         id: 10,
         title: 'Excel para Gestión Pública',
         type: 'vivo',
@@ -310,7 +336,6 @@ const Courses = () => {
             </InView>
             <div style={{ position: 'relative', zIndex: 100 }}>
                 {' '}
-                {/* Fíjate en la Z mayúscula */}
                 <CourseFilters
                     search={search}
                     setSearch={setSearch}

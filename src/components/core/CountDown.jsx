@@ -1,42 +1,53 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, memo } from 'react';
+import styles from '@/views/public/styles/Courses.module.scss'; // Asegúrate de importar tus estilos
 
-const Countdown = ({ targetDate, showSeconds = false }) => {
-    const getTimeLeft = () => {
-        const diff = new Date(targetDate) - new Date();
+const pad = (n) => String(n).padStart(2, '0');
 
-        if (diff <= 0) {
-            return null; // ya empezó
-        }
+const Countdown = memo(({ targetDate, showSeconds = true }) => {
+    const calculateTime = useCallback(() => {
+        const diff = new Date(targetDate).getTime() - Date.now();
+        if (diff <= 0) return null;
 
         return {
-            days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((diff / (1000 * 60)) % 60),
-            seconds: Math.floor((diff / 1000) % 60),
+            d: Math.floor(diff / 86400000),
+            h: Math.floor((diff / 3600000) % 24),
+            m: Math.floor((diff / 60000) % 60),
+            s: Math.floor((diff / 1000) % 60),
         };
-    };
+    }, [targetDate]);
 
-    const [time, setTime] = useState(getTimeLeft());
+    const [time, setTime] = useState(calculateTime());
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(getTimeLeft());
+        const timer = setInterval(() => {
+            const nextTime = calculateTime();
+            setTime(nextTime);
+            if (!nextTime) clearInterval(timer);
         }, 1000);
 
-        return () => clearInterval(interval);
-    }, []);
+        return () => clearInterval(timer);
+    }, [calculateTime]);
 
-    // 🎯 si ya terminó
-    if (!time) {
-        return <span className="countdown-end">Inició</span>;
-    }
+    if (!time) return <span className={styles.countdownEnd}>¡Inició! 🚀</span>;
+
+    const { d, h, m, s } = time;
+    // Senior tip: La urgencia se define si queda menos de 1 hora
+    const isUrgent = d === 0 && h === 0;
 
     return (
-        <div className="countdown">
-            ⏱ {time.days}d {time.hours}h {time.minutes}m 
-            {showSeconds && ` ${time.seconds}s`}
+        <div className={styles.countdown} style={{ fontVariantNumeric: 'tabular-nums' }}>
+            <span>⏱ </span>
+            {/* Corregido: Usamos d, h, m, s del objeto destructurado */}
+            {d > 0 && <span>{d}d </span>}
+            {(d > 0 || h > 0) && <span>{pad(h)}h </span>}
+            <span>{pad(m)}m </span>
+            {showSeconds && (
+                <span className={`${styles.seconds} ${isUrgent ? styles.urgent : ''}`}>
+                    {pad(s)}s
+                </span>
+            )}
         </div>
     );
-};
+});
 
 export default Countdown;

@@ -155,17 +155,6 @@
                 transition: opacity 0.3s ease;
             }
         }
-        &::after {
-            content: '';
-            position: absolute;
-            left: 10%;
-            bottom: -2px;
-            width: 80%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, $primary-500, transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
         &:focus-within::after {
             opacity: 1;
         }
@@ -206,31 +195,31 @@
 }
 .filterBar {
     display: flex;
-    flex-flow: row nowrap; 
+    flex-flow: row nowrap;
     align-items: center;
     gap: $space-md;
-    padding: 0.8rem $space-lg; 
+    padding: 0.8rem $space-lg;
     background: $glass-bg-strong;
     backdrop-filter: $blur-premium;
     border: 1px solid $glass-border-dark;
     border-radius: $radius-lg;
     position: relative;
-    z-index: 101; 
+    z-index: 101;
 
     .searchWrapper {
-        flex: 2; 
+        flex: 2;
         min-width: 200px;
     }
 
     .tabs {
-        flex: 0 0 auto; 
+        flex: 0 0 auto;
         display: flex;
         gap: 8px;
     }
 
     .sort {
-        flex: 0 0 auto; 
-        min-width: 180px; 
+        flex: 0 0 auto;
+        min-width: 180px;
     }
 }
 .active {
@@ -592,15 +581,19 @@
         .countdown {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 0.6rem 0.8rem;
-            border-radius: 8px;
-            background: #fff1f2;
+            gap: 4px;
+            font-weight: 700; // Todos con el mismo grosor
             color: $primary-500;
-            margin-top: auto;
-            margin-bottom: 1rem;
+            font-variant-numeric: tabular-nums; // Crucial para que no "vibre" el texto
+
+            .seconds {
+                // Aseguramos que herede todo y sea igual de grueso
+                font-weight: 700;
+
+                &.urgent {
+                    color: #ef4444; // Rojo cuando falte menos de 1 hora
+                }
+            }
         }
 
         .static {
@@ -665,16 +658,17 @@
     z-index: 102;
     .dropdownMenu {
         position: absolute;
-        top: calc(100% + 5px);
+        top: calc(100% + 8px);
         left: 0;
         width: 100%;
         min-width: 220px;
         background: #ffffff;
+        border: 1px solid $glass-border-dark;
         border-radius: $radius-md;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        z-index: 9999;
-        border: 1px solid $glass-border-dark;
-        overflow: visible;
+        z-index: 9999; // Prioridad máxima
+        overflow: hidden; // Para que el hover de los items no se salga del radio
+        animation: fadeIn 0.2s ease;
     }
     .dropdownBtn {
         display: flex;
@@ -701,31 +695,32 @@
     .rotate {
         transform: rotate(180deg);
     }
-
-    .dropdownMenu {
-        position: absolute;
-        top: 110%;
-        left: 0;
-        width: 100%;
-        background: $bg-card;
-        border: 1px solid $glass-border-dark;
-        border-radius: $radius-md;
-        box-shadow: $sh-md;
-        overflow: hidden;
-        z-index: 50;
-        animation: fadeIn 0.2s ease;
-    }
-
     .dropdownItem {
-        padding: 0.7rem 1rem;
+        padding: 0.8rem 1rem;
         cursor: pointer;
         font-size: $font-size-sm;
-        transition: $transition;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
 
         &:hover {
-            background: rgba($primary-500, 0.08);
+            background: rgba($primary-500, 0.05);
             color: $primary;
             padding-left: 1.2rem;
+        }
+    }
+    .clearFilter {
+        padding: 0.7rem 1rem;
+        font-size: 0.8rem;
+        color: #ef4444;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        text-align: center;
+        font-weight: 600;
+
+        &:hover {
+            background: #fef2f2;
         }
     }
 }
