@@ -577,25 +577,38 @@
                 color: $primary-500;
             }
         }
-
         .countdown {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-weight: 700; // Todos con el mismo grosor
-            color: $primary-500;
-            font-variant-numeric: tabular-nums; // Crucial para que no "vibre" el texto
+            gap: 4px; // Gap pequeño para los números
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            // Quitamos background, padding y margin de aquí
 
             .seconds {
-                // Aseguramos que herede todo y sea igual de grueso
                 font-weight: 700;
-
                 &.urgent {
-                    color: #ef4444; // Rojo cuando falte menos de 1 hora
+                    color: #ef4444;
                 }
             }
         }
 
+        // 2. Esta clase es el "CONTENEDOR" que vive en la Card
+        .countdownWrapper {
+            display: flex;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff1f2; // El fondo rosado
+            color: $primary-500;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .countdownEnd {
+            @extend .countdownWrapper; // Hereda el fondo rosado
+            font-weight: 700;
+            color: #ef4444;
+        }
         .static {
             font-size: 0.85rem;
             font-weight: 500;
@@ -662,7 +675,7 @@
         left: 0;
         width: 100%;
         min-width: 220px;
-        background: #ffffff;
+        background: #ffffff; // Sólido para que no se transparente con las cards
         border: 1px solid $glass-border-dark;
         border-radius: $radius-md;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);

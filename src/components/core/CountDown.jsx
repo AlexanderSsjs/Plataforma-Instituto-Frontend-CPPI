@@ -36,16 +36,16 @@ const Countdown = memo(({ targetDate, showSeconds = true }) => {
 
     return (
         <div className={styles.countdown} style={{ fontVariantNumeric: 'tabular-nums' }}>
-            <span>⏱ </span>
-            {/* Corregido: Usamos d, h, m, s del objeto destructurado */}
-            {d > 0 && <span>{d}d </span>}
-            {(d > 0 || h > 0) && <span>{pad(h)}h </span>}
-            <span>{pad(m)}m </span>
-            {showSeconds && (
-                <span className={`${styles.seconds} ${isUrgent ? styles.urgent : ''}`}>
-                    {pad(s)}s
-                </span>
-            )}
+                <span>⏱ </span>
+                {/* Corregido: Usamos d, h, m, s del objeto destructurado */}
+                {d > 0 && <span>{d}d </span>}
+                {(d > 0 || h > 0) && <span>{pad(h)}h </span>}
+                <span>{pad(m)}m </span>
+                {showSeconds && (
+                    <span className={`${styles.seconds} ${isUrgent ? styles.urgent : ''}`}>
+                        {pad(s)}s
+                    </span>
+                )}
         </div>
     );
 });

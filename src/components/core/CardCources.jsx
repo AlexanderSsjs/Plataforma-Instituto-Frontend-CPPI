@@ -63,10 +63,9 @@ const CourseCard = ({ course, type }) => {
 
                 <h3 className={styles.title}>{course.title}</h3>
 
-                {/* Área de información temporal */}
                 <div className={styles.infoArea}>
                     {courseType === 'vivo' && startDate ? (
-                        <div className={styles.countdown}>
+                        <div className={styles.countdownWrapper}>
                             <Countdown targetDate={course.date} showSeconds={true} />
                         </div>
                     ) : (
