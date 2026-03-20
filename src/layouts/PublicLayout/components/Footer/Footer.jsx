@@ -19,7 +19,7 @@ const Footer = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const currentFooter = footerRef.current; // <--- Guarda la referencia aquí
+        const currentFooter = footerRef.current; 
         const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), {
             threshold: 0.1,
         });
@@ -30,7 +30,7 @@ const Footer = () => {
 
         return () => {
             if (currentFooter) {
-                observer.unobserve(currentFooter); // <--- Usa la variable local
+                observer.unobserve(currentFooter); 
             }
             observer.disconnect();
         };
