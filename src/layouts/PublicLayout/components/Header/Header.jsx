@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-import logoImg from "@/assets/public/logo.svg";
+//import logoImg from "@/assets/public/log-circle.png";
+import logoImg from "@/assets/public/log2.png";
 import styles from './Header.module.scss';
 import { 
     Home, 

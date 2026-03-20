@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './styles/Home.module.scss';
 import logoImg from '@/assets/public/stydie.jpg';
+
 import { Medal, Users, Star } from 'lucide-react';
+
+import StatCard from '@/components/common/RatingItem'; 
 
 const Home = () => {
     const heroRef = useRef(null);
@@ -11,17 +14,11 @@ const Home = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                console.log('¿Hero visible?:', entry.isIntersecting); 
                 setVisible(entry.isIntersecting);
             },
-            {
-                threshold: 0,
-                rootMargin: '0px',
-            },
+            { threshold: 0.1 }
         );
-        if (heroRef.current) {
-            observer.observe(heroRef.current);
-        }
+        if (heroRef.current) observer.observe(heroRef.current);
         return () => observer.disconnect();
     }, []);
 
@@ -30,49 +27,18 @@ const Home = () => {
             <div className={styles.topFade}></div>
             <div className={styles.container}>
                 <div className={styles.text}>
-                    <h1>
-                        Domina las <span>habilidades del futuro</span>
-                    </h1>
-                    <p>
-                        Especialización técnica en sistemas administrativos y gestión pública con
-                        certificación profesional.
-                    </p>
-                    <div
-                        ref={heroRef}
-                        className={`${styles.stats} ${visible ? styles.animate : ''}`}
-                    >
-                        <div className={styles.stat}>
-                            <Users size={30} />
-                            <div className={styles.rating}>
-                                <span className={styles.ratingValue}>+1200</span>
-                                <div className={styles.ratingText}>estudiantes</div>
-                            </div>
-                        </div>
-
-                        <div className={styles.stat}>
-                            <Star size={30} />
-                            <div className={styles.rating}>
-                                <span className={styles.ratingValue}>4.8</span>
-                                <div className={styles.ratingText}>valoración</div>
-                            </div>
-                        </div>
-
-                        <div className={styles.stat}>
-                            <Medal size={30} />
-                            <div className={styles.rating}>
-                                <span className={styles.ratingValue}>Cursos</span>
-                                <div className={styles.ratingText}>Certificados</div>
-                            </div>
-                        </div>
+                    <h1>Domina las <span>habilidades del futuro</span></h1>
+                    <p>Especialización técnica en sistemas administrativos y gestión pública con certificación profesional.</p>
+                    
+                    <div className={`${styles.stats} ${visible ? styles.animate : ''}`}>
+                        <StatCard Icon={Users} value="+1200" label="Estudiantes" />
+                        <StatCard Icon={Star} value="4.8" label="Valoración" />
+                        <StatCard Icon={Medal} value="Cursos" label="Certificados" />
                     </div>
 
                     <div className={styles.cta}>
-                        <Link to="/cursos" className={styles.btnPrimary}>
-                            Ver Cursos
-                        </Link>
-                        <Link to="/nosotros" className={styles.btnGhost}>
-                            Conocer más
-                        </Link>
+                        <Link to="/cursos" className={styles.btnPrimary}>Ver Cursos</Link>
+                        <Link to="/nosotros" className={styles.btnGhost}>Conocer más</Link>
                     </div>
                 </div>
 

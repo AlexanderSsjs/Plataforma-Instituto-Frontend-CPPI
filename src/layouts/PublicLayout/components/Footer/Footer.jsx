@@ -1,40 +1,49 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Footer.module.scss';
+import { Link } from 'react-router-dom';
 import { AnimatedIcon } from '../../../../components/Icon/AnimatedIcon';
-import { MessageCircle, Phone, Mail, BookCheck, GraduationCap, Facebook, Users, Home, ExternalLink } from 'lucide-react';
+import {
+    MessageCircle,
+    Phone,
+    Mail,
+    BookCheck,
+    GraduationCap,
+    Facebook,
+    Users,
+    Home,
+    ExternalLink,
+} from 'lucide-react';
 
 const Footer = () => {
     const footerRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsVisible(entry.isIntersecting);
-            },
-            {
-                threshold: 0.1
-            }
-        );
+        const currentFooter = footerRef.current; // <--- Guarda la referencia aquí
+        const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), {
+            threshold: 0.1,
+        });
 
-        if (footerRef.current) {
-            observer.observe(footerRef.current);
+        if (currentFooter) {
+            observer.observe(currentFooter);
         }
-        return () => observer.disconnect();
+
+        return () => {
+            if (currentFooter) {
+                observer.unobserve(currentFooter); // <--- Usa la variable local
+            }
+            observer.disconnect();
+        };
     }, []);
 
     return (
-        <footer
-            ref={footerRef}
-            className={`${styles.footer} ${isVisible ? styles.visible : ''}`}
-        >
+        <footer ref={footerRef} className={`${styles.footer} ${isVisible ? styles.visible : ''}`}>
             <div className={styles.grid}>
                 <div className={styles.col}>
-                    <div className={styles.logoText}>
-                        CCIP
-                    </div>
+                    <div className={styles.logoText}>CCIP</div>
                     <p className={styles.description}>
-                        Centro de Capacitación e Innovación Profesional. 4 años formando expertos con convenios internacionales.
+                        Centro de Capacitación e Innovación Profesional. 4 años formando expertos
+                        con convenios internacionales.
                     </p>
                     <div className={styles.stats}>
                         <span>
@@ -49,19 +58,20 @@ const Footer = () => {
                     <h4>Plataforma</h4>
                     <ul>
                         <li>
-                            <a href="/" >
+                            <Link to="/">
                                 <AnimatedIcon color="#1877F2">
                                     <Home size={18} />
                                 </AnimatedIcon>
-                                Inicio</a>
+                                Inicio
+                            </Link>
                         </li>
                         <li>
-                            <a href="/cursos">
+                            <Link to="/cursos">
                                 <AnimatedIcon color="#facc15">
                                     <BookCheck size={18} />
                                 </AnimatedIcon>
                                 Cursos Certificables
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a
@@ -116,7 +126,7 @@ const Footer = () => {
                     <h4>Contacto</h4>
                     <ul className={styles.contactList}>
                         <li>
-                            <a href="https://wa.me/51930449016" >
+                            <a href="https://wa.me/51930449016">
                                 <AnimatedIcon color="#25D366">
                                     <MessageCircle size={18} />
                                 </AnimatedIcon>
@@ -124,7 +134,7 @@ const Footer = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="tel:+51959280078" >
+                            <a href="tel:+51959280078">
                                 <AnimatedIcon color="#facc15">
                                     <Phone size={18} />
                                 </AnimatedIcon>

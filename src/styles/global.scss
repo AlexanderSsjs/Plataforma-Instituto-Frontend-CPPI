@@ -12,6 +12,8 @@ html {
     scroll-behavior: auto;
     scrollbar-gutter: stable;
     overflow-x: hidden;
+    scroll-padding-top: calc($nav-height + $space-lg); 
+    scroll-behavior: smooth;
 }
 
 body {

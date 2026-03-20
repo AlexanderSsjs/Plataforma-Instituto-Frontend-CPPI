@@ -1,0 +1,653 @@
+.container {
+    min-height: 100vh;
+    max-width: 100%;
+    font-family: 'Inter', sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(239, 68, 68, 0.08), transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(239, 68, 68, 0.06), transparent 50%),
+        linear-gradient(#e2e8f0 1px, transparent 1px),
+        linear-gradient(90deg, #e2e8f0 1px, transparent 1px),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    background-size:
+        100% 100%,
+        100% 100%,
+        40px 40px,
+        40px 40px,
+        100% 100%;
+    padding-block-start: clamp(6rem, 10vh, 12rem);
+    padding-block-end: clamp(4rem, 10vh, 8rem);
+    padding-inline: clamp(1.2rem, 4vw, 2rem);
+    font-family: 'Inter', sans-serif;
+    position: relative;
+
+    overflow: hidden;
+    animation: bgMove 20s ease-in-out infinite alternate;
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    &::before {
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(
+            circle,
+            rgba(239, 68, 68, 0.18),
+            rgba(239, 68, 68, 0.05),
+            transparent 70%
+        );
+        top: -250px;
+        left: -250px;
+        filter: blur(140px);
+        opacity: 0.6;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url('/noise.png');
+        opacity: 0.03;
+        pointer-events: none;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(239, 68, 68, 0.12), transparent 70%);
+        bottom: -200px;
+        right: -200px;
+        filter: blur(160px);
+        opacity: 0.5;
+    }
+    
+    .contentWrapper {
+        max-width: $container-max;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        padding-top: calc($nav-height + clamp($space-xl, 5vh, $space-2xl));
+        padding-bottom: clamp($space-2xl, 10vh, 8rem);
+        padding-inline: clamp($space-md, 5vw, $space-2xl);
+    }
+    @keyframes bgMove {
+        0% {
+            background-position:
+                0% 0%,
+                100% 100%,
+                0 0,
+                0 0,
+                0 0;
+        }
+        100% {
+            background-position:
+                10% 5%,
+                90% 95%,
+                0 0,
+                0 0,
+                0 0;
+        }
+    }
+}
+
+.searchSection {
+    margin-bottom: $space-2xl;
+    margin-top: $space-md;
+    @include fade-in-up(0.1s);
+
+    .searchWrapper {
+        position: relative;
+        max-width: 700px;
+        margin: 0 auto;
+
+        .searchIcon {
+            position: absolute;
+            left: $space-lg;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $text-muted;
+            z-index: 2;
+        }
+
+        input {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+            border-radius: $radius-lg; // Más redondeado para SaaS
+            border: 1px solid var(--glass-border-dark);
+            background: var(--glass-bg-strong);
+            backdrop-filter: $blur-premium;
+            color: $text-dark;
+            box-shadow: $sh-sm;
+            transition: $transition;
+            font-size: $font-size-md;
+
+            &:focus {
+                background: $bg-main;
+                border-color: $primary;
+                box-shadow: $sh-md;
+                transform: translateY(-2px);
+            }
+        }
+    }
+    input {
+        position: relative;
+
+        &:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: $primary;
+            box-shadow:
+                0 0 0 3px rgba($primary, 0.15),
+                0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px) scale(1.01);
+        }
+    }
+    &:focus::placeholder {
+        opacity: 0.5;
+        transform: translateX(5px);
+    }
+}
+
+.promoCard {
+    background: radial-gradient(circle at top left, $primary-500, $primary-700);
+    border-radius: $radius-lg;
+    padding: $space-xl $space-2xl;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: $space-2xl;
+    position: relative;
+    overflow: hidden;
+    box-shadow: $sh-lg;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    @include fade-in-up(0.2s);
+    backdrop-filter: blur(6px);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: rgba($accent-gold, 0.1);
+        border-radius: 50%;
+        filter: blur(50px);
+    }
+    .promoCard::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+        transform: skewX(-20deg);
+    }
+    &:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow:
+            0 20px 40px rgba(0, 0, 0, 0.12),
+            0 0 0 1px rgba($primary, 0.1);
+    }
+    .promoCard:hover::before {
+        animation: shine 1.2s ease;
+    }
+
+    @keyframes shine {
+        100% {
+            left: 140%;
+        }
+    }
+    .promoInfo {
+        display: flex;
+        align-items: center;
+        gap: $space-lg;
+        z-index: 1;
+
+        .zapCircle {
+            background: $accent-gold;
+            padding: $space-md;
+            border-radius: 50%;
+            color: $primary-700;
+            box-shadow: 0 0 20px rgba($accent-gold, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        margin: 10px;
+        h4 {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-black;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        p {
+            margin: $space-xs 20px 0 0;
+            font-size: $font-size-md;
+            opacity: 0.9;
+            strong {
+                color: $accent-gold;
+                font-size: 1.1em;
+            }
+        }
+    }
+
+    .promoBtn {
+        background: $accent-gold;
+        color: $primary-700;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: $radius-md;
+        font-weight: $font-weight-black;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: $transition-premium;
+        z-index: 1;
+        box-shadow: 0 4px 1 5px rgba(0, 0, 0, 0.2);
+        position: relative;
+        &:active {
+            transform: scale(0.95);
+        }
+
+        &:hover {
+            transform: scale(1.08);
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        &:hover::after {
+            opacity: 1;
+        }
+    }
+}
+
+// --- GRILLA Y CARDS ---
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-bottom: $space-xl;
+    color: $primary;
+    border-left: 4px solid $primary;
+    padding-left: $space-md;
+
+    h2 {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-black;
+        margin: 0;
+    }
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: $space-xl;
+}
+
+.card {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid var(--glass-border-dark);
+    overflow: hidden;
+    transition: $transition-premium;
+    opacity: 0;
+    transform: translateY(40px);
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+        transition: 0.6s ease;
+    }
+    &:hover {
+        transform: translateY(-12px);
+        box-shadow: $sh-lg;
+        border-color: rgba($primary, 0.2);
+
+        .imageWrapper img {
+            transform: scale(1.1);
+        }
+        .imageWrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent 60%);
+        }
+    }
+
+    .imageWrapper {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s $ease-standard;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: $radius-sm;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-bold;
+            color: white;
+            background: $primary;
+            backdrop-filter: blur(4px);
+
+            &.vivo {
+                background: rgba($primary-500, 0.9);
+            }
+        }
+
+        .overlayTags {
+            position: absolute;
+            top: $space-md;
+            left: $space-md;
+        }
+    }
+
+    .content {
+        padding: $space-lg;
+
+        .topRow {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: $space-sm;
+            .price {
+                font-weight: $font-weight-black;
+                color: $primary-500;
+                font-size: $font-size-xl;
+            }
+        }
+
+        h3 {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-bold;
+            color: $text-dark;
+            margin-bottom: $space-md;
+            line-height: 1.2;
+            min-height: 3rem;
+            transition: $transition;
+
+            &:hover {
+                color: $primary;
+            }
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--glass-border-dark);
+            padding-top: $space-md;
+            margin-top: $space-md;
+
+            .btnAction {
+                color: $primary;
+                font-weight: $font-weight-bold;
+                display: flex;
+                align-items: center;
+                gap: $space-xs;
+                background: none;
+                border: none;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                    gap: 8px;
+                }
+            }
+        }
+    }
+}
+
+// --- RESPONSIVE ---
+@include max-tablet {
+    .promoCard {
+        flex-direction: column;
+        text-align: center;
+        padding: $space-xl;
+
+        .promoInfo {
+            flex-direction: column;
+        }
+        .promoBtn {
+            width: 100%;
+            margin-top: $space-md;
+        }
+    }
+
+    .mainGrid {
+        grid-template-columns: 1fr; // Corregido el "3 1fr" previo
+    }
+}
+
+
+
+
+.promoCard {
+    background: radial-gradient(circle at top left, $primary-500, $primary-700);
+    border-radius: $radius-lg;
+    padding: $space-xl $space-2xl;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: $space-2xl;
+    position: relative;
+    overflow: hidden;
+    box-shadow: $sh-lg;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    @include fade-in-up(0.2s);
+
+    // Adorno brillante de fondo
+    &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: rgba($accent-gold, 0.1);
+        border-radius: 50%;
+        filter: blur(50px);
+    }
+
+    .promoInfo {
+        display: flex;
+        align-items: center;
+        gap: $space-lg;
+        z-index: 1;
+
+        .zapCircle {
+            background: $accent-gold;
+            padding: $space-md;
+            border-radius: 50%;
+            color: $primary-700;
+            box-shadow: 0 0 20px rgba($accent-gold, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        margin: 10px;
+        h4 {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-black;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        p {
+            margin: $space-xs 20px 0 0;
+            font-size: $font-size-md;
+            opacity: 0.9;
+            strong {
+                color: $accent-gold;
+                font-size: 1.1em;
+            }
+        }
+    }
+
+    .promoBtn {
+        background: $accent-gold;
+        color: $primary-700;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: $radius-md;
+        font-weight: $font-weight-black;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: $transition-premium;
+        z-index: 1;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            background: white;
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
+
+
+.promoCard {
+    display: flex;
+    flex-direction: column; // Por defecto en móvil: uno arriba del otro
+    justify-content: space-between;
+    align-items: stretch; // Estirar para que los botones ocupen el ancho en móvil
+    gap: 2rem;
+    padding: 2rem; // Padding reducido para móviles
+    border-radius: 24px;
+    background: linear-gradient(135deg, #be123c 0%, #e11d48 50%, #881337 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(225, 29, 72, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: -50%; 
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        animation: rotateGlow 10s linear infinite;
+        pointer-events: none;
+    }
+
+    // --- RESPONSIVE TABLET / DESKTOP ---
+    @media (min-width: 768px) {
+        flex-direction: row; // De lado a lado en pantallas grandes
+        align-items: center;
+        padding: 3rem 4rem;
+        border-radius: 32px;
+    }
+
+    .promoLeft {
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        h4 {
+            font-size: 1.8rem; // Más pequeño en móvil
+            font-weight: 800;
+            line-height: 1.1;
+
+            @media (min-width: 768px) {
+                font-size: 2.2rem; // Tamaño original en desktop
+            }
+        }
+
+        .promoText {
+            font-size: 1rem;
+            @media (min-width: 768px) { font-size: 1.2rem; }
+            
+            span, strong {
+                font-weight: 800;
+                color: #ecb921;
+            }
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap; // Importante: permite que los items bajen si no caben
+            gap: 0.8rem;
+            margin-top: 1rem;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(0, 0, 0, 0.1);
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.75rem;
+
+                p {
+                    margin: 0;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .promoRight {
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+
+        @media (min-width: 768px) {
+            padding: 2rem;
+            min-width: 250px; // Evita que se encoja demasiado en desktop
+        }
+    }
+
+    .priceBox {
+        .newPrice {
+            font-size: 2.2rem; // Ajuste móvil
+            font-weight: 900;
+            color: #fbbf24;
+
+            @media (min-width: 768px) {
+                font-size: 2.8rem;
+            }
+        }
+    }
+
+    .promoBtn {
+        width: 100%; // Botón ancho completo en móvil
+        @media (min-width: 768px) {
+            width: auto; // Tamaño normal en desktop
+        }
+        background: white;
+        color: #e11d48;
+        padding: 1rem 2.5rem;
+        border-radius: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            background: #fbbf24;
+            color: #78350f;
+        }
+    }
+}

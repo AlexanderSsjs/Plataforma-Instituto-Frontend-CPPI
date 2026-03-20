@@ -13,7 +13,7 @@ function App() {
   const isAuthenticated = false; 
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <Routes>
         {/* --- GRUPO 1: VISTAS PÚBLICAS --- */}
