@@ -10,7 +10,8 @@ export const AnimatedIcon = ({ children, color = "#ffffff" }) => {
                 {
                 display: 'inline-flex',
                 alignItems: 'center',
-                justifyContent: 'center' }
+                justifyContent: 'center',
+            }
             }
         >
             {children}

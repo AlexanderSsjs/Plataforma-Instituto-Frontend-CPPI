@@ -1,92 +1,115 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Countdown from '@/components/core/CountDown';
-import styles from "../../views/public/styles/Courses.module.scss";
+import styles from '../../views/public/styles/Courses.module.scss';
 
-// 1. Formateador fuera para no re-crearlo en cada render
 const CURRENCY_FORMATTER = new Intl.NumberFormat('es-PE', {
     style: 'currency',
     currency: 'PEN',
 });
-
 const CourseCard = ({ course, type }) => {
-    // 2. Memoización de lógica pesada
-    const { courseType, status, formattedPrice, startDate } = useMemo(() => {
-        const cType = type || course?.type || 'virtual';
-        const start = course?.date ? new Date(course.date) : null;
+    const [imgState, setImgState] = useState({
+        loaded: false,
+        error: false,
+    });
+
+    const computed = useMemo(() => {
+        if (!course) return null;
+
+        const courseType = type || course.type || 'virtual';
+        const startDate = course.date ? new Date(course.date) : null;
         const now = new Date();
 
-        let currentStatus = 'virtual';
-        if (cType === 'vivo' && start) {
-            currentStatus = start > now ? 'proximo' : 'en-curso';
+        let status = 'virtual';
+
+        if (courseType === 'vivo' && startDate) {
+            status = startDate > now ? 'proximo' : 'en-curso';
         }
 
         return {
-            courseType: cType,
-            status: currentStatus,
-            formattedPrice: CURRENCY_FORMATTER.format(course?.price || 0),
-            startDate: start
+            courseType,
+            status,
+            startDate,
+            price: CURRENCY_FORMATTER.format(course.price || 0),
+            rating: course.rating || 4.5,
         };
     }, [course, type]);
 
-    // 3. Early return si no hay datos (Seguridad)
-    if (!course) return null;
+    if (!course || !computed) return null;
+
+    const { courseType, status, startDate, price, rating } = computed;
+
+    const badgeText =
+        courseType === 'vivo' ? (status === 'proximo' ? '⏳ Próximo' : '🔴 En vivo') : '📚 Virtual';
 
     return (
-        <div 
+        <article
             className={`${styles.card} ${styles[courseType]} ${styles[status]}`}
-            role="article" // SEO y Accesibilidad
+            aria-label={`Curso ${course.title}`}
         >
-            <div className={styles.imageWrapper}> 
-                <img 
-                    src={course.image} 
-                    alt={course.title} 
-                    loading="lazy" // Mejora de Performance LCP
-                />
-                
+            <div className={styles.imageWrapper}>
+                {!imgState.loaded && !imgState.error && <div className={styles.skeleton} />}
+
+                {!imgState.error ? (
+                    <picture>
+                        {course.imageWebp && <source srcSet={course.imageWebp} type="image/webp" />}
+
+                        <img
+                            src={course.image}
+                            alt={`Imagen del curso ${course.title}`}
+                            loading="lazy"
+                            onLoad={() => setImgState({ loaded: true, error: false })}
+                            onError={() => setImgState({ loaded: true, error: true })}
+                            className={imgState.loaded ? styles.imageVisible : styles.imageHidden}
+                        />
+                    </picture>
+                ) : (
+                    <div className={styles.errorPlaceholder}>
+                        <span>Imagen no disponible</span>
+                    </div>
+                )}
+
                 <div className={styles.overlayTags}>
-                    <span className={`${styles.badge} ${styles[courseType]}`}>
-                        {courseType === 'vivo' 
-                            ? (status === 'proximo' ? '⏳ Próximo' : '🔴 En vivo') 
-                            : '📚 Virtual'
-                        }
+                    <span
+                        className={`${styles.badge} ${
+                            status === 'proximo' ? styles.proximo : styles[courseType]
+                        }`}
+                    >
+                        {badgeText}
                     </span>
                 </div>
             </div>
 
-            <div className={styles.content}> 
+            <div className={styles.content}>
                 <div className={styles.topRow}>
-                    <span className={styles.rating} aria-label={`Rating: ${course.rating}`}>
-                        ⭐ {course.rating || '4.5'}
-                    </span>
-                    <span className={styles.price}>{formattedPrice}</span>
+                    <span className={styles.rating}>⭐ {rating}</span>
+
+                    <span className={styles.price}>{price}</span>
                 </div>
 
                 <h3 className={styles.title}>{course.title}</h3>
-
+                <p className={styles.descriptionText}>{course.description}</p>
                 <div className={styles.infoArea}>
                     {courseType === 'vivo' && startDate ? (
                         <div className={styles.countdownWrapper}>
-                            <Countdown targetDate={course.date} showSeconds={true} />
+                            <Countdown targetDate={course.date} showSeconds />
                         </div>
                     ) : (
                         <p className={styles.static}>✅ Acceso inmediato</p>
                     )}
                 </div>
-
-                <div className={styles.footer}>
-                    <span className={styles.duration}>
-                        ⏱ {course.duration || '80 hrs'}
-                    </span>
-
-                    <button 
-                        className={styles.btnAction}
-                        aria-label={`Ver detalles del curso ${course.title}`}
-                    >
-                        Ver detalles →
-                    </button>
-                </div>
             </div>
-        </div>
+
+            <div className={styles.footer}>
+                <span className={styles.duration}>⏱ {course.duration || '80 hrs'}</span>
+
+                <button
+                    className={styles.btnAction}
+                    aria-label={`Ver detalles del curso ${course.title}`}
+                >
+                    Ver detalles →
+                </button>
+            </div>
+        </article>
     );
 };
 

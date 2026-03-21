@@ -40,14 +40,24 @@ const CourseFilters = ({
                         <Search size={18} className={styles.searchIcon} />
                     </div>
                     <div className={styles.tabs}>
-                        {[ 'vivo', 'virtual'].map((type) => (
+                        {['vivo', 'virtual'].map((type) => (
                             <button
                                 key={type}
-                                className={filterType === type ? styles.active : ''}
+                                className={`${filterType === type ? styles.active : ''} ${styles[type]}`}
                                 onClick={() => setFilterType(type)}
                             >
-                                {type === 'vivo' && '🔴 En vivo'}
-                                {type === 'virtual' && '🔵 Virtual'}
+                                {type === 'vivo' && (
+                                    <>
+                                        <span className={styles.icon}>🔴</span>
+                                        <span className={styles.text}>En vivo</span>
+                                    </>
+                                )}
+                                {type === 'virtual' && (
+                                    <>
+                                        <span className={styles.icon}>🔵</span>
+                                        <span className={styles.text}>Virtual</span>
+                                    </>
+                                )}
                             </button>
                         ))}
                     </div>

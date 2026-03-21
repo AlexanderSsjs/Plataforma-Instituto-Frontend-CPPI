@@ -28,16 +28,14 @@ const Countdown = memo(({ targetDate, showSeconds = true }) => {
         return () => clearInterval(timer);
     }, [calculateTime]);
 
-    if (!time) return <span className={styles.countdownEnd}>¡Inició! 🚀</span>;
+    if (!time) return <span className={styles.countdown}>¡Inició! 🚀</span>;
 
     const { d, h, m, s } = time;
-    // Senior tip: La urgencia se define si queda menos de 1 hora
     const isUrgent = d === 0 && h === 0;
 
     return (
         <div className={styles.countdown} style={{ fontVariantNumeric: 'tabular-nums' }}>
                 <span>⏱ </span>
-                {/* Corregido: Usamos d, h, m, s del objeto destructurado */}
                 {d > 0 && <span>{d}d </span>}
                 {(d > 0 || h > 0) && <span>{pad(h)}h </span>}
                 <span>{pad(m)}m </span>

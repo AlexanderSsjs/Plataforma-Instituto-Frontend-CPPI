@@ -29,7 +29,6 @@ const SortDropdown = ({ value, onChange }) => {
     const selected = SORT_OPTIONS.find(o => o.value === value);
 
     const handleSelect = useCallback((newValue) => {
-        // Toggle logic: si es el mismo, resetea a default
         onChange(newValue === value ? 'default' : newValue);
         setOpen(false);
     }, [value, onChange]);
@@ -53,7 +52,6 @@ const SortDropdown = ({ value, onChange }) => {
 
             {open && (
                 <div className={styles.dropdownMenu} role="listbox">
-                    <div className={styles.menuTitle}>Selecciona el orden</div>
                     
                     {SORT_OPTIONS
                         .filter(opt => opt.value !== value)

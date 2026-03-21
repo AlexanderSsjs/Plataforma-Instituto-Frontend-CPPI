@@ -224,6 +224,11 @@ $blur-premium: blur(10px);
         @content;
     }
 }
+@mixin min-Large-tablet {
+    @media (min-width: #{$ms}) {
+        @content;
+    }
+}
 @mixin max-mobile {
     @media (max-width: #{$sd}) {
         @content;
