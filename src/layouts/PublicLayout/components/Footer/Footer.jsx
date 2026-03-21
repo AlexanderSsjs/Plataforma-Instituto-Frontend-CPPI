@@ -113,12 +113,12 @@ const Footer = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="#nosotros">
+                            <Link to="/nosotros">
                                 <AnimatedIcon color="#facc15">
                                     <Users size={18} />
                                 </AnimatedIcon>
                                 Nosotros
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

@@ -1,0 +1,250 @@
+@import '../../../styles/variables.scss';
+
+.nosotrosSection {
+    padding: 120px 0 80px;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    // Fondo de cuadrados igual al Home
+    background:
+        radial-gradient(circle at 20% 10%, rgba(239, 68, 68, 0.05), transparent 40%),
+        linear-gradient(#e2e8f0 1px, transparent 1px),
+        linear-gradient(90deg, #e2e8f0 1px, transparent 1px),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    background-size: 100% 100%, 40px 40px, 40px 40px, 100% 100%;
+}
+
+.nosotrosContainer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+// --- TITULO ANIMADO ---
+.nosotrosHeader {
+    text-align: center;
+    margin-bottom: 100px;
+
+    .splitTitle {
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+
+        span {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .textBlack { color: #111827; }
+        .textRed { color: #ef4444; } // Rojo de tu Home
+    }
+
+    .headerLine {
+        width: 0;
+        height: 4px;
+        background: #ef4444;
+        margin: 20px auto;
+        border-radius: 10px;
+        transition: width 1s ease 0.5s;
+    }
+}
+
+// --- LINEA TEMPORAL PC ---
+.timelineWrapper {
+    position: relative;
+    padding: 20px 0;
+
+    .centralLine {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 3px;
+        height: 0; // Se anima a 100%
+        background: linear-gradient(to bottom, #ef4444, #f59e0b, transparent);
+        transform: translateX(-50%);
+        transition: height 2s ease-in-out;
+    }
+}
+
+.timelineItem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 70px;
+    position: relative;
+    opacity: 0;
+    transition: all 0.8s ease;
+    
+    
+    .timelineCard {
+        width: 44%; // Espacio controlado
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        z-index: 5;
+
+        h3 { color: #1e293b; margin-bottom: 10px; font-size: 1.2rem; }
+        p { color: #64748b; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+    }
+
+    .timelineDot {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 50px;
+        background: #fff;
+        border: 2px solid #ef4444;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ef4444;
+        z-index: 10;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        
+        svg { width: 22px; height: 22px; }
+    }
+}
+
+// Zig-Zag PC
+.left {
+    justify-content: flex-start;
+    transform: translateX(-30px);
+    .timelineCard { margin-left: 0; text-align: right; }
+}
+
+.right {
+    justify-content: flex-end;
+    transform: translateX(30px);
+    .timelineCard { margin-right: 0; text-align: left; }
+}
+
+// --- ADAPTABILIDAD MOVIL ---
+@include max-tablet {
+    .timelineWrapper {
+        .centralLine {
+            left: 20px; // Línea a la izquierda
+            transform: none;
+        }
+    }
+
+    .timelineItem {
+        justify-content: flex-start !important;
+        flex-direction: row !important;
+        margin-bottom: 40px;
+        padding-left: 50px;
+        transform: translateY(20px) !important;
+
+        .timelineDot {
+            left: 20px; // Dot a la izquierda sobre la línea
+            transform: translateX(-50%);
+            width: 38px;
+            height: 38px;
+        }
+
+        .timelineCard {
+            width: 100%;
+            text-align: left !important;
+            padding: 18px;
+        }
+    }
+}
+
+// --- ACTIVADOR DE ANIMACIONES ---
+.animate {
+    .splitTitle span { 
+        opacity: 1; transform: translateY(0); 
+        @for $i from 1 through 3 {
+            &:nth-child(#{$i}) { transition-delay: #{$i * 0.1s}; }
+        }
+    }
+    .headerLine { width: 100px; }
+    .centralLine { height: 100%; }
+    .timelineItem {
+        opacity: 1;
+        transform: translate(0, 0);
+        @for $i from 1 through 6 {
+            &:nth-child(#{$i + 1}) { transition-delay: #{0.4s + ($i * 0.15s)}; }
+        }
+    }
+}
+.timelineItem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 70px;
+    position: relative;
+    
+    // ESTADO INICIAL (Oculto)
+    opacity: 0;
+    filter: blur(5px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    &.left { transform: translateX(-40px); justify-content: flex-start; }
+    &.right { transform: translateX(40px); justify-content: flex-end; }
+
+    // ESTADO VISIBLE (Cuando entra en el scroll)
+    &.itemVisible {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateX(0);
+    }
+}
+.timelineCard {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.05); // Sombra más grande para dar volumen
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.03); // Efecto de interacción al pasar el mouse
+    }
+}
+
+.centralLine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(to bottom, #ef4444, #f59e0b, transparent);
+    transform: translateX(-50%);
+    transition: height 2.5s ease-in-out;
+    
+    &.lineGrow {
+        height: 100%;
+    }
+}
+
+// Animación del Título (Se activa con animateHeader)
+.animateHeader {
+    .splitTitle span {
+        opacity: 1;
+        transform: translateY(0);
+        @for $i from 1 through 3 {
+            &:nth-child(#{$i}) { transition-delay: #{$i * 0.15s}; }
+        }
+    }
+    .headerLine { width: 100px; }
+}
+
+// ... (Mantenemos los estilos de .timelineCard y .timelineDot igual que antes)
+
+@include max-tablet {
+    // Tu lógica de móvil que ya funcionaba con la línea a la izquierda
+    .timelineItem {
+        &.left, &.right {
+            transform: translateY(30px); // En móvil que suban desde abajo
+            &.itemVisible { transform: translateY(0); }
+        }
+    }
+}
