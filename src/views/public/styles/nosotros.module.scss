@@ -176,7 +176,27 @@
             &:nth-child(#{$i + 1}) { transition-delay: #{0.4s + ($i * 0.15s)}; }
         }
     }
+    @keyframes entranceGlow {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+        box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 15px 45px rgba(239, 68, 68, 0.3); // El flash rojo
+        border-color: rgba(239, 68, 68, 0.6);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); // Vuelve a sombra normal
+        // IMPORTANTE: No pongas border-color aquí para que el hover sea libre
+    }
 }
+}
+
 .timelineItem {
     display: flex;
     align-items: center;
@@ -198,15 +218,54 @@
         filter: blur(0);
         transform: translateX(0);
     }
+    &.itemVisible {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateX(0);
+
+        // --- LA MAGIA: Al aparecer, la tarjeta hace un "flash" ---
+        .timelineCard {
+            animation: entranceGlow 1.2s ease-out forwards;
+        }
+    }
+}
+// 2. CREAMOS LA ANIMACIÓN DEL "FLASH" ROJO
+@keyframes entranceGlow {
+    0% {
+        transform: scale(0.9) translateY(20px);
+        box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+        border-color: rgba(226, 232, 240, 0.8);
+    }
+    40% {
+        // En este punto el cuadro "brilla" al máximo
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 15px 45px rgba(239, 68, 68, 0.3); // Sombra roja intensa
+        border-color: rgba(239, 68, 68, 0.6);
+        background: rgba(255, 255, 255, 0.95);
+    }
+    100% {
+        // Al final vuelve a su estado normal (listo para el hover)
+        transform: scale(1) translateY(0);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+    
 }
 .timelineCard {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.05); // Sombra más grande para dar volumen
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    
+    // Esto es lo que hace que el zoom y la sombra roja funcionen siempre
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
 
     &:hover {
-        transform: scale(1.03); // Efecto de interacción al pasar el mouse
+        transform: scale(1.04) translateY(-5px) !important; // El !important asegura que gane al scroll
+        box-shadow: 0 15px 45px rgba(239, 68, 68, 0.2) !important;
+        border-color: rgba(239, 68, 68, 0.5) !important;
+        background: rgba(255, 255, 255, 0.95);
+        z-index: 20;
     }
 }
 
@@ -247,4 +306,56 @@
             &.itemVisible { transform: translateY(0); }
         }
     }
+}
+
+@media (max-width: 768px) {
+    
+    // Movemos la línea central hacia la izquierda para ganar espacio
+    .centralLine {
+        left: 30px !important; // La pegamos al borde izquierdo
+        margin: 0;
+    }
+
+    .timelineItem {
+        width: 100% !important; // Que ocupen todo el ancho
+        padding-left: 70px !important; // Espacio para la línea a la izquierda
+        padding-right: 20px !important;
+        text-align: left !important; // Todo el texto alineado a la izquierda
+        left: 0 !important; // Quitamos el desplazamiento lateral
+        
+        // Forzamos que todos los "Dots" (círculos) se alineen con la línea
+        .timelineDot {
+            left: 30px !important;
+            transform: translateX(-50%)!important;
+        }
+
+        // Animación de entrada: Ahora todos entran desde la derecha
+        &.itemVisible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    // Eliminamos el comportamiento de "izquierda" para que todo sea igual
+    .left, .right {
+        justify-content: flex-start !important;
+        flex-direction: row !important;
+    }
+}
+.timelineDot {
+    // ... lo que ya tienes
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 2px solid #ef4444;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
 }
