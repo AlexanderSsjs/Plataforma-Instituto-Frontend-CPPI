@@ -1,112 +1,86 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+let observer;
+
+const getObserver = () => {
+    if (!observer) {
+        observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+
+                    const el = entry.target;
+
+                    if (el.dataset.animated === 'true') return;
+
+                    el.dataset.animated = 'true';
+                    el.classList.add('inview-visible');
+
+                    if (import.meta.env.DEV && window.__PERF_MONITOR__) {
+                        console.log('👁️ InView triggered');
+                    }
+
+                    observer.unobserve(el);
+                });
+            },
+            {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.15,
+            },
+        );
+    }
+
+    return observer;
+};
 
 const InView = ({
     children,
-    threshold = 0.15,
     delay = 0,
-    duration = 0.8,
-    triggerOnce = false,
-
-    distance = 80,
-    blur = 6,
+    duration = 0.5,
+    distance = 60,
     scale = 0.96,
-
-    initialDirection = 'down',    
-    reenterFromTop = 'left',      
-    reenterFromBottom = 'right',  
-
+    direction = 'up',
     className = '',
 }) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [hasEntered, setHasEntered] = useState(false);
-    const [scrollDirection, setScrollDirection] = useState('down');
-    const [entryDirection, setEntryDirection] = useState(initialDirection);
-
-    const domRef = useRef(null);
-    const lastScrollY = useRef(0);
-
-    // detectar dirección del scroll
+    const ref = useRef(null);
+    console.log('🧩 InView render');
     useEffect(() => {
-        const handleScroll = () => {
-            const current = window.scrollY;
-            setScrollDirection(current > lastScrollY.current ? 'down' : 'up');
-            lastScrollY.current = current;
-        };
+        const el = ref.current;
+        if (!el) return;
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+        // 🔥 detectar mobile una sola vez
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    // observer
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    // 🔥 decidir dirección SOLO cuando entra
-                    if (!hasEntered) {
-                        setEntryDirection(initialDirection);
-                        setHasEntered(true);
-                    } else {
-                        if (scrollDirection === 'down') {
-                            setEntryDirection(reenterFromBottom);
-                        } else {
-                            setEntryDirection(reenterFromTop);
-                        }
-                    }
+        const finalDistance = isMobile ? distance * 0.6 : distance;
+        const finalDuration = isMobile ? duration * 0.8 : duration;
 
-                    setIsVisible(true);
+        // 🔥 transform sin función extra (más rápido)
+        let transform;
+        if (direction === 'up') transform = `translateY(${finalDistance}px)`;
+        else if (direction === 'down') transform = `translateY(-${finalDistance}px)`;
+        else if (direction === 'left') transform = `translateX(${finalDistance}px)`;
+        else if (direction === 'right') transform = `translateX(-${finalDistance}px)`;
+        else transform = `translateY(${finalDistance}px)`;
 
-                    if (triggerOnce) observer.unobserve(entry.target);
-                } else {
-                    if (!triggerOnce) setIsVisible(false);
-                }
-            },
-            { threshold }
-        );
+        // 🔥 aplicar todo junto (menos reflow)
+        el.style.cssText += `
+            --delay: ${delay}s;
+            --duration: ${finalDuration}s;
+            --scale-start: ${scale};
+            --transform-start: ${transform};
+        `;
 
-        const current = domRef.current;
-        if (current) observer.observe(current);
+        const obs = getObserver();
+        obs.observe(el);
 
         return () => {
-            if (current) observer.unobserve(current);
+            obs.unobserve(el);
         };
-    }, [threshold, triggerOnce, scrollDirection, hasEntered]);
-
-    const getTransform = () => {
-        switch (entryDirection) {
-            case 'up':
-                return `translateY(${distance}px)`;
-            case 'down':
-                return `translateY(-${distance}px)`;
-            case 'left':
-                return `translateX(${distance}px)`;
-            case 'right':
-                return `translateX(-${distance}px)`;
-            default:
-                return `translateY(${distance}px)`;
-        }
-    };
+    }, []); // 🔥 sin dependencias (clave performance)
 
     return (
-        <div
-            ref={domRef}
-            className={className}
-            style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible
-                    ? `translate(0,0) scale(1)`
-                    : `${getTransform()} scale(${scale})`,
-                filter: isVisible ? 'blur(0px)' : `blur(${blur}px)`,
-
-                transition: `
-                    opacity ${duration}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s,
-                    transform ${duration}s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s,
-                    filter ${duration}s ease ${delay}s
-                `,
-                willChange: 'transform, opacity, filter',
-                width: '100%',
-            }}
-        >
+        <div ref={ref} className={`inview ${className}`}>
             {children}
         </div>
     );

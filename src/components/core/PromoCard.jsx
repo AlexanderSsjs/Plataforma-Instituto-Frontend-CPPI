@@ -2,7 +2,12 @@ import React from 'react';
 import confetti from 'canvas-confetti';
 import styles from '@/views/public/styles/Courses.module.scss'; // Asegúrate de que la ruta sea correcta
 
-const PromoCard = () => {
+/**
+ * PromoCard - Componente que renderiza um cartão de promoção com efeitos de confetti
+ * @param {string} className - Classe CSS para personalizar o cartão
+ * @returns {React.Component} - Componente renderizado
+ */
+const PromoCard = (className) => {
     const handleConfetti = (event) => {
         const rect = event.target.getBoundingClientRect();
         const x = (rect.left + rect.width / 2) / window.innerWidth;
@@ -45,7 +50,7 @@ const PromoCard = () => {
                     className={styles.promoBtn}
                     onMouseEnter={handleConfetti}
                 >
-                    ¡Lo quiero ahora! 🚀
+                    ¡Lo quiero ahora! <i className={styles.arrowRight}>🚀</i>
                 </button>
             </div>
         </div>

@@ -12,7 +12,6 @@ const SortDropdown = ({ value, onChange }) => {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null); // Ref para detectar clics fuera
 
-    // 2. Cerrar dropdown al hacer clic fuera (Efecto Pro)
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
