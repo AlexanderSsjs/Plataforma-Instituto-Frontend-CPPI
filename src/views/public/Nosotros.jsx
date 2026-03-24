@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import styles from '../views/public/styles/nosotros.module.scss';
+import styles from './styles/Nosotros.module.scss';
 import { Target, Award, ShieldCheck, Rocket, Users, TrendingUp } from 'lucide-react';
 
-// Componente para cada fila de la línea de tiempo con su propio sensor
 const TimelineItem = ({ item, index }) => {
     const itemRef = useRef(null);
     const [isItemVisible, setIsItemVisible] = useState(false);
