@@ -1,0 +1,480 @@
+{
+    "cursos": [
+        {
+            "id": 1,
+            "nombre": "Invierte.pe",
+            "nombre_completo": "CURSO INVIERTE.PE (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774367313/parabol-the-agile-meeting-tool-XklL9zyYa6Y-unsplash_hah8ry.jpg",
+            "descripcion": "Aprende a gestionar el ciclo completo de inversión pública bajo el sistema Invierte.pe, desde la formulación y evaluación de proyectos hasta su ejecución, seguimiento y cierre.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "Contenido General",
+                    "slug": "contenido-general",
+                    "temas": [
+                        "Sistema Administrativo en el Sector Público",
+                        "Marco Normativo del Sistema Nacional de Programación Multianual y Gestión de Inversiones",
+                        "Identificación, Formulación y Evaluación",
+                        "Fases del Ciclo de Inversión",
+                        "Formulación de alternativas. Evaluación ex post y operación."
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "Módulo Práctico",
+                    "slug": "modulo-practico",
+                    "temas": [
+                        "Formulación de Proyectos.",
+                        "Evaluación Social (Excel).",
+                        "Evaluación de Impacto Ambiental.",
+                        "Formato 6A, Formato 7A, Formato 8A y 8B (fase de ejecución).",
+                        "Formato 9 (cierre de proyectos)",
+                        "Formato 12B (seguimiento de ejecución)",
+                        "Ficha estándar para proyectos de saneamiento (urbano y rural)"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "PROYECTOS POR SECTOR",
+                    "slug": "proyectos-por-sector",
+                    "temas": [
+                        "PIP en Educación Básica Regular",
+                        "PIP del Sector Ambiente",
+                        "PIP de Vías Interurbanas",
+                        "PIP de Electrificación Rural"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "orden": 4,
+                    "nombre": "MÓDULO 4: SUPERVISIÓN DE ESTUDIOS DE PREINVERSIÓN",
+                    "slug": "supervision-estudios-preinversion",
+                    "temas": ["Supervisión de estudios de preinversión"]
+                }
+            ]
+        },
+
+        {
+            "id": 2,
+            "nombre": "SIAF",
+            "nombre_completo": "CURSO SISTEMA INTEGRADO DE ADMINISTRACIÓN FINANCIERA DEL ESTADO (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774369012/2-57_djbsx5.jpg",
+            "descripcion": "Aprende a registrar, controlar y gestionar operaciones presupuestales y financieras del Estado utilizando el sistema SIAF de manera práctica y segura.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "INTRODUCCIÓN AL SIAF Y AL SISTEMA DE ADMINISTRACIÓN FINANCIERA DEL ESTADO",
+                    "slug": "introduccion-siaf",
+                    "temas": [
+                        "Marco general de la administración financiera pública.",
+                        "Objetivos del SIAF en la gestión pública.",
+                        "Principios de la administración financiera del Estado.",
+                        "Alcances del SIAF en las entidades públicas.",
+                        "Rol de las Unidades Ejecutoras.",
+                        "Integración del SIAF con los sistemas administrativos del Estado.",
+                        "Estructura general del sistema.",
+                        "Buenas prácticas en el uso del SIAF."
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "ESTRUCTURA OPERATIVA DEL SIAF Y CONFIGURACIÓN INICIAL",
+                    "slug": "estructura-operativa-siaf",
+                    "temas": [
+                        "Componentes del SIAF.",
+                        "Entorno de trabajo.",
+                        "Perfiles de usuario.",
+                        "Accesos, roles y responsabilidades.",
+                        "Estructura de la Unidad Ejecutora.",
+                        "Clasificadores presupuestarios.",
+                        "Fuentes de financiamiento.",
+                        "Cadena funcional programática.",
+                        "Catálogos principales del sistema."
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "PRESUPUESTO PÚBLICO EN EL SIAF",
+                    "slug": "presupuesto-publico-siaf",
+                    "temas": [
+                        "Fases del proceso presupuestario.",
+                        "Programación presupuestal institucional.",
+                        "Registro del Presupuesto Institucional de Apertura (PIA).",
+                        "Modificaciones presupuestarias.",
+                        "Créditos suplementarios.",
+                        "Anulaciones y habilitaciones.",
+                        "Transferencias de partidas.",
+                        "Seguimiento del presupuesto institucional.",
+                        "Consultas presupuestales.",
+                        "Reportes de ejecución presupuestal."
+                    ]
+                },
+                {
+                    "id": 4,
+                    "orden": 4,
+                    "nombre": "CERTIFICACIÓN, COMPROMISO Y DEVENGADO",
+                    "slug": "certificacion-compromiso-devengado",
+                    "temas": [
+                        "Concepto de certificación presupuestal.",
+                        "Registro de la certificación.",
+                        "Gestión de saldos de certificación.",
+                        "Registro del compromiso anual.",
+                        "Registro del compromiso mensual.",
+                        "Relación entre compromiso y devengado."
+                    ]
+                }
+            ]
+        },
+
+        {
+            "id": 3,
+            "nombre": "SIGA",
+            "nombre_completo": "SISTEMA INTEGRADO DE GESTIÓN ADMINISTRATIVA (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370141/siga_ocawfp.jpg",
+            "descripcion": "Aprende a gestionar compras, almacén y patrimonio del Estado utilizando el sistema SIGA con casos prácticos reales.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "INTRODUCCIÓN AL SIGA Y MARCO DE LA GESTIÓN ADMINISTRATIVA PÚBLICA",
+                    "slug": "introduccion-siga",
+                    "temas": [
+                        "Concepto y objetivos del SIGA.",
+                        "Importancia del SIGA en la gestión administrativa del Estado.",
+                        "Rol del SIGA dentro de los sistemas administrativos.",
+                        "Articulación del SIGA con el presupuesto institucional.",
+                        "Relación del SIGA con las áreas usuarias.",
+                        "Estructura general del sistema.",
+                        "Módulos que conforman el SIGA.",
+                        "Buenas prácticas para el registro de información."
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "GESTIÓN DE REQUERIMIENTOS Y PROCESO DE ABASTECIMIENTO EN SIGA",
+                    "slug": "abastecimiento-siga",
+                    "temas": [
+                        "Registro de requerimientos de bienes y servicios.",
+                        "Catálogo de bienes y servicios.",
+                        "Registro de necesidades de las áreas usuarias.",
+                        "Consolidación de requerimientos.",
+                        "Priorización de requerimientos.",
+                        "Flujo de atención de requerimientos.",
+                        "Seguimiento del estado de los requerimientos.",
+                        "Control de requerimientos atendidos y pendientes.",
+                        "Casos prácticos de registro de requerimientos."
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "GESTIÓN DE ALMACÉN Y PATRIMONIO EN SIGA",
+                    "slug": "almacen-patrimonio-siga",
+                    "temas": [
+                        "Registro de ingresos a almacén.",
+                        "Registro de salidas de almacén.",
+                        "Control de stock.",
+                        "Kardex de bienes.",
+                        "Transferencias internas.",
+                        "Ajustes de inventario.",
+                        "Registro y control de bienes patrimoniales.",
+                        "Asignación de bienes a responsables.",
+                        "Altas, bajas y reasignaciones de bienes.",
+                        "Reportes de almacén y patrimonio.",
+                        "Casos prácticos de gestión de bienes."
+                    ]
+                }
+            ]
+        },
+
+        {
+            "id": 4,
+            "nombre": "INFOBRAS",
+            "nombre_completo": "CURSO INFOBRAS (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370137/INFOOBRAS_h3jqpv.jpg",
+            "descripcion": "Aprende a registrar, supervisar y cerrar obras públicas utilizando INFOBRAS, aplicando normativa vigente y control técnico.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "INTRODUCCIÓN A INFOBRAS",
+                    "slug": "introduccion-infobras",
+                    "temas": [
+                        "Marco normativo del Sistema Nacional de Información de Obras Públicas.",
+                        "Rol de la Contraloría General de la República.",
+                        "Beneficios y responsabilidades del registro en INFOBRAS.",
+                        "Acceso y navegación en la plataforma."
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "REGISTRO DE DATOS DE LA OBRA",
+                    "slug": "registro-obra-infobras",
+                    "temas": [
+                        "Ingreso y detalle de la obra.",
+                        "Clasificación de la obra según su naturaleza.",
+                        "Registro del expediente técnico.",
+                        "Ubicación geográfica y componente territorial.",
+                        "Identificación del proyecto de inversión pública.",
+                        "Fuentes y modalidades de financiamiento."
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "SUPERVISIÓN Y DATOS DE EJECUCIÓN",
+                    "slug": "supervision-ejecucion-infobras",
+                    "temas": [
+                        "Registro de datos generales de ejecución.",
+                        "Línea de tiempo y cronograma de avance.",
+                        "Reporte y actualización del avance físico y financiero.",
+                        "Carga de evidencias documentarias y fotográficas.",
+                        "Incorporación de información complementaria.",
+                        "Buenas prácticas para la supervisión en tiempo real."
+                    ]
+                },
+                {
+                    "id": 4,
+                    "orden": 4,
+                    "nombre": "CIERRE Y LIQUIDACIÓN DE LA OBRA",
+                    "slug": "cierre-liquidacion-infobras",
+                    "temas": [
+                        "Procedimientos para la recepción de la obra.",
+                        "Documentación y actas de cierre.",
+                        "Registro de la liquidación final.",
+                        "Validación de información y publicación del cierre.",
+                        "Errores frecuentes y cómo evitarlos."
+                    ]
+                },
+                {
+                    "id": 5,
+                    "orden": 5,
+                    "nombre": "CASOS PRÁCTICOS Y SIMULACIÓN EN INFOBRAS",
+                    "slug": "casos-practicos-infobras",
+                    "temas": [
+                        "Ejercicio guiado de registro de una obra real.",
+                        "Seguimiento de avances en tiempo real.",
+                        "Cierre y verificación de datos.",
+                        "Evaluación final y recomendaciones prácticas."
+                    ]
+                }
+            ]
+        },
+
+        {
+            "id": 5,
+            "nombre": "Contrataciones",
+            "nombre_completo": "CONTRATACIONES DEL ESTADO (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370136/contrataciones_ytar5f.jpg",
+            "descripcion": "Aprende a gestionar procesos de contratación pública, desde la planificación hasta la adjudicación, cumpliendo la normativa vigente.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "MARCO GENERAL DE LAS CONTRATACIONES DEL ESTADO",
+                    "slug": "marco-contrataciones",
+                    "temas": [
+                        "Finalidad de la contratación pública.",
+                        "Principios que rigen las contrataciones del Estado.",
+                        "Ámbito de aplicación de la normativa de contrataciones.",
+                        "Actores que intervienen en los procesos de contratación.",
+                        "Roles y responsabilidades de: Área usuaria, Órgano encargado de las contrataciones, Comité de selección.",
+                        "Fases del proceso de contratación.",
+                        "Responsabilidad administrativa, civil y penal en las contrataciones.",
+                        "Buenas prácticas en la gestión de contrataciones públicas."
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "ACTUACIONES PREPARATORIAS Y PLANIFICACIÓN DE LAS CONTRATACIONES",
+                    "slug": "planificacion-contrataciones",
+                    "temas": [
+                        "Identificación de la necesidad del área usuaria.",
+                        "Elaboración del requerimiento.",
+                        "Contenido técnico del requerimiento.",
+                        "Estudio de mercado.",
+                        "Determinación del valor estimado y valor referencial.",
+                        "Certificación de crédito presupuestario.",
+                        "Inclusión en el Plan Anual de Contrataciones (PAC).",
+                        "Aprobación y modificación del PAC.",
+                        "Documentación de las actuaciones preparatorias.",
+                        "Casos prácticos de elaboración de requerimientos."
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "PROCEDIMIENTOS DE SELECCIÓN Y EVALUACIÓN DE OFERTAS",
+                    "slug": "seleccion-evaluacion-contrataciones",
+                    "temas": [
+                        "Tipos de procedimientos de selección.",
+                        "Elaboración de bases del procedimiento.",
+                        "Absolución de consultas y observaciones.",
+                        "Integración de bases.",
+                        "Presentación de ofertas.",
+                        "Evaluación técnica y económica.",
+                        "Calificación de postores.",
+                        "Otorgamiento de la buena pro.",
+                        "Declaratoria de desierto."
+                    ]
+                }
+            ]
+        },
+
+        {
+            "id": 6,
+            "nombre": "Ofimática",
+            "nombre_completo": "OFIMÁTICA (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370140/ofimatica_isdr9p.jpg",
+            "descripcion": "Domina herramientas de oficina como Word, Excel, Power BI y presentaciones para mejorar tu productividad laboral.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "PROCESADOR DE TEXTOS",
+                    "slug": "word",
+                    "temas": [
+                        "Creación y edición de documentos.",
+                        "Formato de texto y párrafo.",
+                        "Uso de estilos y plantillas.",
+                        "Inserción de tablas e imágenes.",
+                        "Encabezados, pies de página y numeración.",
+                        "Revisión ortográfica y control de cambios.",
+                        "Exportación de documentos a PDF."
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "HOJAS DE CÁLCULO Y POWER BI",
+                    "slug": "excel-powerbi",
+                    "temas": [
+                        "Ingreso y organización de datos.",
+                        "Formato de celdas y hojas.",
+                        "Fórmulas y funciones básicas e intermedias.",
+                        "Filtros y ordenamiento de información.",
+                        "Tablas y gráficos dinámicos.",
+                        "Preparación de reportes automáticos.",
+                        "Introducción a Power BI.",
+                        "Importación de datos desde Excel a Power BI.",
+                        "Creación de paneles y visualizaciones básicas."
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "PRESENTACIONES Y HERRAMIENTAS COLABORATIVAS",
+                    "slug": "presentaciones",
+                    "temas": [
+                        "Creación de diapositivas.",
+                        "Uso de plantillas y diseños profesionales.",
+                        "Inserción de imágenes, videos y gráficos.",
+                        "Animaciones y transiciones.",
+                        "Estructura de presentaciones efectivas.",
+                        "Organización de archivos digitales.",
+                        "Trabajo colaborativo y control de versiones."
+                    ]
+                },
+                {
+                    "id": 4,
+                    "orden": 4,
+                    "nombre": "GESTIÓN DIGITAL Y TRABAJO EN LA NUBE (ENTORNO MICROSOFT)",
+                    "slug": "nube-microsoft",
+                    "temas": [
+                        "Gestión de archivos en la nube.",
+                        "Organización de carpetas y permisos de acceso.",
+                        "Trabajo colaborativo en documentos en línea.",
+                        "Control de versiones y recuperación de archivos.",
+                        "Uso del correo corporativo y calendario.",
+                        "Gestión de reuniones virtuales."
+                    ]
+                }
+            ]
+        },
+
+        {
+            "id": 7,
+            "nombre": "Sistemas Administrativos",
+            "nombre_completo": "CURSO MANEJO DE SISTEMAS ADMINISTRATIVOS DEL ESTADO (80 HORAS ACADÉMICAS)",
+            "horas": 80,
+            "precio": { "monto": 80, "moneda": "PEN" },
+            "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370138/istockphoto-1314446595-170667a_j0a1yq.jpg",
+            "descripcion": "Aprende la integración y gestión de los principales sistemas administrativos del Estado para una gestión pública eficiente.",
+            "categorias": [
+                {
+                    "id": 1,
+                    "orden": 1,
+                    "nombre": "GESTIÓN POR PROCESOS",
+                    "slug": "gestion-procesos",
+                    "temas": [
+                        "Política Nacional de Modernización de la Gestión Pública",
+                        "Elementos de un proceso",
+                        "Ventajas de la gestión por procesos",
+                        "Ciclo de la mejora continua"
+                    ]
+                },
+                {
+                    "id": 2,
+                    "orden": 2,
+                    "nombre": "DESARROLLO, TERRITORIO, INVERSIÓN Y GESTIÓN PÚBLICA",
+                    "slug": "desarrollo-territorio",
+                    "temas": [
+                        "Gestión pública moderna",
+                        "Políticas públicas con enfoque de desarrollo territorial"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "orden": 3,
+                    "nombre": "SISTEMAS ADMINISTRATIVOS DEL SECTOR PÚBLICO FINANCIERA - SIAF",
+                    "slug": "sistemas-siaf",
+                    "temas": [
+                        "Integración de los sistemas administrativos del Estado",
+                        "Articulación de planes y políticas públicas",
+                        "Sistema de Presupuesto Público",
+                        "Políticas públicas y su aplicación",
+                        "Introducción al SIAF",
+                        "Módulo Administrativo"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "orden": 4,
+                    "nombre": "SISTEMA INVIERTE.PE",
+                    "slug": "sistema-invierte",
+                    "temas": [
+                        "Introducción al Sistema Invierte.pe y Marco Normativo",
+                        "Fases del Ciclo de Inversión",
+                        "Programación Multianual y Gestión de Inversiones",
+                        "Formulación de Proyectos en el Sector Educación",
+                        "Formulación de Proyectos en el Sector Salud",
+                        "Formulación de Proyectos en el Sector Saneamiento",
+                        "Formulación de Proyectos de Electrificación",
+                        "Registro de Cierre de Inversiones"
+                    ]
+                }
+            ]
+        }
+    ]
+}

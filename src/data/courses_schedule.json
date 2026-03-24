@@ -1,0 +1,102 @@
+{
+    "cursos_programados": [
+        {
+            "id": 1,
+            "curso_id": 1,
+            "slug": "invierte-pe-marzo-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-03-28",
+            "hora_inicio": "19:00",
+            "duracion_semanas": 4,
+            "dias": ["Lunes", "Miércoles", "Viernes"],
+            "cupo_maximo": 30,
+            "inscritos": 20,
+            "estado": "activo"
+        },
+        {
+            "id": 2,
+            "curso_id": 2,
+            "slug": "siaf-marzo-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-03-30",
+            "hora_inicio": "20:00",
+            "duracion_semanas": 5,
+            "dias": ["Martes", "Jueves"],
+            "cupo_maximo": 25,
+            "inscritos": 12,
+            "estado": "activo"
+        },
+        {
+            "id": 3,
+            "curso_id": 3,
+            "slug": "siga-abril-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-04-02",
+            "hora_inicio": "19:30",
+            "duracion_semanas": 3,
+            "dias": ["Lunes", "Miércoles"],
+            "cupo_maximo": 20,
+            "inscritos": 15,
+            "estado": "activo"
+        },
+        {
+            "id": 4,
+            "curso_id": 4,
+            "slug": "infobras-abril-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-04-05",
+            "hora_inicio": "18:30",
+            "duracion_semanas": 4,
+            "dias": ["Martes", "Jueves"],
+            "cupo_maximo": 25,
+            "inscritos": 10,
+            "estado": "activo"
+        },
+        {
+            "id": 5,
+            "curso_id": 5,
+            "slug": "contrataciones-abril-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-04-07",
+            "hora_inicio": "19:00",
+            "duracion_semanas": 4,
+            "dias": ["Sábado"],
+            "cupo_maximo": 40,
+            "inscritos": 25,
+            "estado": "activo"
+        },
+        {
+            "id": 6,
+            "curso_id": 6,
+            "slug": "ofimatica-abril-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-04-09",
+            "hora_inicio": "20:00",
+            "duracion_semanas": 6,
+            "dias": ["Lunes", "Miércoles", "Viernes"],
+            "cupo_maximo": 35,
+            "inscritos": 18,
+            "estado": "activo"
+        },
+        {
+            "id": 7,
+            "curso_id": 7,
+            "slug": "sistemas-administrativos-abril-2026",
+            "modalidad": "En vivo",
+            "tipo": "Virtual",
+            "fecha_inicio": "2026-04-12",
+            "hora_inicio": "19:00",
+            "duracion_semanas": 5,
+            "dias": ["Martes", "Jueves"],
+            "cupo_maximo": 30,
+            "inscritos": 14,
+            "estado": "activo"
+        }
+    ]
+}

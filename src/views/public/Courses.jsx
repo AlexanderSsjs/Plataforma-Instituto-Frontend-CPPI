@@ -6,7 +6,10 @@ import CourseFilters from '@/components/core/CourseFilters';
 import styles from '../public/styles/Courses.module.scss';
 import PromoCard from '../../components/core/promoCard';
 import useInfiniteScroll from '@/components/hooks/useInfiniteScroll';
-import COURSES_DATA from '@/data/courses';
+
+// 🔥 NUEVOS JSON
+import TYPES from '@/data/type_courses.json';
+import SCHEDULE from '@/data/courses_schedule.json';
 
 const DEBUG = false;
 
@@ -14,81 +17,102 @@ const Courses = () => {
 
     const [search, setSearch] = useState('');
     const [filterType, setFilterType] = useState('all');
-    const [minRating, setMinRating] = useState(0);
-    const [sort, setSort] = useState('default');
 
     const getDelay = useCallback((i) => (i % 6) * 0.05, []);
+
+    // 🔥 1. CURSOS EN VIVO (MERGE)
+    const vivoCourses = useMemo(() => {
+        return SCHEDULE.cursos_programados.map((s) => {
+            const base = TYPES.cursos.find(c => c.id === s.curso_id);
+            if (!base) return null;
+
+            return {
+                id: s.id,
+                nombre: base.nombre,
+                descripcion: base.descripcion,
+                imagen_url: base.imagen_url,
+                precio: base.precio,
+                horas: base.horas,
+                date: `${s.fecha_inicio}T${s.hora_inicio}`,
+                type: 'vivo'
+            };
+        }).filter(Boolean);
+    }, []);
+
+    // 🔥 2. CURSOS VIRTUALES
+    const virtualCourses = useMemo(() => {
+        return TYPES.cursos.map(c => ({
+            ...c,
+            type: 'virtual'
+        }));
+    }, []);
+
+    // 🔥 3. UNIFICAR
+    const allCourses = useMemo(() => {
+        return [...vivoCourses, ...virtualCourses];
+    }, [vivoCourses, virtualCourses]);
+
+    // 🔥 4. FILTRO
     const filtered = useMemo(() => {
-        const result = COURSES_DATA
-            .filter((c) =>
-                c.title.toLowerCase().includes(search.toLowerCase()) &&
-                (filterType === 'all' || c.type === filterType) &&
-                c.rating >= minRating
-            )
-            .sort((a, b) => {
-                if (sort === 'price-low') return a.price - b.price;
-                if (sort === 'price-high') return b.price - a.price;
-                if (sort === 'rating') return b.rating - a.rating;
-                return 0;
-            });
+        const result = allCourses.filter((c) =>
+            c.nombre.toLowerCase().includes(search.toLowerCase()) &&
+            (filterType === 'all' || c.type === filterType)
+        );
 
         if (DEBUG) console.debug('Filtered:', result.length);
 
         return result;
-    }, [search, filterType, minRating, sort]);
+    }, [allCourses, search, filterType]);
 
-    const vivoCourses = useMemo(() => {
+    // 🔥 5. SEPARAR
+    const vivoFiltered = useMemo(() => {
         return filtered
-            .filter((c) => c.type === 'vivo')
+            .filter(c => c.type === 'vivo')
             .sort((a, b) => new Date(a.date) - new Date(b.date));
     }, [filtered]);
-    const virtualCourses = useMemo(() => {
-        return filtered.filter((c) => c.type === 'virtual');
+
+    const virtualFiltered = useMemo(() => {
+        return filtered.filter(c => c.type === 'virtual');
     }, [filtered]);
+
+    // 🔥 6. SCROLL
     const vivoScroll = useInfiniteScroll({
         initialCount: 6,
         step: 6,
-        total: vivoCourses.length,
-        resetDependencies: [search, filterType, minRating, sort],
+        total: vivoFiltered.length,
+        resetDependencies: [search, filterType],
     });
 
     const virtualScroll = useInfiniteScroll({
         initialCount: 6,
         step: 6,
-        total: virtualCourses.length,
-        resetDependencies: [search, filterType, minRating, sort],
+        total: virtualFiltered.length,
+        resetDependencies: [search, filterType],
     });
 
     const visibleVivo = useMemo(
-        () => vivoCourses.slice(0, vivoScroll.visibleCount),
-        [vivoCourses, vivoScroll.visibleCount]
+        () => vivoFiltered.slice(0, vivoScroll.visibleCount),
+        [vivoFiltered, vivoScroll.visibleCount]
     );
 
     const visibleVirtual = useMemo(
-        () => virtualCourses.slice(0, virtualScroll.visibleCount),
-        [virtualCourses, virtualScroll.visibleCount]
+        () => virtualFiltered.slice(0, virtualScroll.visibleCount),
+        [virtualFiltered, virtualScroll.visibleCount]
     );
 
+    // 🔥 7. RENDER
     const renderVivo = useMemo(() => {
         return visibleVivo.map((c, i) => (
-            <InView
-                key={c.id}
-                delay={getDelay(i)}
-                direction="up"
-            >
-                <CardCources course={c} />
+            <InView key={c.id} delay={getDelay(i)} direction="up">
+                <CardCources course={c} type="vivo" />
             </InView>
         ));
     }, [visibleVivo, getDelay]);
 
     const renderVirtual = useMemo(() => {
         return visibleVirtual.map((c, i) => (
-            <InView
-                key={c.id}
-                delay={getDelay(i)}
-                direction="left"
-            >
-                <CardCources course={c} />
+            <InView key={c.id} delay={getDelay(i)} direction="left">
+                <CardCources course={c} type="virtual" />
             </InView>
         ));
     }, [visibleVirtual, getDelay]);
@@ -106,17 +130,13 @@ const Courses = () => {
                     setSearch={setSearch}
                     filterType={filterType}
                     setFilterType={setFilterType}
-                    minRating={minRating}
-                    setMinRating={setMinRating}
-                    setSort={setSort}
-                    sort={sort}
                 />
             </div>
 
             <div style={{ position: 'relative', zIndex: 1 }}>
 
-                {/* VIVO */}
-                {vivoCourses.length > 0 && (
+                {/* 🔴 VIVO */}
+                {vivoFiltered.length > 0 && (
                     <>
                         <InView direction="up" distance={40}>
                             <div className={styles.sectionHeader}>
@@ -135,8 +155,8 @@ const Courses = () => {
                     </>
                 )}
 
-                {/* VIRTUAL */}
-                {virtualCourses.length > 0 && (
+                {/* 🔵 VIRTUAL */}
+                {virtualFiltered.length > 0 && (
                     <>
                         <InView direction="right" distance={40} className={styles.mt}>
                             <div className={styles.sectionHeader}>

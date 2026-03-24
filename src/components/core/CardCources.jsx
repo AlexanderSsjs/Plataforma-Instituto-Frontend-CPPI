@@ -2,72 +2,63 @@ import React, { useMemo, useState } from 'react';
 import Countdown from '@/components/core/CountDown';
 import styles from '../../views/public/styles/Courses.module.scss';
 
-// 🔥 formatter fuera (no se recrea nunca)
-const CURRENCY_FORMATTER = new Intl.NumberFormat('es-PE', {
-    style: 'currency',
-    currency: 'PEN',
-});
+// 🔥 formatter fuera (no se recrea)
+const formatCurrency = (monto = 0, moneda = 'PEN') =>
+    new Intl.NumberFormat('es-PE', {
+        style: 'currency',
+        currency: moneda,
+    }).format(monto);
 
-// 🔥 comparación custom (CLAVE REAL)
+// 🔥 comparación optimizada
 const areEqual = (prev, next) => {
     const a = prev.course;
     const b = next.course;
 
     return (
         a.id === b.id &&
-        a.price === b.price &&
-        a.rating === b.rating &&
-        a.date === b.date &&
-        a.title === b.title &&
-        a.image === b.image
+        a.nombre === b.nombre &&
+        a.precio?.monto === b.precio?.monto &&
+        a.imagen_url === b.imagen_url &&
+        a.date === b.date && // 🔥 ahora usamos date directo
+        prev.type === next.type
     );
 };
 
-const CourseCard = ({ course, type }) => {
+const CourseCard = ({ course, type = 'virtual' }) => {
 
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgError, setImgError] = useState(false);
 
-    // 🔥 SOLO CÁLCULOS NECESARIOS
     const computed = useMemo(() => {
         if (!course) return null;
 
-        const courseType = type || course.type || 'virtual';
-        const startDate = course.date ? new Date(course.date) : null;
-        const now = Date.now();
+        const isLive = type === 'vivo';
 
-        let status = 'virtual';
-
-        if (courseType === 'vivo' && startDate) {
-            status = startDate.getTime() > now ? 'proximo' : 'en-curso';
-        }
+        // 🔥 ahora el card SOLO usa "date"
+        const startDate = isLive && course.date
+            ? new Date(course.date)
+            : null;
 
         return {
-            courseType,
-            status,
+            isLive,
             startDate,
-            price: CURRENCY_FORMATTER.format(course.price || 0),
-            rating: course.rating || 4.5,
+            price: formatCurrency(
+                course?.precio?.monto ?? 0,
+                course?.precio?.moneda ?? 'PEN'
+            ),
         };
     }, [course, type]);
 
     if (!course || !computed) return null;
 
-    const { courseType, status, startDate, price, rating } = computed;
-
-    const badgeText =
-        courseType === 'vivo'
-            ? status === 'proximo'
-                ? '⏳ Próximo'
-                : '🔴 En vivo'
-            : '📚 Virtual';
+    const { isLive, startDate, price } = computed;
 
     return (
         <article
-            className={`${styles.card} ${styles[courseType]} ${styles[status]}`}
-            aria-label={`Curso ${course.title}`}
+            className={`${styles.card} ${styles[type]}`}
+            aria-label={`Curso ${course.nombre}`}
         >
-            {/* 🖼 IMAGEN OPTIMIZADA */}
+            {/* 🖼 IMAGEN */}
             <div className={styles.imageWrapper}>
 
                 {!imgLoaded && !imgError && (
@@ -75,58 +66,33 @@ const CourseCard = ({ course, type }) => {
                 )}
 
                 {!imgError ? (
-                    <picture>
-                        {course.imageWebp && (
-                            <source srcSet={course.imageWebp} type="image/webp" />
-                        )}
-
-                        <img
-                            src={course.image}
-                            alt={course.title}
-                            loading="lazy"
-                            decoding="async" // 🔥 mejora render
-                            onLoad={() => setImgLoaded(true)}
-                            onError={() => setImgError(true)}
-                            className={imgLoaded ? styles.imageVisible : styles.imageHidden}
-                        />
-                    </picture>
+                    <img
+                        src={course.imagen_url}
+                        alt={course.nombre}
+                        loading="lazy"
+                        decoding="async"
+                        onLoad={() => setImgLoaded(true)}
+                        onError={() => setImgError(true)}
+                        className={imgLoaded ? styles.imageVisible : styles.imageHidden}
+                    />
                 ) : (
                     <div className={styles.errorPlaceholder}>
                         Imagen no disponible
                     </div>
                 )}
-
-                <div className={styles.overlayTags}>
-                    <span
-                        className={`${styles.badge} ${
-                            status === 'proximo'
-                                ? styles.proximo
-                                : styles[courseType]
-                        }`}
-                    >
-                        {badgeText}
-                    </span>
-                </div>
             </div>
-
-            {/* 📄 CONTENIDO */}
             <div className={styles.content}>
-
                 <div className={styles.topRow}>
-                    <span className={styles.rating}>⭐ {rating}</span>
                     <span className={styles.price}>{price}</span>
                 </div>
-
-                <h3 className={styles.title}>{course.title}</h3>
-
+                <h3 className={styles.title}>{course.nombre}</h3>
                 <p className={styles.descriptionText}>
-                    {course.description}
+                    {course.descripcion}
                 </p>
-
                 <div className={styles.infoArea}>
-                    {courseType === 'vivo' && startDate ? (
+                    {isLive && startDate ? (
                         <div className={styles.countdownWrapper}>
-                            <Countdown targetDate={course.date} />
+                            <Countdown targetDate={startDate} />
                         </div>
                     ) : (
                         <p className={styles.static}>
@@ -136,15 +102,14 @@ const CourseCard = ({ course, type }) => {
                 </div>
             </div>
 
-            {/* ⚡ FOOTER */}
             <div className={styles.footer}>
                 <span className={styles.duration}>
-                    ⏱ {course.duration || '80 hrs'}
+                    ⏱ {course.horas || 80} hrs
                 </span>
 
                 <button
                     className={styles.btnAction}
-                    aria-label={`Ver curso ${course.title}`}
+                    aria-label={`Ver curso ${course.nombre}`}
                 >
                     Ver detalles →
                 </button>
