@@ -1,11 +1,9 @@
-@import '../../../styles/variables.scss';
 
 .nosotrosSection {
     padding: 120px 0 80px;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
-    // Fondo de cuadrados igual al Home
     background:
         radial-gradient(circle at 20% 10%, rgba(239, 68, 68, 0.05), transparent 40%),
         linear-gradient(#e2e8f0 1px, transparent 1px),
