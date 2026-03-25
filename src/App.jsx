@@ -6,6 +6,7 @@ import ScrollToTop from './components/common/scrollTop';
 import Home from './views/public/Home';
 import Nosotros from './views/public/Nosotros';
 import Courses from './views/public/Courses';
+import Contacto from './views/public/Contacto';
 
 const LoginPage = () => <div style={{padding: '100px', textAlign: 'center'}}><h1>Formulario de Acceso</h1></div>;
 const DashboardHome = () => <h1>Bienvenido al Panel de Control (Privado)</h1>;
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cursos" element={<Courses />} />
           <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/contacto" element={<Contacto />} />
           <Route path="/login" element={<LoginPage />} />
         </Route>
 
