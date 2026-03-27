@@ -106,6 +106,7 @@
     opacity: 0;
     transform: translateY(-20px);
     animation: fadeInDown $duration var(--ease-premium, cubic-bezier(0.4, 0, 0.2, 1)) $delay forwards;
+    animation-fill-mode: both;
 }
 @keyframes fadeInUpBounce {
     0% {

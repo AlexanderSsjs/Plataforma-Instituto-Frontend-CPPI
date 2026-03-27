@@ -13,7 +13,10 @@
     pointer-events: none;
     z-index: 1;
 }
-
+.hero * {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
 .hero {
     min-height: 100vh;
     display: flex;
@@ -55,8 +58,7 @@
         );
         top: -250px;
         left: -250px;
-        filter: blur(140px);
-        opacity: 0.6;
+        opacity: 0.15;
     }
 
     &::after {
@@ -65,15 +67,17 @@
         background: radial-gradient(circle, rgba(239, 68, 68, 0.12), transparent 70%);
         bottom: -200px;
         right: -200px;
-        filter: blur(160px);
-        opacity: 0.5;
+        opacity: 0.15;
     }
     .text,
     .image,
     .stats {
         opacity: 0;
         transform: translateY(40px);
-        transition: all 0.1s ease-out;
+        transition:
+            transform 0.6s ease,
+            opacity 0.6s ease;
+        will-change: transform, opacity;
     }
     &.sectionVisible {
         .text,
@@ -81,12 +85,10 @@
         .stats {
             opacity: 1;
             transform: translateY(0);
+            transition-delay: 0.1s;
         }
         .image {
             transition-delay: 0.2s;
-        }
-        .stats {
-            transition-delay: 0.1s;
         }
     }
 }
@@ -100,6 +102,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
+
     .text {
         opacity: 0;
         transition: opacity 0.5s ease;
@@ -113,22 +116,29 @@
             white-space: normal;
             opacity: 0;
             transform: translateY(-40px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transition:
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: 0.1s;
             span {
                 display: inline-block;
-                opacity: 0;
-                transform: translateX(20px);
-                transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-                transition-delay: 0.3s;
+                background-color: $primary;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 opacity: 0;
-                transform: translateX(-30px);
-                transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-                transition-delay: 0.5s;
+                transform: translateY(20px) scale(0.98);
+                transition:
+                    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+                transition-delay: 0.4s;
+                will-change: transform, opacity;
+                transition-delay: 0.2s;
                 &:hover {
-                    filter: brightness(1.2);
+                    opacity: 0.85;
                 }
+            }
+            .sectionVisible span {
+                transform: translateY(0) scale(1);
             }
         }
         p {
@@ -138,63 +148,35 @@
             max-width: 440px;
             transform: translateX(30px);
             opacity: 0;
-            transition: opacity 0.5s ease;
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transition:
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
             transition-delay: 0.5s;
+            transition-delay: 0.4s;
         }
     }
 }
-
-.text {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    h1 {
-        font-size: clamp(2rem, 4vw, 3.2rem);
-        font-weight: 800;
-        line-height: 1.15;
-        letter-spacing: -0.5px;
-        font-family: 'Poppins', sans-serif;
-
-        opacity: 0;
-        transform: translateY(-40px);
-        transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-
-        span {
-            display: inline-block;
-            background-color: $primary;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            transition-delay: 0.3s;
-
-            &:hover {
-                filter: brightness(1.2);
-            }
-        }
-    }
-}
-
 .sectionVisible {
-    .text {
-        opacity: 1;
-        h1 {
-            opacity: 1;
-            transform: translateY(0);
-            span {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        p {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+    .text,
+    .image,
+    .stats,
     .btnPrimary,
     .btnGhost {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .text h1 {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .text h1 span {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    .text p {
         opacity: 1;
         transform: translateY(0);
     }
@@ -206,7 +188,9 @@
     margin: 32px 0;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 0.1s ease;
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
     &.animate {
         opacity: 1;
         transform: translateY(0);
@@ -224,15 +208,12 @@
         padding: 15px 20px;
         border-radius: 20px;
         background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.7);
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
         opacity: 0;
         transform: translateY(40px);
-        transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease,
-            background 0.3s ease;
+        transition: transform 0.3s ease;
+        will-change: transform;
         cursor: pointer;
         svg {
             width: 45px;
@@ -241,7 +222,7 @@
             border-radius: $radius-md;
             color: $primary;
             background: rgba($primary, 0.1);
-            transition: all $transition-fast;
+            transition: transform 0.3s ease;
         }
         .rating {
             display: flex;
@@ -262,6 +243,7 @@
             box-shadow: 0 15px 35px rgba($primary, 0.1);
             background: rgba(255, 255, 255, 0.9);
             border-color: rgba($primary, 0.3);
+            transition: transform 0.3s ease;
             svg {
                 background: $primary;
                 color: #fff;
@@ -382,7 +364,10 @@
     z-index: 1;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+        transform 0.6s ease,
+        opacity 0.6s ease;
+    will-change: transform;
     transition-delay: 0s;
     &::before {
         content: '';
@@ -421,11 +406,13 @@
     color: #4b5563;
     background: transparent;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(12px);
     opacity: 0;
     transform: translateY(-40px);
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+        transform 0.6s ease,
+        opacity 0.6s ease;
     transition-delay: 0s;
     &:hover {
         transform: translateY(-4px);
@@ -444,9 +431,16 @@
     z-index: 1;
     perspective: 1200px;
     opacity: 0;
-    transform: scale(0.9) translateX(40px);
-    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: 0.2s;
+    transform: scale(0.9) translateX(40px) translateZ(0);
+    transition:
+        transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+    backface-visibility: hidden;
+    transition-delay: 0.5s;
+    .sectionVisible .image {
+        transform: scale(1) translateX(0) translateY(0);
+    }
     &::before {
         content: '';
         position: absolute;
@@ -458,7 +452,6 @@
             transparent,
             rgba(59, 130, 246, 0.2)
         );
-        filter: blur(40px);
         z-index: -1;
         pointer-events: none;
     }
@@ -468,7 +461,7 @@
         border-radius: 24px;
         box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.12);
         transform: rotateY(-5deg) rotateX(2deg);
-        transition: 0.5s ease;
+        transition: transform 0.5s ease;
     }
     &:hover img {
         transform: rotateY(-5deg) rotateX(2deg) scale(1.02);
@@ -559,7 +552,7 @@
         justify-content: center;
     }
     .image::before {
-        filter: blur(25px);
+        filter: blur(10px);
     }
 }
 
@@ -569,4 +562,8 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+.image,
+.stat {
+    will-change: transform;
 }
