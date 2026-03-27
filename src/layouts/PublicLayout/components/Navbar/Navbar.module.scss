@@ -14,15 +14,33 @@
     font-weight: $font-weight-medium;
     position: relative;
     padding: $space-xs 0;
+
+    opacity: 0;
+    transform: translateY(-10px) translateZ(0);
+    -webkit-transform: translateY(-10px) translateZ(0);
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    will-change: transform, opacity;
+
+    @include animation-fade-in-down(0.2s);
+
+    @for $i from 1 through 5 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.08s};
+        }
+    }
+
     transition: color $transition-fast;
-    @include animation-fade-in-down(0.2s); 
-    @include stagger-children(5, 0.2s, 0.1s);
+
     &:hover {
         color: $primary;
         &::after {
             width: 100%;
         }
     }
+
     &::after {
         content: '';
         position: absolute;
@@ -34,10 +52,11 @@
         transition: width $transition;
         border-radius: 2px;
     }
+
     &.active {
         color: $primary;
         &::after {
-            width: 100%; 
+            width: 100%;
         }
     }
 }
@@ -59,7 +78,7 @@
     .navIcon {
         transition: transform 0.3s ease;
     }
-    
+
     &:hover:not(.mobileActive) {
         background-color: rgba($primary, 0.03);
         color: $primary;
@@ -68,7 +87,7 @@
             transform: scale(1.1);
         }
     }
-    
+
     &.mobileActive {
         background-color: rgba($primary, 0.06);
         color: $primary;
@@ -94,10 +113,10 @@
     display: flex;
     background: transparent;
     border: none;
-    color: $text-dark; 
+    color: $text-dark;
     padding: $space-sm;
     cursor: pointer;
-    border-radius: 50%; 
+    border-radius: 50%;
     transition: background-color $transition-fast;
 
     &:hover {
@@ -112,7 +131,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    height: 100dvh; 
+    height: 100dvh;
     width: 85%;
     max-width: 300px;
     background-color: $bg-main;
@@ -144,7 +163,7 @@
     .mobileLink {
         @include animation-fade-in-right($duration: 0.5s);
         opacity: 0;
-        pointer-events: auto; 
+        pointer-events: auto;
         @for $i from 1 through 6 {
             &:nth-child(#{$i}) {
                 animation-delay: #{$i * 0.1s};
@@ -158,7 +177,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(15, 23, 42, 0.3); 
+    background-color: rgba(15, 23, 42, 0.3);
     z-index: 90;
     opacity: 0;
     visibility: hidden;
@@ -184,7 +203,7 @@
     .mobileMenuOpen & {
         opacity: 1;
     }
-    button {
+    a {
         width: 100%;
         display: flex;
         align-items: center;

@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styles from '@/views/public/styles/Courses.module.scss';
+import TYPES from '@/data/type_courses.json'; // 🔥 Importamos tu JSON de cursos
 
-// 1. Constantes fuera para optimizar memoria
-const SORT_OPTIONS = [
-    { value: 'rating', label: '⭐ Mejor valorados' },
-    { value: 'price_low', label: '💰 Menor precio' },
-    { value: 'price_high', label: '💸 Mayor precio' },
-];
+// 1. Generamos las opciones dinámicamente mapeando el JSON
+const COURSE_OPTIONS = TYPES.cursos.map((curso) => ({
+    value: curso.id.toString(), // Usamos el ID como identificador
+    label: curso.nombre         // Usamos el nombre del curso para mostrar
+}));
 
 const SortDropdown = ({ value, onChange }) => {
     const [open, setOpen] = useState(false);
-    const dropdownRef = useRef(null); // Ref para detectar clics fuera
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -25,7 +25,8 @@ const SortDropdown = ({ value, onChange }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [open]);
 
-    const selected = SORT_OPTIONS.find(o => o.value === value);
+    // Buscamos si hay un curso seleccionado actualmente
+    const selected = COURSE_OPTIONS.find(o => o.value === value);
 
     const handleSelect = useCallback((newValue) => {
         onChange(newValue === value ? 'default' : newValue);
@@ -42,7 +43,8 @@ const SortDropdown = ({ value, onChange }) => {
                 aria-expanded={open}
             >
                 <span className={styles.btnLabel}>
-                    {selected ? selected.label : 'Ordenar por'}
+                    {/* Cambiamos el texto por defecto */}
+                    {selected ? selected.label : 'Todos los cursos'} 
                 </span>
                 <span className={`${styles.arrow} ${open ? styles.rotate : ''}`}>
                     ⌄
@@ -52,7 +54,7 @@ const SortDropdown = ({ value, onChange }) => {
             {open && (
                 <div className={styles.dropdownMenu} role="listbox">
                     
-                    {SORT_OPTIONS
+                    {COURSE_OPTIONS
                         .filter(opt => opt.value !== value)
                         .map((opt) => (
                             <button
@@ -71,7 +73,7 @@ const SortDropdown = ({ value, onChange }) => {
                         <button 
                             type="button"
                             className={styles.clearFilter}
-                            onClick={() => handleSelect(value)}
+                            onClick={() => handleSelect('default')} // 🔥 Corregido para limpiar explícitamente
                         >
                             ✕ Quitar filtro
                         </button>

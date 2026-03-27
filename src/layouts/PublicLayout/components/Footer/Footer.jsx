@@ -158,7 +158,9 @@ const Footer = () => {
             <div className={styles.bottom}>
                 <p>© 2026 CCIP - Todos los derechos reservados.</p>
                 <div style={{ display: 'none' }}>
-                    <p>Hecho por Alexander Piélago Quiroz</p>
+
+                    <p>Diseñado por Alexander Piélago Quiroz</p>
+                    <p>Contacto: 934836437</p>
                 </div>
             </div>
         </footer>

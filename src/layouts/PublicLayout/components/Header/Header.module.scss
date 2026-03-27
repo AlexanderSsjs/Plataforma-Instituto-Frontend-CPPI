@@ -1,13 +1,12 @@
-
 .header {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    background: linear-gradient(to bottom, var(--glass-bg), rgba(255, 255, 255, 0.4));
-    border-bottom: 1px solid var(--glass-border);
+    background-color: #ffffff; 
+    border-bottom: 1px solid #e2e8f0;  
+
 
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     @include animation-fade-in-down(0.1s);
@@ -87,6 +86,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
     &:hover {
+        color: white;
         transform: translateY(-2px);
         box-shadow:
             0 10px 10px rgba(239, 68, 68, 0.35),

@@ -1,15 +1,14 @@
 import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Countdown from '@/components/core/CountDown';
 import styles from '../../views/public/styles/Courses.module.scss';
 
-// 🔥 formatter fuera (no se recrea)
 const formatCurrency = (monto = 0, moneda = 'PEN') =>
     new Intl.NumberFormat('es-PE', {
         style: 'currency',
         currency: moneda,
     }).format(monto);
 
-// 🔥 comparación optimizada
 const areEqual = (prev, next) => {
     const a = prev.course;
     const b = next.course;
@@ -19,13 +18,12 @@ const areEqual = (prev, next) => {
         a.nombre === b.nombre &&
         a.precio?.monto === b.precio?.monto &&
         a.imagen_url === b.imagen_url &&
-        a.date === b.date && // 🔥 ahora usamos date directo
+        a.date === b.date &&
         prev.type === next.type
     );
 };
 
 const CourseCard = ({ course, type = 'virtual' }) => {
-
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgError, setImgError] = useState(false);
 
@@ -34,18 +32,12 @@ const CourseCard = ({ course, type = 'virtual' }) => {
 
         const isLive = type === 'vivo';
 
-        // 🔥 ahora el card SOLO usa "date"
-        const startDate = isLive && course.date
-            ? new Date(course.date)
-            : null;
+        const startDate = isLive && course.date ? new Date(course.date) : null;
 
         return {
             isLive,
             startDate,
-            price: formatCurrency(
-                course?.precio?.monto ?? 0,
-                course?.precio?.moneda ?? 'PEN'
-            ),
+            price: formatCurrency(course?.precio?.monto ?? 0, course?.precio?.moneda ?? 'PEN'),
         };
     }, [course, type]);
 
@@ -54,16 +46,10 @@ const CourseCard = ({ course, type = 'virtual' }) => {
     const { isLive, startDate, price } = computed;
 
     return (
-        <article
-            className={`${styles.card} ${styles[type]}`}
-            aria-label={`Curso ${course.nombre}`}
-        >
+        <article className={`${styles.card} ${styles[type]}`} aria-label={`Curso ${course.nombre}`}>
             {/* 🖼 IMAGEN */}
             <div className={styles.imageWrapper}>
-
-                {!imgLoaded && !imgError && (
-                    <div className={styles.skeleton} />
-                )}
+                {!imgLoaded && !imgError && <div className={styles.skeleton} />}
 
                 {!imgError ? (
                     <img
@@ -76,43 +62,39 @@ const CourseCard = ({ course, type = 'virtual' }) => {
                         className={imgLoaded ? styles.imageVisible : styles.imageHidden}
                     />
                 ) : (
-                    <div className={styles.errorPlaceholder}>
-                        Imagen no disponible
-                    </div>
+                    <div className={styles.errorPlaceholder}>Imagen no disponible</div>
                 )}
             </div>
             <div className={styles.content}>
                 <div className={styles.topRow}>
-                    <span className={styles.price}>{price}</span>
+                    <h3 className={styles.title}>{course.nombre}</h3>
+                    <div className={styles.topRow}>
+                        <span className={styles.price}>{price}</span>
+                    </div>
                 </div>
-                <h3 className={styles.title}>{course.nombre}</h3>
-                <p className={styles.descriptionText}>
-                    {course.descripcion}
-                </p>
+                <p className={styles.descriptionText}>{course.descripcion}</p>
                 <div className={styles.infoArea}>
                     {isLive && startDate ? (
                         <div className={styles.countdownWrapper}>
                             <Countdown targetDate={startDate} />
                         </div>
                     ) : (
-                        <p className={styles.static}>
-                            ✅ Acceso inmediato
-                        </p>
+                        <p className={styles.static}>✅ Acceso inmediato</p>
                     )}
                 </div>
             </div>
 
             <div className={styles.footer}>
-                <span className={styles.duration}>
-                    ⏱ {course.horas || 80} hrs
-                </span>
+                <span className={styles.duration}>⏱ {course.horas || 80} hrs</span>
 
-                <button
+                <Link
+                    to={`/curso/${course.id}`}
+                    state={{ type: type }} 
                     className={styles.btnAction}
                     aria-label={`Ver curso ${course.nombre}`}
                 >
                     Ver detalles →
-                </button>
+                </Link>
             </div>
         </article>
     );

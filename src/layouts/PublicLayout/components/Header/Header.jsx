@@ -1,27 +1,21 @@
-import { Link } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
+import { Link } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 //import logoImg from "@/assets/public/log-circle.png";
-import logoImg from "@/assets/public/log2.png";
+import logoImg from '@/assets/public/log2.png';
 import styles from './Header.module.scss';
-import { 
-    Home, 
-    BookOpen, 
-    Users, 
-    Mail, 
-    Rocket 
-} from 'lucide-react';
+import { Home, BookOpen, Users, Mail, Rocket } from 'lucide-react';
 const Header = () => {
     const navLinks = [
-        { name: 'Inicio', href: '/', icon: Home }, 
+        { name: 'Inicio', href: '/', icon: Home },
         { name: 'Cursos', href: '/cursos', icon: BookOpen },
         { name: 'Nosotros', href: '/nosotros', icon: Users },
         { name: 'Contacto', href: '/contacto', icon: Mail },
     ];
 
     const CtaButton = () => (
-        <button className={styles.btn}>
+        <a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
             Iniciar Sesión
-        </button>
+        </a>
     );
 
     return (
@@ -40,7 +34,6 @@ const Header = () => {
                 <div className={styles.ctaDesktop}>
                     <CtaButton />
                 </div>
-
             </div>
         </header>
     );

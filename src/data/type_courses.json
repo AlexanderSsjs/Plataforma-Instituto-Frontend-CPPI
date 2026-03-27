@@ -2,8 +2,8 @@
     "cursos": [
         {
             "id": 1,
-            "nombre": "Invierte.pe",
-            "nombre_completo": "CURSO INVIERTE.PE (80 HORAS ACADÉMICAS)",
+            "nombre": "INVIERTE.PE",
+            "nombre_completo": "CURSO INVIERTE.PE",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774367313/parabol-the-agile-meeting-tool-XklL9zyYa6Y-unsplash_hah8ry.jpg",
@@ -62,7 +62,7 @@
         {
             "id": 2,
             "nombre": "SIAF",
-            "nombre_completo": "CURSO SISTEMA INTEGRADO DE ADMINISTRACIÓN FINANCIERA DEL ESTADO (80 HORAS ACADÉMICAS)",
+            "nombre_completo": "CURSO SISTEMA INTEGRADO DE ADMINISTRACIÓN FINANCIERA DEL ESTADO",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774369012/2-57_djbsx5.jpg",
@@ -139,7 +139,7 @@
         {
             "id": 3,
             "nombre": "SIGA",
-            "nombre_completo": "SISTEMA INTEGRADO DE GESTIÓN ADMINISTRATIVA (80 HORAS ACADÉMICAS)",
+            "nombre_completo": "SISTEMA INTEGRADO DE GESTIÓN ADMINISTRATIVA",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370141/siga_ocawfp.jpg",
@@ -203,7 +203,7 @@
         {
             "id": 4,
             "nombre": "INFOBRAS",
-            "nombre_completo": "CURSO INFOBRAS (80 HORAS ACADÉMICAS)",
+            "nombre_completo": "CURSO INFOBRAS ",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370137/INFOOBRAS_h3jqpv.jpg",
@@ -279,8 +279,8 @@
 
         {
             "id": 5,
-            "nombre": "Contrataciones",
-            "nombre_completo": "CONTRATACIONES DEL ESTADO (80 HORAS ACADÉMICAS)",
+            "nombre": "CONTRATACIONES DEL ESTADO",
+            "nombre_completo": "CONTRATACIONES DEL ESTADO ",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370136/contrataciones_ytar5f.jpg",
@@ -342,8 +342,8 @@
 
         {
             "id": 6,
-            "nombre": "Ofimática",
-            "nombre_completo": "OFIMÁTICA (80 HORAS ACADÉMICAS)",
+            "nombre": "OFIMÁTICA",
+            "nombre_completo": "OFIMÁTICA",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370140/ofimatica_isdr9p.jpg",
@@ -415,8 +415,8 @@
 
         {
             "id": 7,
-            "nombre": "Sistemas Administrativos",
-            "nombre_completo": "CURSO MANEJO DE SISTEMAS ADMINISTRATIVOS DEL ESTADO (80 HORAS ACADÉMICAS)",
+            "nombre": "SISTEMAS ADMINISTRATIVOS",
+            "nombre_completo": "CURSO MANEJO DE SISTEMAS ADMINISTRATIVOS DEL ESTADO",
             "horas": 80,
             "precio": { "monto": 80, "moneda": "PEN" },
             "imagen_url": "https://res.cloudinary.com/dk2u9eeyy/image/upload/v1774370138/istockphoto-1314446595-170667a_j0a1yq.jpg",
