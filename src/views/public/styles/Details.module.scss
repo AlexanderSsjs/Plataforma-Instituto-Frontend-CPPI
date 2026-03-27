@@ -1,0 +1,478 @@
+.detailsPage {
+    padding-block-start: clamp(3rem, 10vh, 6rem);
+    background: linear-gradient(to bottom, $bg-main, $bg-light);
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-inline: clamp(2rem, 4vw, 4rem);
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: flex-end;
+
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 $radius-lg $radius-lg;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, $bg-dark 60%, transparent),
+            color-mix(in srgb, $bg-dark 90%, transparent)
+        );
+        backdrop-filter: blur(3px);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+            circle,
+            color-mix(in srgb, $accent-gold 25%, transparent),
+            transparent 70%
+        );
+        top: -100px;
+        right: -150px;
+        filter: blur(80px);
+        opacity: 0.6;
+    }
+    @include max-mobile {
+        .backLink {
+            display: none !important;
+        }
+    }
+    @include mobile-mini {
+        padding: 0 1.2rem !important;
+        min-height: 500px;
+    }
+    .container {
+        position: relative;
+        z-index: 2;
+        max-width: $container-max;
+        margin: 0 auto;
+        width: 100%;
+
+        @include fade-in-up();
+    }
+
+    .backLink {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-sm;
+        color: rgba(255, 255, 255, 0.8); /* Forzado a blanco opaco por el overlay oscuro */
+        margin-bottom: $space-lg;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+
+        transition: $transition;
+
+        &:hover {
+            color: #ffffff;
+            transform: translateX(-6px);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    h1 {
+        font-size: clamp(2.2rem, 5vw, 3.2rem);
+        font-weight: $font-weight-black;
+        margin-bottom: $space-md;
+        letter-spacing: -0.02em;
+        color: #ffffff; /* Forzado a blanco por el overlay */
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        @include mobile-mini {
+            font-size: 1.8rem !important;
+        
+        };
+    }
+
+    p {
+        max-width: 680px;
+        padding: 0 25px 0 0;
+        color: rgba(255, 255, 255, 0.95);
+        line-height: 1.6;
+        font-size: $font-size-md;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+}
+
+.mainLayout {
+    max-width: $container-max;
+    margin: 0 auto;
+    padding: $space-2xl $space-md;
+    display: grid;
+    gap: $space-2xl;
+
+    @include desktop {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    margin-top: $space-md;
+
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-xs;
+        padding: $space-sm $space-md;
+        border-radius: 999px;
+
+        /* 1️⃣ FIX DE ALINEACIÓN: Quitamos el interlineado extra */
+        line-height: 1;
+
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+
+        color: #ffffff;
+        background: color-mix(in srgb, $bg-dark 50%, transparent);
+        backdrop-filter: $blur-premium;
+        -webkit-backdrop-filter: $blur-premium;
+        border: 1px solid color-mix(in srgb, $bg-light 25%, transparent);
+
+        transition: $transition;
+
+        svg {
+            display: block;
+            transform: translateY(1.5px); 
+            
+            font-size: 1.1rem;
+        }
+
+        &:hover {
+            transform: translateY(-3px);
+            background: color-mix(in srgb, $bg-dark 70%, transparent);
+            box-shadow: $sh-md;
+        }
+    }
+
+    .live {
+        background: linear-gradient(135deg, $primary-500, $primary-600);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 15px color-mix(in srgb, $primary 40%, transparent);
+        animation: livePulse 2.2s infinite;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            border: 2px solid color-mix(in srgb, $primary 60%, transparent);
+            animation: liveRing 2.2s infinite;
+            z-index: -1;
+        }
+
+        &:hover {
+            background: linear-gradient(135deg, $primary, $primary-500);
+            box-shadow: 0 6px 20px color-mix(in srgb, $primary 50%, transparent);
+        }
+    }
+}
+@keyframes livePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px color-mix(in srgb, $primary 40%, transparent);
+    }
+    50% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px color-mix(in srgb, $primary 50%, transparent);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px color-mix(in srgb, $primary 40%, transparent);
+    }
+}
+
+@keyframes liveRing {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    70% {
+        opacity: 0;
+        transform: scale(1.6);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .live,
+    .live::after {
+        animation: none !important;
+    }
+}
+
+
+.cardLive {
+    background: $glass-bg-strong;
+    backdrop-filter: $blur-premium;
+    border: 1px solid $glass-border;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    box-shadow: $sh-md;
+    margin-bottom: $space-lg;
+
+    @include fade-in-up(0.1s);
+
+    h3 {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: $primary;
+        margin-bottom: $space-md;
+    }
+
+    .grid {
+        display: grid;
+        gap: $space-md;
+
+        @include tablet {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        div {
+            display: flex;
+            align-items: center;
+            gap: $space-sm;
+            padding: $space-sm;
+            border-radius: $radius-sm;
+            transition: $transition;
+
+            &:hover {
+                background: color-mix(in srgb, $bg-dark 3%, transparent);
+                transform: translateY(-2px);
+            }
+
+            svg {
+                color: $primary;
+            }
+        }
+    }
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+}
+
+.cardAccordion {
+    border-radius: $radius-lg;
+    background: $bg-card;
+    border: 1px solid $border-color;
+    overflow: hidden;
+    transition: $transition;
+
+    &:hover {
+        box-shadow: $sh-md;
+        border-color: $glass-border-dark;
+        transform: translateY(-2px);
+    }
+
+    button {
+        width: 100%;
+        padding: $space-md $space-lg;
+        display: flex;
+        justify-content: space-between;
+        gap: $space-md;
+        align-items: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+            background: $bg-light;
+        }
+
+        h4 {
+            font-size: $font-size-md;
+            font-weight: $font-weight-semibold;
+            color: $text-dark;
+            text-align: left; /* 👈 FIX: Fuerza el texto a la izquierda si cae a 2 líneas */
+            line-height: 1.4; /* 👈 FIX: Mejor interlineado */
+            flex: 1;
+        }
+        > svg { 
+            transition: transform 0.4s $ease-standard;
+            flex-shrink: 0; /* 👈 FIX: Evita que la flecha se aplaste si el texto es muy largo */
+        }
+
+        svg {
+            transition: transform 0.4s $ease-standard;
+        }
+    }
+}
+
+.content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    background: linear-gradient(to bottom, $bg-main, $bg-light);
+    transition:
+        max-height 0.5s ease,
+        opacity 0.4s ease;
+}
+
+.open {
+    max-height: 800px;
+    opacity: 1;
+}
+
+.content div {
+    padding: $space-md $space-lg;
+    border-top: 1px solid $border-color;
+    display: flex;
+    align-items: flex-start; /* 👈 FIX: Alinea arriba, NO al centro, ideal para textos largos */
+    gap: $space-md;
+    align-items: center;
+    gap: $space-sm;
+    font-size: $font-size-sm;
+    color: $text-light;
+    transition: $transition;
+
+    &:hover {
+        background: color-mix(in srgb, $bg-dark 1%, transparent);
+        transform: translateX(6px);
+        color: $text-dark;
+    }
+
+    svg { 
+        color: $primary; 
+        flex-shrink: 0; /* 👈 FIX: Evita que el ícono se deforme o encoja */
+        margin-top: 2px; /* 👈 FIX: Baja el ícono un par de píxeles para que se alinee visualmente con la primera línea de texto */
+        font-size: 1.1rem; /* Asegura un tamaño consistente */
+    }
+}
+
+/* =========================================================
+   SIDEBAR FIX
+========================================================= */
+.sidebar {
+    position: sticky;
+    top: calc(#{$nav-height} + #{$space-lg}); /* Espaciado dinámico usando tus variables */
+}
+
+/* =========================================================
+   PRICE CARD (ELITE)
+========================================================= */
+.cardPrice {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    padding: $space-xl;
+    box-shadow: $shadow-elegant; /* Integrado tu sombra elegante */
+    border: 1px solid $glass-border-dark;
+    position: relative;
+    overflow: hidden;
+
+    @include fade-in-up(0.2s);
+
+    &::before {
+        content: '';
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: linear-gradient(90deg, $primary, $accent-gold);
+    }
+
+    h2 {
+        text-align: center;
+        font-size: $font-size-3xl;
+        font-weight: $font-weight-black;
+        color: $text-dark;
+        margin-bottom: $space-md;
+        letter-spacing: -0.03em;
+    }
+
+    .alert {
+        text-align: center;
+        background: color-mix(in srgb, $primary-700 8%, transparent);
+        color: $primary;
+        padding: 10px;
+        border-radius: $radius-sm;
+        margin-bottom: $space-lg;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+    }
+
+    button {
+        width: 100%;
+        padding: $space-md;
+        border-radius: $radius-md;
+        border: none;
+        background: linear-gradient(135deg, $primary, $primary-700);
+        color: #ffffff;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+        cursor: pointer;
+        box-shadow: 0 10px 25px color-mix(in srgb, $primary 25%, transparent);
+        transition: $transition;
+
+        &:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px color-mix(in srgb, $primary 40%, transparent);
+            background: linear-gradient(135deg, $primary-hover, $primary);
+        }
+    }
+
+    ul {
+        margin-top: $space-xl;
+        display: flex;
+        flex-direction: column;
+        gap: $space-md;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: $space-sm;
+            font-size: $font-size-sm;
+            color: $text-light;
+            font-weight: $font-weight-medium;
+
+            svg {
+                color: #10b981;
+                font-size: $font-size-lg;
+            } /* Mantuve el verde para el check */
+        }
+    }
+}
+.virtualInfoText {
+    background: $glass-bg-strong;
+    backdrop-filter: $blur-premium;
+    border: 1px solid $glass-border;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    box-shadow: $sh-md;
+    margin-bottom: $space-lg;
+
+    @include fade-in-up(0.1s);
+
+    h3 {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color:$accent-gold;
+    }
+}

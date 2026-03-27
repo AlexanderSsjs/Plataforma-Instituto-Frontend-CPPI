@@ -212,8 +212,6 @@
             transition: all 0.3s ease;
             outline: none;
             gap: 6px;
-
-            
         }
     }
 
@@ -671,7 +669,7 @@
     }
 
     .content {
-        padding: 1.2rem  ;
+        padding: 1.2rem;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -681,7 +679,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
+            gap: 1rem;
 
             .rating {
                 font-size: 0.8rem;
@@ -704,8 +703,9 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            height: 3rem;
-            line-height: 1.5rem;
+
+            height: 2rem;
+            line-height: 1rem;
         }
         .descriptionText {
             font-size: 0.9rem;
@@ -713,11 +713,11 @@
             margin: 0 0 10px 0;
             line-height: 1.4;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 3; /* Define exactamente las 3 líneas */
             -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-height: 2.8rem;
+            overflow: hidden; /* Oculta lo que sobrepase la línea 3 */
+            text-overflow: ellipsis; /* Agrega los "..." */
+
 
             padding-bottom: 0;
             box-sizing: content-box;
@@ -728,6 +728,7 @@
             background: #fff1f2;
             color: $primary-500;
             font-size: 0.8rem;
+            font-weight: bold;
         }
         .static {
             font-size: 0.8rem;

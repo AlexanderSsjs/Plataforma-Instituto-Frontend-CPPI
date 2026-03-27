@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// SOLUCIÓN: Usar una función de flecha para poder recibir la variable 'command'
 export default defineConfig(({ command }) => {
     return {
         plugins: [react()],
