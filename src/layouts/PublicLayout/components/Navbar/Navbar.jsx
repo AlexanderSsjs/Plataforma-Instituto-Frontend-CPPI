@@ -57,7 +57,6 @@ const Navbar = ({ links, children }) => {
     }, [location]);
     return (
         <>
-            {/* Desktop Navigation */}
             <nav className={styles.navDesktop}>
                 {links.map((link) => (
                     <Link
@@ -69,7 +68,6 @@ const Navbar = ({ links, children }) => {
                     </Link>
                 ))}
             </nav>
-            {/* Toggle Button */}
             <button
                 className={styles.mobileToggle}
                 onClick={() => setIsOpen(true)}
@@ -77,7 +75,6 @@ const Navbar = ({ links, children }) => {
             >
                 <Menu size={24} />
             </button>
-            {/* Overlay */}
             <div
                 className={`${styles.overlay} ${isOpen ? styles.overlayOpen : ''}`}
                 onClick={() => setIsOpen(false)}
