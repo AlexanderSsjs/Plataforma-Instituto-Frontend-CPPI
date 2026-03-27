@@ -1,83 +1,169 @@
-import { useEffect, useState } from 'react';
-import "./styles/Contacto.scss";
-import { MessageCircle, Phone, Mail, Users } from 'lucide-react'; 
+import React, { useEffect, useRef, useState } from 'react';
+import { Mail, Phone, Users, BookOpen, MessageSquare, Facebook, Instagram, Linkedin, Share2 } from 'lucide-react';
+import './styles/Contacto.scss';
 
-const Contacto = () => {
+// Componente para manejar la animación individual de cada tarjeta
+const ContactMethod = ({ icon: Icon, title, info, link, linkText, delay, isExternal }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100); 
-    return () => clearTimeout(timer);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(cardRef.current);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className={`contacto-section ${isVisible ? 'animateHeader' : ''}`}>
-      <div className="container">
-        <header className="contacto-header">
-          <div className="splitTitle">
-            <span className="textBlack">Contáctanos</span>
-            <span className="textRed">ahora</span>
-          </div>
-          <div className="headerLine"></div>
-        </header>
+    <div 
+      ref={cardRef} 
+      className={`info-card ${isVisible ? 'itemVisible' : ''}`} 
+      style={{ '--animation-delay': delay }}
+    >
+      <div className="icon-wrapper">
+        <Icon size={22} />
+      </div>
+      <div className="info-text">
+        <h4>{title}</h4>
+        <p>{info}</p>
+        {link ? (
+          <a 
+            href={link} 
+            className="btn-link"
+            target={isExternal ? "_blank" : "_self"}
+            rel={isExternal ? "noopener noreferrer" : ""}
+          >
+            {linkText}
+          </a>
+        ) : (
+          <span className="info-meta">{linkText}</span>
+        )}
+      </div>
+    </div>
+  );
+};
 
-        <div className="contacto-grid">
-          {/* COLUMNA IZQUIERDA: Contacto Directo */}
-          <div className="contacto-info">
-            <div className="info-card">
-              <div className="icon-wrapper">
-                <MessageCircle size={24} />
-              </div>
-              <div className="info-text">
-                <h4>WhatsApp</h4>
-                <p>930 449 016</p>
-                <a href="https://wa.me/51930449016" target="_blank" className="btn-link">Chatear ahora</a>
-              </div>
+const Contacto = () => {
+  // Lógica para la tarjeta de comunidad
+  const [comunidadVisible, setComunidadVisible] = useState(false);
+  const comunidadRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setComunidadVisible(true);
+          observer.unobserve(comunidadRef.current);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (comunidadRef.current) observer.observe(comunidadRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="contacto" className="contacto-section">
+      <div className="container-wrapper">
+        <div className="contacto-main-header">
+           <h1 className="splitTitle">
+             <span className="textBlack">Contáctanos</span> 
+             <span className="textRed">ahora</span>
+           </h1>
+           <div className="headerLine"></div>
+        </div>
+
+        <div className="alignment-wrapper">
+            <div className="section-header-unified">
+              <BookOpen size={24} className="icon-header" />
+              <h2>Contacto</h2>
             </div>
 
-            <div className="info-card">
-              <div className="icon-wrapper">
-                <Phone size={24} />
-              </div>
-              <div className="info-text">
-                <h4>Teléfono</h4>
-                <p>959 280 078</p>
-                <a href="tel:+51959280078" className="btn-link">Llamar ahora</a>
-              </div>
+            <div className="contacto-info-grid">
+                <ContactMethod
+                  icon={Users}
+                  title="WhatsApp"
+                  info="930 449 016"
+                  link="https://wa.me/51930449016"
+                  linkText="Chatear ahora"
+                  isExternal={true}
+                />
+                <ContactMethod
+                  icon={Phone}
+                  title="Teléfono"
+                  info="959 280 078"
+                  link="tel:+51959280078"
+                  linkText="Llamar ahora"
+                />
+                <ContactMethod
+                  icon={Mail}
+                  title="Correo Electrónico"
+                  info="tuportalacademico@gmail.com"
+                  link="mailto:tuportalacademico@gmail.com"
+                  linkText="Enviar mensaje"
+                />
             </div>
 
-            <div className="info-card">
-              <div className="icon-wrapper">
-                <Mail size={24} />
-              </div>
-              <div className="info-text">
-                <h4>Correo Electrónico</h4>
-                <p>tuportalacademico@gmail.com</p>
-                <a href="mailto:tuportalacademico@gmail.com" className="btn-link">Enviar mensaje</a>
-              </div>
+            <div className="section-header-unified mt-extra">
+              <Share2 size={24} className="icon-header" />
+              <h2>Redes Sociales</h2>
             </div>
-          </div>
 
-          {/* LÍNEA SEPARADORA DINÁMICA */}
-          <div className="separator-line"></div>
+            <div className="contacto-info-grid">
+                <ContactMethod
+                  icon={Facebook}
+                  title="Facebook"
+                  info="COLEGIO DE INGENIEROS"
+                  link="https://www.facebook.com/groups/1088438969190108?locale=es_LA"
+                  linkText="Seguir"
+                  isExternal={true}
+                />
+                <ContactMethod
+                  icon={Instagram}
+                  title="Instagram"
+                  info="@consejonacionalcip"
+                  link="https://www.instagram.com/consejonacionalcip/?hl=es"
+                  linkText="Ver perfil"
+                  isExternal={true}
+                />
+                <ContactMethod
+                  icon={Linkedin}
+                  title="LinkedIn"
+                  info="CPPI"
+                  link="https://www.linkedin.com/company/cipcn/"
+                  linkText="Conectar"
+                  isExternal={true}
+                />
+            </div>
 
-          {/* COLUMNA DERECHA: Comunidad */}
-          <div className="contacto-extra">
-           <div className="community-card">
+            <div className="section-header-unified mt-extra">
+              <MessageSquare size={24} className="icon-header" />
+              <h2>Comunidad</h2>
+            </div>
+
+            <div className="community-container">
+              <div 
+                ref={comunidadRef} 
+                className={`community-card ${comunidadVisible ? 'itemVisible' : ''}`}
+              >
                 <div className="icon-wrapper big-icon">
-                    <Users size={32} />
+                  <Users size={40} />
                 </div>
-                <div className="community-content"> {/* Un div opcional para agrupar mejor el texto */}
-                    <h3>Comunidad CCIP</h3>
-                    <p>Únete a nuestro grupo y comparte con otros estudiantes y profesionales de la comunidad.</p>
-                </div>
-                <a href="https://chat.whatsapp.com/IkMOAYK2EgA3JOtAqM5OYe" target="_blank" className="btn-accent">
-                    Unirse al Grupo
+                <h3>Comunidad CCIP</h3>
+                <p>Únete a nuestro grupo y comparte con otros estudiantes y profesionales de la comunidad.</p>
+                <a href="https://chat.whatsapp.com/IkMOAYK2EgA3JOtAqM5OYe" target="_blank" rel="noopener noreferrer" className="btn-accent">
+                  Unirse al Grupo
                 </a>
-                </div>
-          </div>
+              </div>
+            </div>
         </div>
       </div>
     </section>
