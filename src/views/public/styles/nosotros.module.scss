@@ -292,6 +292,58 @@
 }
 
 @keyframes pulse {
+<<<<<<< HEAD
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes contactEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+        box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 15px 45px rgba(239, 68, 68, 0.3); // El brillo rojo
+        border-color: rgba(239, 68, 68, 0.6);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    }
+}
+
+.info-card {
+    // ESTADO INICIAL (Oculto)
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+
+    // ESTADO CUANDO APARECE (Se activa con JS)
+    &.itemVisible {
+        animation: contactEntrance 1.2s ease-out forwards;
+    }
+
+    // Mantén tu hover aquí...
+    &:hover {
+        transform: scale(1.04) translateY(-5px) !important;
+        box-shadow: 0 15px 45px rgba(239, 68, 68, 0.2) !important;
+        border-color: rgba(239, 68, 68, 0.5) !important;
+        z-index: 10;
+    }
+}
+
+// Aplicar lo mismo a la tarjeta de comunidad
+.community-card {
+    opacity: 0;
+    &.itemVisible {
+        animation: contactEntrance 1.2s ease-out forwards;
+        animation-delay: 0.2s; // Un pequeño retraso para que salga después
+    }
+}
+=======
     0% {
         transform: scale(1);
         opacity: 0.5;
@@ -301,3 +353,4 @@
         opacity: 0;
     }
 }
+>>>>>>> cf0c601bce840c28a513ca5df1e504bb61d76290
