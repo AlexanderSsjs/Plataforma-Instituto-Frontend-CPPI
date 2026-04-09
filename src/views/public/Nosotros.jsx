@@ -1,48 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import styles from './styles/Nosotros.module.scss';
-import { Target, Award, ShieldCheck, Rocket, Users, TrendingUp } from 'lucide-react';
-
-const TimelineItem = ({ item, index }) => {
-    const itemRef = useRef(null);
-    const [isItemVisible, setIsItemVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsItemVisible(true);
-                    observer.unobserve(entry.target); // Deja de observar una vez que ya apareció
-                }
-            },
-            { threshold: 0.2, rootMargin: "0px 0px -50px 0px" } // Se activa un poco antes de llegar
-        );
-
-        if (itemRef.current) observer.observe(itemRef.current);
-        return () => observer.disconnect();
-    }, []);
-
-    return (
-        <div 
-            ref={itemRef}
-            className={`${styles.timelineItem} 
-                        ${index % 2 === 0 ? styles.left : styles.right} 
-                        ${isItemVisible ? styles.itemVisible : ''}`}
-        >
-            <div className={styles.timelineDot}>
-                {item.icon}
-            </div>
-            <div className={styles.timelineCard}>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-            </div>
-        </div>
-    );
-};
+import { useState, useRef, useEffect } from 'react';
+import styles from './styles/nosotros.module.scss'; 
+import { Calendar, Award, BookOpen, Briefcase, Handshake } from 'lucide-react';
 
 const Nosotros = () => {
+    const [activeStep, setActiveStep] = useState(0);
     const headerRef = useRef(null);
     const [headerVisible, setHeaderVisible] = useState(false);
-    
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => { if (entry.isIntersecting) setHeaderVisible(true); },
@@ -52,35 +16,107 @@ const Nosotros = () => {
         return () => observer.disconnect();
     }, []);
 
-    const hitos = [
-        { icon: <Target />, title: "Nuestro Propósito", desc: "Fortalecer competencias técnicas en gestión pública y sistemas del Estado." },
-        { icon: <Award />, title: "Calidad Académica", desc: "Docentes especializados y metodologías 100% prácticas y actualizadas." },
-        { icon: <ShieldCheck />, title: "Ética y Transparencia", desc: "Integridad total en nuestros procesos de enseñanza y certificación." },
-        { icon: <Rocket />, title: "Innovación", desc: "Herramientas digitales de vanguardia para una experiencia educativa superior." },
-        { icon: <Users />, title: "Enfoque Humano", desc: "Atención personalizada para asegurar el éxito laboral de cada estudiante." },
-        { icon: <TrendingUp />, title: "Mejora Continua", desc: "Evolucionamos con los cambios normativos para darte lo mejor siempre." }
+    const handleStepClick = (index) => {
+        if (index === activeStep) return; 
+
+        setActiveStep(index);
+
+        // Usamos un pequeño delay (50ms) para que React alcance a renderizar 
+        // la nueva tarjeta antes de buscarla en el DOM
+        setTimeout(() => {
+            const card = document.querySelector(`.${styles.contentCard}`);
+            if (card) {
+                // Aplicamos la animación estilo "Contacto"
+                card.classList.remove(styles.cardEntranceAnimation);
+                void card.offsetWidth; // Reset de animación
+                card.classList.add(styles.cardEntranceAnimation);
+            }
+        }, 50);
+    };
+
+    const trayectoria = [
+        { 
+            date: "2014", 
+            title: "Fundación y Registro Oficial", 
+            desc: "Ingeniería Líder S.R.L. nace el 5 de diciembre. Inscrita en SUNARP (Partida N.º 11117191) y registrada en SUNAT con RUC 20448864139. Iniciamos consultoría avalada por el OSCE.",
+            icon: <Briefcase /> 
+        },
+        { 
+            date: "2018", 
+            title: "Inicio del Ámbito Académico", 
+            desc: "Nuestro equipo multidisciplinario inicia formalmente las actividades académicas presenciales, enfocadas en ingeniería especializada.",
+            icon: <BookOpen /> 
+        },
+        { 
+            date: "2020", 
+            title: "Tu Portal Académico", 
+            desc: "Lanzamos nuestra red social académica. Organizamos eventos avalados por el Colegio de Ingenieros del Perú (CIP) - CD Puno.",
+            icon: <Award /> 
+        },
+        { 
+            date: "2023", 
+            title: "Autorización MTPE", 
+            desc: "El Ministerio de Trabajo nos otorga la autorización como Centro de Certificación de Competencias Laborales (Auto Directoral N.º 000578-2023).",
+            icon: <Calendar /> 
+        },
+        { 
+            date: "2024", 
+            title: "Convenios Estratégicos", 
+            desc: "Suscripción de convenios con el Colegio de Estadísticos y el CIP CD Puno para fortalecer la cooperación institucional permanente.",
+            icon: <Handshake /> 
+        }
     ];
 
     return (
-    
         <section id="nosotros" className={styles.nosotrosSection}>
             <div className={styles.nosotrosContainer}>
                 
                 <div ref={headerRef} className={`${styles.nosotrosHeader} ${headerVisible ? styles.animateHeader : ''}`}>
                     <h2 className={styles.splitTitle}>
-                        <span className={styles.textBlack}>Ingeniería</span>
-                        <span className={styles.textRed}>Líder</span>
-                        <span className={styles.textRed}>SRL</span>
+                        <span className={styles.textBlack}>Ingenería</span>
+                        <span className={styles.textRed}>Lider S.R.L</span>
                     </h2>
                     <div className={styles.headerLine}></div>
                 </div>
 
-                <div className={styles.timelineWrapper}>
-                    <div className={`${styles.centralLine} ${headerVisible ? styles.lineGrow : ''}`}></div>
-                    
-                    {hitos.map((item, index) => (
-                        <TimelineItem key={index} item={item} index={index} />
-                    ))}
+                <div className={styles.interactiveTimeline}>
+                    {/* 1. Área de Información */}
+                    <div className={styles.displayArea}>
+                        {trayectoria.map((item, index) => (
+                            index === activeStep && (
+                                <div key={index} className={`${styles.contentCard} ${styles.cardEntranceAnimation}`}>
+                                    <div className={styles.iconBox}>{item.icon}</div>
+                                    <div className={styles.textBox}>
+                                        <h3>{item.title}</h3>
+                                        <p>{item.desc}</p>
+                                    </div>
+                                </div>
+                            )
+                        ))}
+                    </div>
+
+                    {/* 2. Navegación */}
+                    <div className={styles.stepperNav}>
+                        <div className={styles.progressLine}>
+                            <div 
+                                className={styles.progressFill} 
+                                style={{ 
+                                    "--progress": `calc((100% / ${trayectoria.length - 1}) * ${activeStep})`
+                                }}
+                            ></div>
+                        </div>
+                        
+                        {trayectoria.map((item, index) => (
+                            <button 
+                                key={index}
+                                className={`${styles.stepBtn} ${index === activeStep ? styles.active : ''}`}
+                                onClick={() => handleStepClick(index)} 
+                            >
+                                <div className={styles.dot}></div>
+                                <span className={styles.dateLabel}>{item.date}</span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
