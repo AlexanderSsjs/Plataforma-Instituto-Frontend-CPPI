@@ -13,13 +13,29 @@ import {
     Home,
     ExternalLink,
 } from 'lucide-react';
+const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
+const getWhatsAppChat = () => {
+    return 'https://wa.me/51930449016';
+};
+
+const getWhatsAppGroup = () => {
+    return 'https://chat.whatsapp.com/K3AEYyxA4wWE7sHmQeCGbS';
+};
+
+const getMailLink = () => {
+    if (isMobile()) {
+        return 'mailto:tuportalacademico@gmail.com';
+    }
+
+    return 'https://mail.google.com/mail/?view=cm&fs=1&to=tuportalacademico@gmail.com&su=Consulta%20de%20curso&body=Hola,%20quiero%20información%20sobre...';
+};
 const Footer = () => {
     const footerRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const currentFooter = footerRef.current; 
+        const currentFooter = footerRef.current;
         const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), {
             threshold: 0.1,
         });
@@ -30,7 +46,7 @@ const Footer = () => {
 
         return () => {
             if (currentFooter) {
-                observer.unobserve(currentFooter); 
+                observer.unobserve(currentFooter);
             }
             observer.disconnect();
         };
@@ -91,21 +107,7 @@ const Footer = () => {
                     <h4>Oportunidades</h4>
                     <ul>
                         <li>
-                            <a
-                                href="https://fieuna.blogspot.com/2024/05/practicas-pre-profesionales-y.html"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <ExternalLink size={16} />
-                                Prácticas Pre/Profesionales
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://chat.whatsapp.com/K3AEYyxA4wWE7sHmQeCGbS"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                            <a href={getWhatsAppGroup()} target="_blank" rel="noopener noreferrer">
                                 <AnimatedIcon color="#25D366">
                                     <MessageCircle size={18} />
                                 </AnimatedIcon>
@@ -126,23 +128,16 @@ const Footer = () => {
                     <h4>Contacto</h4>
                     <ul className={styles.contactList}>
                         <li>
-                            <a href="https://wa.me/51930449016">
+                            <a href={getWhatsAppChat()} target="_blank" rel="noopener noreferrer">
                                 <AnimatedIcon color="#25D366">
                                     <MessageCircle size={18} />
                                 </AnimatedIcon>
                                 930 449 016
                             </a>
                         </li>
+
                         <li>
-                            <a href="tel:+51959280078">
-                                <AnimatedIcon color="#facc15">
-                                    <Phone size={18} />
-                                </AnimatedIcon>
-                                959 280 078
-                            </a>
-                        </li>
-                        <li>
-                            <a href="mailto:tuportalacademico@gmail.com">
+                            <a href={getMailLink()} target="_blank" rel="noopener noreferrer">
                                 <AnimatedIcon color="#dc2626">
                                     <Mail size={18} />
                                 </AnimatedIcon>
@@ -158,7 +153,6 @@ const Footer = () => {
             <div className={styles.bottom}>
                 <p>© 2026 CCIP - Todos los derechos reservados.</p>
                 <div style={{ display: 'none' }}>
-
                     <p>Diseñado por Alexander Piélago Quiroz</p>
                     <p>Contacto: 934836437</p>
                 </div>

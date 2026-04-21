@@ -1,7 +1,8 @@
 import { CheckCircle } from 'lucide-react';
 import styles from '../../views/public/styles/Details.module.scss';
 
-const PriceCard = ({ course, schedule }) => {
+const PriceCard = ({ course, schedule, promoActive, promoPrice }) => {
+    
     const formatPrice = (monto, moneda) => {
         try {
             return new Intl.NumberFormat('es-PE', {
@@ -12,7 +13,7 @@ const PriceCard = ({ course, schedule }) => {
             return `S/ ${monto}`;
         }
     };
-    console.log(course);
+
     if (!course || !course.precio) {
         return (
             <div className={styles.cardPrice}>
@@ -20,9 +21,18 @@ const PriceCard = ({ course, schedule }) => {
             </div>
         );
     }
+
+    // 🔥 Determinamos qué precio mostrar
+    const finalPrice = promoActive ? promoPrice : course.precio.monto;
+
     return (
         <div className={styles.cardPrice}>
-            <h2>{formatPrice(course.precio.monto, course.precio.moneda)}</h2>
+            {/* Contenedor de precio con lógica de descuento */}
+            <div className={styles.priceWrapper}>
+                <h2 className={promoActive ? styles.salePrice : ''}>
+                    {formatPrice(finalPrice, course.precio.moneda)}
+                </h2>
+            </div>
 
             {schedule && (
                 <p className={styles.alert}>
@@ -30,17 +40,17 @@ const PriceCard = ({ course, schedule }) => {
                 </p>
             )}
 
-            <button>Inscribirme ahora</button>
+            <button className={styles.btnEnroll}>Inscribirme ahora</button>
 
             <ul>
                 <li>
-                    <CheckCircle /> Certificado
+                    <CheckCircle size={18} /> Certificado
                 </li>
                 <li>
-                    <CheckCircle /> Material
+                    <CheckCircle size={18} /> Material
                 </li>
                 <li>
-                    <CheckCircle /> Acceso 24/7
+                    <CheckCircle size={18} /> Acceso 24/7
                 </li>
             </ul>
         </div>

@@ -5,10 +5,11 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
     return {
         plugins: [react()],
-        base: command === 'serve' ? '/' : '/Plataforma-Instituto-Frontend-CPPI/',
+        // Cambiado a '/' para que las rutas apunten a la raíz de fundacionperu.org.pe
+        base: '/', 
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, './src'),
@@ -18,8 +19,9 @@ export default defineConfig(({ command }) => {
             preprocessorOptions: {
                 scss: {
                     additionalData: `
-          @use "@/styles/_variables.scss" as *;
-          @use '@/styles/_animations' as *; `,
+                        @use "@/styles/_variables.scss" as *;
+                        @use "@/styles/_animations" as *;
+                    `,
                 },
             },
         },

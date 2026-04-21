@@ -17,9 +17,9 @@ const PromoCard = (className) => {
             particleCount: 40,
             spread: 60,
             origin: { x, y },
-            colors: ['#fbbf24', '#ffffff', '#e11d48'], 
+            colors: ['#fbbf24', '#ffffff', '#e11d48'],
             disableForReducedMotion: true,
-            zIndex: 100
+            zIndex: 100,
         });
     };
 
@@ -32,13 +32,11 @@ const PromoCard = (className) => {
                     Lleva <strong>3 cursos</strong> por solo <span>S/ 120</span>
                 </p>
                 <div className={styles.features}>
-                    {['Acceso inmediato', 'Certificado incluido', 'Clases en vivo'].map(
-                        (f, i) => (
-                            <span key={i} className={styles.cardFeature}>
-                                <i>✔</i> <p>{f}</p>
-                            </span>
-                        ),
-                    )}
+                    {['Acceso inmediato', 'Certificado incluido', 'Clases en vivo'].map((f, i) => (
+                        <span key={i} className={styles.cardFeature}>
+                            <i>✔</i> <p>{f}</p>
+                        </span>
+                    ))}
                 </div>
             </div>
             <div className={styles.promoRight}>
@@ -46,12 +44,16 @@ const PromoCard = (className) => {
                     <span className={styles.oldPrice}>Antes S/ 300</span>
                     <span className={styles.newPrice}>S/ 120</span>
                 </div>
-                <button 
-                    className={styles.promoBtn}
-                    onMouseEnter={handleConfetti}
+                <a
+                    href="https://api.whatsapp.com/send/?phone=51930449016&text=¡Hola! Quiero aprovechar la promoción de S/ 120&type=phone_number&app_absent=0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: 'none' }}
                 >
-                    ¡Lo quiero ahora! <i className={styles.arrowRight}>🚀</i>
-                </button>
+                    <button className={styles.promoBtn} onMouseEnter={handleConfetti}>
+                        ¡Lo quiero ahora! <i className={styles.arrowRight}>🚀</i>
+                    </button>
+                </a>
             </div>
         </div>
     );

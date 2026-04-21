@@ -23,7 +23,7 @@ const areEqual = (prev, next) => {
     );
 };
 
-const CourseCard = ({ course, type = 'virtual' }) => {
+const CourseCard = ({ course, type = 'virtual', promoActive, promoPrice }) => {
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgError, setImgError] = useState(false);
 
@@ -31,19 +31,26 @@ const CourseCard = ({ course, type = 'virtual' }) => {
         if (!course) return null;
 
         const isLive = type === 'vivo';
-
         const startDate = isLive && course.date ? new Date(course.date) : null;
+
+        const originalPrice = course?.precio?.monto ?? 0;
+        const moneda = course?.precio?.moneda ?? 'PEN';
+
+        const finalPrice = promoActive ? promoPrice : originalPrice;
 
         return {
             isLive,
             startDate,
-            price: formatCurrency(course?.precio?.monto ?? 0, course?.precio?.moneda ?? 'PEN'),
+            originalPriceFormatted: formatCurrency(originalPrice, moneda),
+            finalPriceFormatted: formatCurrency(finalPrice, moneda),
+            hasDiscount: promoActive,
         };
-    }, [course, type]);
+    }, [course, type, promoActive, promoPrice]);
 
     if (!course || !computed) return null;
 
-    const { isLive, startDate, price } = computed;
+    const { isLive, startDate, originalPriceFormatted, finalPriceFormatted, hasDiscount } =
+        computed;
 
     return (
         <article className={`${styles.card} ${styles[type]}`} aria-label={`Curso ${course.nombre}`}>
@@ -66,11 +73,16 @@ const CourseCard = ({ course, type = 'virtual' }) => {
                 )}
             </div>
             <div className={styles.content}>
+                <h3 className={styles.title}>{course.nombre}</h3>
                 <div className={styles.topRow}>
-                    <h3 className={styles.title}>{course.nombre}</h3>
-                    <div className={styles.topRow}>
-                        <span className={styles.price}>{price}</span>
-                    </div>
+                    {hasDiscount ? (
+                        <>
+                            <span className={styles.priceOld}>{originalPriceFormatted}</span>
+                            <span className={styles.priceNew}>{finalPriceFormatted}</span>
+                        </>
+                    ) : (
+                        <span className={styles.price}>{finalPriceFormatted}</span>
+                    )}
                 </div>
                 <p className={styles.descriptionText}>{course.descripcion}</p>
                 <div className={styles.infoArea}>
@@ -89,7 +101,10 @@ const CourseCard = ({ course, type = 'virtual' }) => {
 
                 <Link
                     to={`/curso/${course.id}`}
-                    state={{ type: type }} 
+                    state={{ type: type,
+                        promoActive: promoActive, 
+                        promoPrice: promoPrice }}
+                    
                     className={styles.btnAction}
                     aria-label={`Ver curso ${course.nombre}`}
                 >

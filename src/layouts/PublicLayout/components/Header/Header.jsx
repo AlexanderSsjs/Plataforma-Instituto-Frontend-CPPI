@@ -13,16 +13,19 @@ const Header = () => {
     ];
 
     const CtaButton = () => (
-        <a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
+        <Link to="/login" className={styles.btn}>
             Iniciar Sesión
-        </a>
+        </Link>
+
+        //<a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
+        //    Iniciar Sesión
+        //</a>
     );
 
     return (
         <header className={styles.header}>
             <div className={styles.container}>
                 <Link to="/" className={styles.brand}>
-                    <img src={logoImg} alt="Logo CCIP" className={styles.logoImg} />
                     <span className={styles.logoText}>
                         CC<span>IP</span>
                     </span>
