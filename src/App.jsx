@@ -33,7 +33,7 @@ function App() {
             <Suspense fallback={<PageLoader />}>
                 <Routes>
                     {/* =========================
-              🌐 RUTAS PÚBLICAS
+                        🌐 RUTAS PÚBLICAS
           ========================= */}
                     <Route element={<PublicLayout />}>
                         <Route index element={<Home />} />
@@ -49,7 +49,7 @@ function App() {
                     <Route path="/login" element={<FormLogin />} />
                     <Route path="/recuperar" element={<ForgotPass />} />
                     {/* =========================
-              🔐 RUTAS PRIVADAS (Protegidas)
+                        🔐 RUTAS PRIVADAS (Protegidas)
           ========================= */}
                     <Route
                         element={
@@ -60,7 +60,7 @@ function App() {
                     </Route>
 
                     {/* =========================
-              ❌ MANEJO DE 404
+                            ❌ MANEJO DE 404
           ========================= */}
                     {/* En lugar de solo redirigir, podrías mostrar una página 404 personalizada */}
                     <Route path="*" element={<Navigate to="/" replace />} />

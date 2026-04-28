@@ -5,7 +5,6 @@ import styles from './PrivateLayout.module.scss';
 const PrivateLayout = () => {
     return (
         <div className={styles.dashboardWrapper}>
-            {/* 1. Sidebar Lateral */}
             <aside className={styles.sidebar}>
                 <div className={styles.logo}>INTRA-SENATI</div>
                 <nav>

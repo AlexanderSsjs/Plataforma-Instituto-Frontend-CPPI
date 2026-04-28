@@ -13,13 +13,13 @@ const Header = () => {
     ];
 
     const CtaButton = () => (
-        <Link to="/login" className={styles.btn}>
-            Iniciar Sesión
-        </Link>
+        // <Link to="/login" className={styles.btn}>
+        //     Iniciar Sesión
+        // </Link>
 
-        //<a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
-        //    Iniciar Sesión
-        //</a>
+        <a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
+        Iniciar Sesión
+        </a>
     );
 
     return (
