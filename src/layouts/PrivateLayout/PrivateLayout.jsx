@@ -1,34 +1,113 @@
-// src/layouts/PrivateLayout/PrivateLayout.jsx
-import { Outlet, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Menu, X, LayoutDashboard, User, BookOpen, LogOut, ChevronLeft, LayoutGrid } from 'lucide-react';
 import styles from './PrivateLayout.module.scss';
 
 const PrivateLayout = () => {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
+    const location = useLocation();
+
+    // Cerrar el menú móvil cuando cambia la ruta
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [location]);
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const toggleDesktopMenu = () => {
+        setIsDesktopCollapsed(!isDesktopCollapsed);
+    };
+
+    const navLinks = [
+        { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+        { path: '/dashboard/perfil', label: 'Cuenta', icon: User },
+        { path: '/dashboard/cursos', label: 'Pedidos', icon: BookOpen },
+    ];
+
     return (
         <div className={styles.dashboardWrapper}>
-            {/* 1. Sidebar Lateral */}
-            <aside className={styles.sidebar}>
-                <div className={styles.logo}>INTRA-SENATI</div>
-                <nav>
+            {/* 1. Sidebar Lateral (Desktop) / Menú Flotante (Mobile) */}
+            <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.mobileOpen : ''} ${isDesktopCollapsed ? styles.collapsed : ''}`}>
+                <div className={styles.sidebarHeader}>
+                    <div className={styles.logoContainer} onClick={() => isDesktopCollapsed && toggleDesktopMenu()}>
+                        <div className={styles.logoIcon}>
+                            <LayoutGrid size={24} strokeWidth={2.5} />
+                        </div>
+                        <span className={`${styles.logoText} ${isDesktopCollapsed ? styles.hidden : styles.visible}`}>
+                            mixsoon
+                        </span>
+                    </div>
+
+                    <button
+                        className={`${styles.collapseBtn} ${isDesktopCollapsed ? styles.hideBtn : styles.showBtn}`}
+                        onClick={toggleDesktopMenu}
+                    >
+                        <ChevronLeft size={18} />
+                    </button>
+                    
+                    {/* Botón de cerrar solo para móvil */}
+                    <button className={styles.mobileCloseBtn} onClick={toggleMobileMenu} aria-label="Cerrar menú">
+                        <X size={24} />
+                    </button>
+                </div>
+                
+                <nav className={styles.navigation}>
                     <ul>
-                        <li><Link to="/dashboard">Panel Inicio</Link></li>
-                        <li><Link to="/perfil">Mi Perfil</Link></li>
-                        <li><Link to="/cursos">Mis Cursos</Link></li>
-                        <li><Link to="/">Cerrar Sesión</Link></li>
+                        {navLinks.map((link) => {
+                            const isActive = location.pathname === link.path;
+                            return (
+                                <li key={link.path}>
+                                    <Link to={link.path} className={`${styles.navItem} ${isActive ? styles.active : ''}`}>
+                                        <div className={styles.navIcon}>
+                                            <link.icon size={22} />
+                                        </div>
+                                        {!isDesktopCollapsed && <span className={styles.navLabel}>{link.label}</span>}
+                                        {isDesktopCollapsed && isMobileMenuOpen && <span className={styles.navLabel}>{link.label}</span>}
+                                    </Link>
+                                </li>
+                            );
+                        })}
+                        <div className={styles.navSpacer}></div>
+                        <li className={styles.logoutContainer}>
+                            <Link to="/login" className={`${styles.navItem} ${styles.logoutItem}`}>
+                                <div className={styles.navIcon}>
+                                    <LogOut size={22} color="#f87171" />
+                                </div>
+                                {!isDesktopCollapsed && <span className={styles.navLabel} style={{ color: '#f87171' }}>Salir</span>}
+                                {isDesktopCollapsed && isMobileMenuOpen && <span className={styles.navLabel} style={{ color: '#f87171' }}>Salir</span>}
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
             </aside>
 
-            <div className={styles.mainContent}>
+            {/* Overlay para móvil cuando el menú está abierto */}
+            {isMobileMenuOpen && (
+                <div className={styles.overlay} onClick={toggleMobileMenu} aria-hidden="true"></div>
+            )}
+
+            <div className={`${styles.mainContent} ${isDesktopCollapsed ? styles.expanded : ''}`}>
                 {/* 2. Topbar / Header del Dashboard */}
                 <header className={styles.topbar}>
-                    <span>Bienvenido, Alumno</span>
-                    <div className={styles.userBadge}>JS</div>
+                    <button className={styles.mobileToggleBtn} onClick={toggleMobileMenu} aria-label="Abrir menú">
+                        <Menu size={24} />
+                    </button>
+                    
+                    <div className={styles.topbarRight}>
+                        <div className={styles.userInfo}>
+                            <span className={styles.userName}>Bienvenido, Alumno</span>
+                            <div className={styles.userBadge}>AL</div>
+                        </div>
+                    </div>
                 </header>
 
                 {/* 3. Contenido Dinámico */}
-                <section className={styles.pageBody}>
-                    <Outlet /> {/* Aquí se renderizarán las vistas privadas */}
-                </section>
+                <main className={styles.pageBody}>
+                    <Outlet />
+                </main>
             </div>
         </div>
     );

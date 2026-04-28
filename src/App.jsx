@@ -8,6 +8,10 @@ import ScrollToTop from './components/common/scrollTop';
 import FormLogin from '@/views/public/FormLogin';
 import ForgotPass from '@/components/core/ForgotPass';
 
+// Private Views (No usamos lazy loading para el layout base, pero podemos usarlo para sus vistas)
+import Dashboard from './views/private/Dashboard/Dashboard';
+import Profile from './views/private/Profile/Profile';
+
 const Home = lazy(() => import('./views/public/Home'));
 const Nosotros = lazy(() => import('./views/public/Nosotros'));
 const Courses = lazy(() => import('./views/public/Courses'));
@@ -24,7 +28,8 @@ const PageLoader = () => (
 
 function App() {
     // Aquí conectarás tu lógica de Auth (Context o Redux)
-    const isAuthenticated = false;
+    // TEMPORAL: Cambiado a true para que el usuario pueda probar el Dashboard
+    const isAuthenticated = true;
 
     return (
         <BrowserRouter>
@@ -43,20 +48,24 @@ function App() {
                         <Route path="contacto" element={<Contacto />} />
                     </Route>
 
-                    <Route path="/" element={<Navigate to="/login" />} />
-
                     {/* Rutas de Autenticación */}
                     <Route path="/login" element={<FormLogin />} />
                     <Route path="/recuperar" element={<ForgotPass />} />
+
                     {/* =========================
               🔐 RUTAS PRIVADAS (Protegidas)
           ========================= */}
                     <Route
+                        path="/dashboard"
                         element={
                             isAuthenticated ? <PrivateLayout /> : <Navigate to="/login" replace />
                         }
                     >
-                        <Route path="perfil" element={<h1>Tu Perfil</h1>} />
+                        {/* Ruta por defecto cuando se entra a /dashboard */}
+                        <Route index element={<Dashboard />} />
+                        {/* Subrutas */}
+                        <Route path="perfil" element={<Profile />} />
+                        <Route path="cursos" element={<h1>Mis Cursos (En construcción)</h1>} />
                     </Route>
 
                     {/* =========================
