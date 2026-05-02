@@ -25,6 +25,7 @@ const PrivateLayout = () => {
         { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/dashboard/perfil', label: 'Cuenta', icon: User },
         { path: '/dashboard/cursos', label: 'Pedidos', icon: BookOpen },
+        { path: '/dashboard/Asistencias', label: 'Asistencia', icon: BookOpen },
     ];
 
     return (
@@ -37,7 +38,7 @@ const PrivateLayout = () => {
                             <LayoutGrid size={24} strokeWidth={2.5} />
                         </div>
                         <span className={`${styles.logoText} ${isDesktopCollapsed ? styles.hidden : styles.visible}`}>
-                            mixsoon
+                            CCIP
                         </span>
                     </div>
 

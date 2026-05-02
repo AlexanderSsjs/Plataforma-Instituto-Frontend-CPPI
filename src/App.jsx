@@ -11,6 +11,7 @@ import ForgotPass from '@/components/core/ForgotPass';
 // Private Views (No usamos lazy loading para el layout base, pero podemos usarlo para sus vistas)
 import Dashboard from './views/private/Dashboard/Dashboard';
 import Profile from './views/private/Profile/Profile';
+import Asistencias from './views/private/Asistencias/asistencias';
 
 const Home = lazy(() => import('./views/public/Home'));
 const Nosotros = lazy(() => import('./views/public/Nosotros'));
@@ -66,8 +67,8 @@ function App() {
                         {/* Subrutas */}
                         <Route path="perfil" element={<Profile />} />
                         <Route path="cursos" element={<h1>Mis Cursos (En construcción)</h1>} />
+                        <Route path="Asistencias" element={<Asistencias />} />
                     </Route>
-
                     {/* =========================
               ❌ MANEJO DE 404
           ========================= */}
