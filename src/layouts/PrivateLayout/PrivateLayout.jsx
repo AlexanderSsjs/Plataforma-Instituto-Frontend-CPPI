@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Menu, X, LayoutDashboard, User, BookOpen, LogOut, ChevronLeft, LayoutGrid } from 'lucide-react';
+import { Menu, X, LayoutDashboard, User, BookOpen, LogOut, ChevronLeft, LayoutGrid, Users, Calendar, ClipboardList } from 'lucide-react';
 import styles from './PrivateLayout.module.scss';
 
 const PrivateLayout = () => {
@@ -24,8 +24,11 @@ const PrivateLayout = () => {
     const navLinks = [
         { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/dashboard/perfil', label: 'Cuenta', icon: User },
-        { path: '/dashboard/cursos', label: 'Pedidos', icon: BookOpen },
-        { path: '/dashboard/Asistencias', label: 'Asistencia', icon: BookOpen },
+        { path: '/dashboard/alumnos', label: 'Alumnos', icon: Users },
+        { path: '/dashboard/cursos', label: 'Mis Cursos', icon: BookOpen },
+        { path: '/dashboard/Asistencias', label: 'Asistencia', icon: ClipboardList },
+        { path: '/dashboard/horarios', label: 'Horarios', icon: Calendar },
+        { path: '/dashboard/actividades', label: 'Actividades', icon: ClipboardList },
     ];
 
     return (

@@ -1,0 +1,124 @@
+@import '../../../styles/variables';
+
+.alumnosContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    @include fade-in-up(0.1s);
+}
+
+.header {
+    h1 {
+        font-size: $font-size-3xl;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        margin-bottom: $space-xs;
+    }
+    p {
+        color: $text-light;
+        font-size: $font-size-lg;
+    }
+}
+
+.listaAlumnos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $space-lg;
+}
+
+.alumnoCard {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    box-shadow: $sh-sm;
+    padding: $space-lg;
+    border: 1px solid $border-color;
+    transition: all $transition;
+
+    &:hover {
+        box-shadow: $sh-md;
+        transform: translateY(-4px);
+    }
+}
+
+.alumnoHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-md;
+    margin-bottom: $space-lg;
+    padding-bottom: $space-md;
+    border-bottom: 1px solid $border-color;
+
+    .headerMain {
+        display: flex;
+        align-items: center;
+        gap: $space-md;
+    }
+
+    .btnEdit {
+        background: $bg-light;
+        border: 1px solid $border-color;
+        width: 32px;
+        height: 32px;
+        border-radius: $radius-sm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-muted;
+        cursor: pointer;
+        transition: all $transition;
+
+        &:hover {
+            border-color: $primary;
+            color: $primary;
+            background: rgba($primary, 0.05);
+            transform: scale(1.1);
+        }
+    }
+
+    .iconBox {
+        width: 48px;
+        height: 48px;
+        background-color: $bg-card;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $primary;
+        box-shadow: $sh-sm;
+    }
+
+    .textWrapper {
+        display: flex;
+        flex-direction: column;
+        
+        .label {
+            font-size: $font-size-xs;
+            color: $text-muted;
+            font-weight: $font-weight-medium;
+        }
+        .value {
+            font-size: $font-size-lg;
+            color: $text-dark;
+            font-weight: $font-weight-semibold;
+        }
+    }
+}
+
+.alumnoInfo {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+
+    .infoItem {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        color: $text-light;
+        font-size: $font-size-sm;
+
+        svg {
+            color: $primary;
+        }
+    }
+}

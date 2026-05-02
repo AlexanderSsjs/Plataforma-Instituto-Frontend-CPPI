@@ -1,0 +1,133 @@
+@import '../../../styles/variables';
+
+.actividadesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    @include fade-in-up(0.1s);
+}
+
+.header {
+    h1 {
+        font-size: $font-size-3xl;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        margin-bottom: $space-xs;
+    }
+    p {
+        color: $text-light;
+        font-size: $font-size-lg;
+    }
+}
+
+.listaActividades {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+}
+
+.actividadCard {
+    background: $bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    padding: $space-lg;
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
+    transition: all $transition;
+
+    &:hover {
+        box-shadow: $sh-sm;
+        border-color: $primary;
+    }
+
+    @include mobile-only {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $space-md;
+    }
+}
+
+.statusIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pendiente {
+    .statusIcon { background: rgba($primary, 0.1); color: $primary; }
+}
+
+.completado {
+    border-left: 4px solid #22c55e;
+    .statusIcon { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    h3 { text-decoration: line-through; color: $text-muted; }
+}
+
+.actInfo {
+    flex: 1;
+
+    h3 {
+        font-size: $font-size-lg;
+        color: $text-dark;
+        margin: 0 0 4px;
+        font-weight: $font-weight-semibold;
+    }
+
+    .cursoName {
+        font-size: $font-size-sm;
+        color: $primary;
+        font-weight: $font-weight-medium;
+        display: block;
+        margin-bottom: $space-sm;
+    }
+
+    .meta {
+        display: flex;
+        gap: $space-lg;
+
+        @include mobile-only {
+            flex-direction: column;
+            gap: $space-xs;
+        }
+    }
+
+    .fecha, .prioridad {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: $font-size-xs;
+        color: $text-light;
+    }
+}
+
+.prioridad {
+    &.alta { color: #ef4444; font-weight: $font-weight-bold; }
+    &.media { color: #f59e0b; font-weight: $font-weight-bold; }
+    &.baja { color: #3b82f6; font-weight: $font-weight-bold; }
+}
+
+.actActions {
+    .btnVer {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 16px;
+        background: transparent;
+        border: 1px solid $border-color;
+        border-radius: $radius-sm;
+        color: $text-dark;
+        font-weight: $font-weight-semibold;
+        cursor: pointer;
+        transition: all $transition;
+
+        &:hover {
+            background: $bg-light;
+            border-color: $text-muted;
+        }
+    }
+}

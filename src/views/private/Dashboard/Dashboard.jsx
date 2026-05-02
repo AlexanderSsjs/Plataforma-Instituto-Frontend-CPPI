@@ -19,7 +19,6 @@ const Dashboard = () => {
                 <Card icon={ChartLine} title="Estadísticas" desc="Ver reportes" />
                 <Card icon={User} title="Usuarios" desc="Administrar cuentas" />
                 <Card icon={Settings} title="Ajustes" desc="Ajustes del sistema" />
-                <h1>HOLAA</h1>
             </div>
         </div>
     );

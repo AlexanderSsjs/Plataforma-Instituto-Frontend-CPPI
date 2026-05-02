@@ -12,6 +12,11 @@ import ForgotPass from '@/components/core/ForgotPass';
 import Dashboard from './views/private/Dashboard/Dashboard';
 import Profile from './views/private/Profile/Profile';
 import Asistencias from './views/private/Asistencias/asistencias';
+import Alumnos from './views/private/Alumnos/Alumnos';
+import MisCursos from './views/private/Cursos/MisCursos';
+import DetalleCurso from './views/private/Cursos/DetalleCurso';
+import Horarios from './views/private/Horarios/Horarios';
+import Actividades from './views/private/Actividades/Actividades';
 
 const Home = lazy(() => import('./views/public/Home'));
 const Nosotros = lazy(() => import('./views/public/Nosotros'));
@@ -66,8 +71,12 @@ function App() {
                         <Route index element={<Dashboard />} />
                         {/* Subrutas */}
                         <Route path="perfil" element={<Profile />} />
-                        <Route path="cursos" element={<h1>Mis Cursos (En construcción)</h1>} />
+                        <Route path="alumnos" element={<Alumnos />} />
+                        <Route path="cursos" element={<MisCursos />} />
+                        <Route path="cursos/:id" element={<DetalleCurso />} />
                         <Route path="Asistencias" element={<Asistencias />} />
+                        <Route path="horarios" element={<Horarios />} />
+                        <Route path="actividades" element={<Actividades />} />
                     </Route>
                     {/* =========================
               ❌ MANEJO DE 404
