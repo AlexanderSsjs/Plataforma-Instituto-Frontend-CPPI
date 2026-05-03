@@ -17,6 +17,8 @@ import MisCursos from './views/private/Cursos/MisCursos';
 import DetalleCurso from './views/private/Cursos/DetalleCurso';
 import Horarios from './views/private/Horarios/Horarios';
 import Actividades from './views/private/Actividades/Actividades';
+import CursosAsignados from './views/private/CursosAsignados/cursosasignados';
+import DetalleAlumno from './views/private/detallesalumnos/detallealumno';
 
 const Home = lazy(() => import('./views/public/Home'));
 const Nosotros = lazy(() => import('./views/public/Nosotros'));
@@ -77,6 +79,8 @@ function App() {
                         <Route path="Asistencias" element={<Asistencias />} />
                         <Route path="horarios" element={<Horarios />} />
                         <Route path="actividades" element={<Actividades />} />
+                        <Route path="CursosAsignados" element={<CursosAsignados />} />
+                        <Route path="/dashboard/detallealumnos/:id?" element={<DetalleAlumno />} />
                     </Route>
                     {/* =========================
               ❌ MANEJO DE 404

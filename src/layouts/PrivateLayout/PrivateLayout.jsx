@@ -29,6 +29,8 @@ const PrivateLayout = () => {
         { path: '/dashboard/Asistencias', label: 'Asistencia', icon: ClipboardList },
         { path: '/dashboard/horarios', label: 'Horarios', icon: Calendar },
         { path: '/dashboard/actividades', label: 'Actividades', icon: ClipboardList },
+        { path: '/dashboard/CursosAsignados', label: 'Cursos Asignados', icon: ClipboardList },
+        { path: '/dashboard/detallealumnos', label: 'Detalles Alumnos', icon: Users },
     ];
 
     return (

@@ -1,0 +1,229 @@
+@import '../../../styles/variables';
+
+.container {
+    padding: $space-lg;
+    @include fade-in-up(0.2s);
+}
+
+.header {
+    margin-bottom: $space-xl;
+    h1 { font-size: $font-size-3xl; color: $text-dark; }
+    p { color: $text-light; }
+}
+
+.bloqueSection {
+    margin-bottom: $space-2xl;
+}
+
+.bloqueTitle {
+    font-size: $font-size-xl;
+    color: $primary;
+    border-left: 4px solid $primary;
+    padding-left: $space-md;
+    margin-bottom: $space-lg;
+    text-transform: uppercase;
+}
+
+.cursosGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $space-lg;
+}
+
+.cursoCard {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    padding: $space-xl;
+    transition: all $transition;
+    box-shadow: $sh-sm;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: $sh-md;
+        border-color: rgba($primary, 0.4);
+    }
+
+    .cursoHeader {
+        display: flex;
+        align-items: center;
+        gap: $space-md;
+        margin-bottom: $space-md;
+        
+        .icon { color: $primary; }
+        h3 { font-size: $font-size-lg; font-weight: $font-weight-bold; }
+    }
+
+    p {
+        color: $text-muted;
+        font-size: $font-size-sm;
+        margin-bottom: $space-lg;
+        line-height: 1.5;
+    }
+}
+
+.acciones {
+    display: flex;
+    gap: $space-sm;
+
+    .btnContenido {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $space-xs;
+        padding: $space-sm $space-md;
+        background: $bg-light;
+        border: 1px solid $border-color;
+        border-radius: $radius-md;
+        color: $text-dark;
+        font-weight: $font-weight-medium;
+        cursor: pointer;
+        transition: all $transition;
+
+        &:hover {
+            background: $primary;
+            color: white;
+            border-color: $primary;
+        }
+    }
+
+    .btnIr {
+        padding: $space-sm;
+        background: transparent;
+        border: 1px solid $border-color;
+        border-radius: $radius-md;
+        cursor: pointer;
+        color: $text-light;
+        &:hover { color: $primary; border-color: $primary; }
+    }
+}
+.modalOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: $space-lg;
+}
+
+.modalContent {
+    background: white;
+    width: 95%;
+    max-width: 1100px;
+    max-height: 90vh;
+    border-radius: $radius-lg;
+    padding: $space-2xl;
+    position: relative;
+    overflow-y: auto;
+}
+
+.btnClose {
+    position: absolute;
+    top: $space-md; right: $space-md;
+    border: none; background: none;
+    cursor: pointer; color: $text-light;
+    &:hover { color: $primary; }
+}
+
+.hojaHeader {
+    text-align: center;
+    margin-bottom: $space-xl;
+    h2 { font-weight: $font-weight-bold; color: $text-dark; text-decoration: underline; }
+}
+
+.tableWrapper {
+    border: 2px solid #333;
+}
+
+.temarioTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+
+    th {
+        background: #b1b1b1; // Gris como el de la imagen
+        color: black;
+        border: 1px solid #333;
+        padding: $space-sm;
+        text-transform: uppercase;
+    }
+
+    td {
+        border: 1px solid #333;
+        padding: $space-md;
+        vertical-align: top;
+        color: #333;
+
+        ul, ol {
+            padding-left: $space-lg;
+            margin: 0;
+            li { margin-bottom: 4px; }
+        }
+    }
+
+    .centerText {
+        text-align: center;
+        font-weight: bold;
+        span { font-weight: normal; font-size: 0.75rem; }
+    }
+}
+.moduloTag {
+    background: rgba($primary, 0.1);
+    color: $primary;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.hojaHeader {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    
+    h2 { font-size: 1.2rem; margin: 5px 0; }
+    h3 { font-size: 1rem; color: #555; }
+}
+
+.infoCurso {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.temarioTable {
+    // Estilo Senati: Bordes negros y letras claras
+    th {
+        background: #333 !important;
+        color: white !important;
+        font-weight: bold;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    ul, ol {
+        margin: 0;
+        padding-left: 15px;
+        li { margin-bottom: 3px; }
+    }
+}
+
+.smallList {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #666;
+}

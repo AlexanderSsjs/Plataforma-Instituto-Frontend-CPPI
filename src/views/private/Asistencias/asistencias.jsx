@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp, BookOpen, Calendar, CheckCircle } from 'lucide-
 import styles from './Asistencias.module.scss';
 
 const Asistencias = () => {
-    // SIMULACIÓN DE ROL: Cambia a false para ver cómo lo vería el alumno
+    // SIMULACIÓN DE ROL: Cambia a false para ver cómo lo vería el alumno |!importantee
     const esProfesor = true; 
 
     const cursosData = [
