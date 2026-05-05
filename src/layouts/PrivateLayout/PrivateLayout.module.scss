@@ -1,73 +1,356 @@
+@import '../../styles/variables';
+@import '../../styles/animations';
+
 .dashboardWrapper {
     display: flex;
     min-height: 100vh;
+    background-color: #f8fafc; /* Color pizarra muy claro del prototipo */
 }
 
+// ------------------------------------
+// Sidebar
+// ------------------------------------
 .sidebar {
-    width: $sidebar-width; // Usamos la variable de 260px
-    color: white;
-    padding: 2rem 1rem;
+    width: 260px;
+    height: 100vh;
+    background-color: #0f172a;
     display: flex;
     flex-direction: column;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+    padding: 20px 14px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    box-sizing: border-box;
+    z-index: 100;
 
-    .logo {
-        font-weight: $font-weight-bold;
-        font-size: 1.5rem;
-        margin-bottom: 3rem;
-        text-align: center;
-        color: $accent; // Un toque de amarillo para resaltar
+    &.collapsed {
+        width: 85px;
+        
+        .navItem {
+            justify-content: center;
+            padding: 12px 0;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+
+        .collapseBtn {
+            position: absolute;
+            right: -5px;
+            background: #0f172a;
+        }
     }
 
-    ul {
-        li {
-            margin-bottom: 0.5rem;
+    // Mobile: oculto por defecto (fuera de la pantalla)
+    @include mobile-only {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+        width: 260px; // En móvil siempre tiene 260px si está abierto
+        
+        &.collapsed {
+            width: 260px; // En móvil no aplicamos el collapse visual de escritorio
+        }
+    }
+
+    // Estado abierto en móvil
+    &.mobileOpen {
+        transform: translateX(0);
+    }
+}
+
+/* Header y Botón de Colapso */
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 35px;
+    padding: 0 10px;
+    position: relative;
+    
+    .logoContainer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        color: #3b82f6; /* Color acento mxsoon */
+    }
+
+    .logoText {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+
+        &.hidden {
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        &.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .collapseBtn {
+        background: none;
+        border: none;
+        color: rgba(white, 0.7);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &.hideBtn {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.5) translateX(-10px);
+        }
+
+        &.showBtn {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateX(0);
             
-            a {
-                color: rgba(white, 0.8);
-                padding: 0.8rem 1.2rem;
-                border-radius: $radius-md; // Usamos tu variable de bordes
+            &:hover {
+                background: #3b82f6;
+                color: white;
+                box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        @include mobile-only {
+            display: none; // Oculto en móvil porque usamos el botón mobileCloseBtn
+        }
+    }
+
+    .mobileCloseBtn {
+        display: none;
+        background: none;
+        border: none;
+        color: rgba(white, 0.7);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all $transition-fast;
+
+        &:hover {
+            color: white;
+            background: rgba(white, 0.1);
+        }
+
+        @include mobile-only {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+/* Items de Navegación */
+.navigation {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 100%;
+
+        li {
+            .navItem {
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                transition: $transition;
+                padding: 12px 14px;
+                border-radius: 12px;
+                color: #94a3b8;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                overflow: hidden;
+
+                .navIcon {
+                    min-width: 24px;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .navLabel {
+                    margin-left: 12px;
+                    font-size: 0.95rem;
+                    font-weight: 500;
+                    white-space: nowrap;
+                }
 
                 &:hover {
-                    background: rgba(white, 0.1);
+                    background: rgba(255, 255, 255, 0.05);
                     color: white;
-                    transform: translateX(5px); // Pequeña animación de empuje
+                    transform: translateX(4px);
+                }
+
+                &.active {
+                    background: #3b82f6;
+                    color: white !important;
+                    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+                }
+            }
+        }
+
+        .navSpacer {
+            flex: 1;
+        }
+
+        .logoutContainer {
+            .logoutItem {
+                margin-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                padding-top: 20px;
+                border-radius: 0;
+
+                &:hover {
+                    background: rgba(248, 113, 113, 0.1);
+                    color: #f87171 !important;
                 }
             }
         }
     }
 }
 
+// ------------------------------------
+// Overlay para móvil
+// ------------------------------------
+.overlay {
+    display: none;
+    
+    @include mobile-only {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.5);
+        backdrop-filter: blur(2px);
+        z-index: 90;
+        @include animation-fade-in-down(0.3s);
+    }
+}
+
+// ------------------------------------
+// Main Content
+// ------------------------------------
 .mainContent {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; // Permite que el contenido haga scroll independientemente
+    height: 100vh;
+    overflow-y: auto;
+    width: 100%; // Asegura que tome el ancho en mobile
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
 }
 
+// ------------------------------------
+// Topbar (Mobile Only as requested implicitly by prototype structure which had no topbar on desktop, but we need it for mobile toggle and user badge)
+// ------------------------------------
 .topbar {
-    height: $nav-height; // Consistencia con el header público
-    background: white;
-    border-bottom: 1px solid $border-color;
+    height: $nav-height;
+    background: transparent;
+    border-bottom: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-top: 20px; /* para separar del techo un poco */
+
+    @include mobile-only {
+        padding: 0 20px;
+        background: white;
+        margin-top: 0;
+        border-bottom: 1px solid $border-color;
+    }
 }
 
+.mobileToggleBtn {
+    display: none;
+    background: none;
+    border: none;
+    color: $text-dark;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: $radius-sm;
+    transition: background-color $transition-fast;
+
+    &:hover {
+        background-color: $bg-light;
+    }
+
+    @include mobile-only {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.topbarRight {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .userName {
+        font-weight: 500;
+        color: $text-dark;
+
+        @include mobile-only {
+            display: none; 
+        }
+    }
+
+    .userBadge {
+        width: 40px;
+        height: 40px;
+        background: #3b82f6; /* Azul mxsoon */
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+    }
+}
+
+// ------------------------------------
+// Page Body (Contenido)
+// ------------------------------------
 .pageBody {
-    padding: 2rem;
-    flex: 1;
-    // Aquí es donde caerá el contenido de cada vista (Dashboard, Perfil, etc.)
-}
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 
-// Responsive: Ocultar sidebar en móviles (Opcional)
-@include mobile-only {
-    .sidebar {
-        display: none; // Luego podrías hacer un menú hamburguesa lateral
+    @include mobile-only {
+        padding: 20px;
     }
 }
