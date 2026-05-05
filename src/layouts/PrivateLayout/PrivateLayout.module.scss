@@ -67,7 +67,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
     padding: 0 10px;
     position: relative;
     
@@ -158,6 +158,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    padding-right: 4px; 
+
+    /* Estilizar el scrollbar para que sea discreto */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    
 
     ul {
         list-style: none;
@@ -166,8 +174,7 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
-        height: 100%;
-
+        padding-bottom: 20px;
         li {
             .navItem {
                 display: flex;
@@ -255,9 +262,11 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow-y: auto;
-    width: 100%; // Asegura que tome el ancho en mobile
+    overflow-y: auto; 
+    overflow-x: hidden; // Evita scroll horizontal innecesario
+    width: 100%;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    position: relative; // Para mejor control de capas
 }
 
 // ------------------------------------
@@ -345,11 +354,12 @@
 // ------------------------------------
 .pageBody {
     padding: 40px;
+    padding-bottom: 100px; // AUMENTA ESTO para que el contenido no pegue abajo
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
-
+    min-height: calc(100vh - 100px);
     @include mobile-only {
         padding: 20px;
     }

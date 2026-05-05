@@ -76,16 +76,6 @@ const PrivateLayout = () => {
                                 </li>
                             );
                         })}
-                        <div className={styles.navSpacer}></div>
-                        <li className={styles.logoutContainer}>
-                            <Link to="/login" className={`${styles.navItem} ${styles.logoutItem}`}>
-                                <div className={styles.navIcon}>
-                                    <LogOut size={22} color="#f87171" />
-                                </div>
-                                {!isDesktopCollapsed && <span className={styles.navLabel} style={{ color: '#f87171' }}>Salir</span>}
-                                {isDesktopCollapsed && isMobileMenuOpen && <span className={styles.navLabel} style={{ color: '#f87171' }}>Salir</span>}
-                            </Link>
-                        </li>
                     </ul>
                 </nav>
             </aside>
