@@ -55,18 +55,23 @@ function App() {
                     {/* =========================
                         🔐 RUTAS PRIVADAS (Protegidas)
           ========================= */}
-                    <Route
+                    {/* --- GRUPO PRIVADO (Autenticación desactivada para prototipo) --- */}
+                    <Route path="/dashboard" element={<PrivateLayout />}>
+                        <Route index element={<Dashboard />} />
+                        <Route path="perfil" element={<Profile />} />
+                        {/* Asegúrate de que el componente CoursesPrivate esté importado arriba */}
+                    </Route>
+
+                    {/* <Route
                         path="/dashboard"
                         element={
                             isAuthenticated ? <PrivateLayout /> : <Navigate to="/login" replace />
                         }
                     >
-                        {/* Ruta por defecto cuando se entra a /dashboard */}
                         <Route index element={<Dashboard />} />
-                        {/* Subrutas */}
                         <Route path="perfil" element={<Profile />} />
                         <Route path="cursos" element={<h1>Mis Cursos (En construcción)</h1>} />
-                    </Route>
+                    </Route> */}
 
                     {/* =========================
                             ❌ MANEJO DE 404

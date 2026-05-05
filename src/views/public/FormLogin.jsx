@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthLayout from '@/components/core/AuthLayout';
 import styles from '../public/styles/FormLogin.module.scss';
 const FormLogin = () => {
+    const navigate = useNavigate(); // <-- AGREGA ESTA LÍNEA
     const [showPassword, setShowPassword] = useState(false);
+    const handleLogin = (e) => {
+        e.preventDefault(); // <--- CRÍTICO: Esto detiene el refresco de página
 
+        console.log('Navegando al dashboard...');
+        navigate('/dashboard');
+    };
     return (
-        <AuthLayout 
-            title="Bienvenido a" 
-            subtitle="Ingresa tus credenciales para acceder."
-        >
-            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+        <AuthLayout title="Bienvenido a" subtitle="Ingresa tus credenciales para acceder.">
+            <form className={styles.form} onSubmit={handleLogin}>
                 <div className={styles.inputGroup}>
                     <label>Correo Electrónico</label>
                     <div className={styles.inputWrapper}>
@@ -24,22 +28,36 @@ const FormLogin = () => {
                     <label>Contraseña</label>
                     <div className={styles.inputWrapper}>
                         <Lock className={styles.icon} size={18} />
-                        <input type={showPassword ? "text" : "password"} placeholder="••••••••" required />
-                        <button type="button" className={styles.eyeBtn} onClick={() => setShowPassword(!showPassword)}>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="••••••••"
+                            required
+                        />
+                        <button
+                            type="button"
+                            className={styles.eyeBtn}
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
                     </div>
                 </div>
 
                 <div className={styles.actions}>
-                    <Link to="/recuperar" className={styles.forgot}>¿Olvidaste tu contraseña?</Link>
+                    <Link to="/recuperar" className={styles.forgot}>
+                        ¿Olvidaste tu contraseña?
+                    </Link>
                 </div>
 
-                <button type="submit" className={styles.submitBtn}>Iniciar Sesión</button>
+                <button type="submit" className={styles.submitBtn}>
+                    Iniciar Sesión
+                </button>
             </form>
 
             <footer className={styles.footer}>
-                <p>¿Aún no eres alumno? <Link to="/courses">Ver Cursos</Link></p>
+                <p>
+                    ¿Aún no eres alumno? <Link to="/courses">Ver Cursos</Link>
+                </p>
             </footer>
         </AuthLayout>
     );
