@@ -4,20 +4,20 @@
 .dashboardWrapper {
     display: flex;
     min-height: 100vh;
-    background-color: #f8fafc; /* Color pizarra muy claro del prototipo */
+    background-color: $bg-light; 
 }
 
 // ------------------------------------
 // Sidebar
 // ------------------------------------
 .sidebar {
-    width: 260px;
+    width: $sidebar-width;
     height: 100vh;
-    background-color: #0f172a;
+    background-color: $text-dark;
     display: flex;
     flex-direction: column;
-    padding: 20px 14px;
-    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s ease;
+    padding: $space-lg $space-md;
+    transition: width 0.4s $ease-standard, transform 0.4s ease;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     position: sticky;
     top: 0;
@@ -176,14 +176,14 @@
         gap: 8px;
         padding-bottom: 20px;
         li {
-            .navItem {
+                .navItem {
                 display: flex;
                 align-items: center;
-                padding: 12px 14px;
-                border-radius: 12px;
-                color: #94a3b8;
+                padding: $space-md $space-lg;
+                border-radius: $radius-md;
+                color: $text-muted;
                 text-decoration: none;
-                transition: all 0.3s ease;
+                transition: all $transition;
                 cursor: pointer;
                 overflow: hidden;
 
@@ -337,7 +337,7 @@
     .userBadge {
         width: 40px;
         height: 40px;
-        background: #3b82f6; /* Azul mxsoon */
+        background: #3b82f6;
         color: white;
         border-radius: 50%;
         display: flex;
