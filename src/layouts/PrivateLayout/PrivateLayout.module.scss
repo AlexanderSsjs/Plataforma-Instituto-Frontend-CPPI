@@ -4,363 +4,406 @@
 .dashboardWrapper {
     display: flex;
     min-height: 100vh;
-    background-color: $bg-light; 
+    background-color: $bg-light;
+    overflow: hidden;
 }
 
 // ------------------------------------
-// Sidebar
+// Sidebar (Menú Lateral)
 // ------------------------------------
 .sidebar {
     width: $sidebar-width;
     height: 100vh;
-    background-color: $text-dark;
+    background-color: #1a1c1e; // Fondo oscuro elegante
     display: flex;
     flex-direction: column;
-    padding: $space-lg $space-md;
-    transition: width 0.4s $ease-standard, transform 0.4s ease;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    position: sticky;
-    top: 0;
-    box-sizing: border-box;
+    padding: $space-lg 0;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
     z-index: 100;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 
     &.collapsed {
-        width: 85px;
-        
+        width: 80px;
+
+        .logoText, .navLabel, .logoutBtn span {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .logoContainer {
+            justify-content: center;
+            padding: 0;
+        }
+
         .navItem {
             justify-content: center;
-            padding: 12px 0;
-
-            &:hover {
-                transform: scale(1.1);
-            }
+            padding: $space-md;
+            margin: 0 $space-sm;
         }
 
-        .collapseBtn {
-            position: absolute;
-            right: -5px;
-            background: #0f172a;
+        .logoutBtn {
+            justify-content: center;
+            padding: $space-md;
         }
     }
 
-    // Mobile: oculto por defecto (fuera de la pantalla)
     @include mobile-only {
         position: fixed;
-        top: 0;
         left: 0;
+        top: 0;
+        bottom: 0;
         transform: translateX(-100%);
-        width: 260px; // En móvil siempre tiene 260px si está abierto
-        
-        &.collapsed {
-            width: 260px; // En móvil no aplicamos el collapse visual de escritorio
-        }
-    }
+        width: 280px;
+        transition: transform 0.3s ease;
 
-    // Estado abierto en móvil
-    &.mobileOpen {
-        transform: translateX(0);
+        &.mobileOpen {
+            transform: translateX(0);
+        }
     }
 }
 
-/* Header y Botón de Colapso */
 .sidebarHeader {
+    padding: 0 $space-lg;
+    margin-bottom: $space-2xl;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 0 10px;
-    position: relative;
-    
+    height: 40px;
+
     .logoContainer {
         display: flex;
         align-items: center;
-        gap: 12px;
-        cursor: pointer;
-        color: #3b82f6; /* Color acento mxsoon */
-    }
+        gap: $space-md;
+        text-decoration: none;
+        transition: all 0.3s ease;
 
-    .logoText {
-        transition: opacity 0.3s ease, transform 0.3s ease;
-
-        &.hidden {
-            opacity: 0;
-            transform: translateX(-10px);
-            pointer-events: none;
-            position: absolute;
+        .logoImg {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
         }
 
-        &.visible {
-            opacity: 1;
-            transform: translateX(0);
+        .logoText {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            transition: opacity 0.2s ease;
         }
     }
 
     .collapseBtn {
-        background: none;
+        background: rgba(255, 255, 255, 0.05);
         border: none;
-        color: rgba(white, 0.7);
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 50%;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-        &.hideBtn {
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(0.5) translateX(-10px);
+        &:hover {
+            background: $primary;
+            box-shadow: 0 0 15px rgba($primary, 0.4);
         }
 
-        &.showBtn {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1) translateX(0);
-            
-            &:hover {
-                background: #3b82f6;
-                color: white;
-                box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-            }
-        }
+        &.hideBtn { opacity: 0; visibility: hidden; }
 
-        @include mobile-only {
-            display: none; // Oculto en móvil porque usamos el botón mobileCloseBtn
-        }
+        @include mobile-only { display: none; }
     }
 
     .mobileCloseBtn {
         display: none;
         background: none;
         border: none;
-        color: rgba(white, 0.7);
+        color: white;
         cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 50%;
-        transition: all $transition-fast;
-
-        &:hover {
-            color: white;
-            background: rgba(white, 0.1);
-        }
 
         @include mobile-only {
             display: flex;
             align-items: center;
-            justify-content: center;
         }
     }
 }
 
-/* Items de Navegación */
 .navigation {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    padding-right: 4px; 
+    justify-content: space-between;
+    padding: 0 $space-sm;
+}
 
-    /* Estilizar el scrollbar para que sea discreto */
-    &::-webkit-scrollbar {
-        width: 5px;
-    }
-    
+.navLinks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+    .navItem {
         display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding-bottom: 20px;
-        li {
-                .navItem {
-                display: flex;
-                align-items: center;
-                padding: $space-md $space-lg;
-                border-radius: $radius-md;
-                color: $text-muted;
-                text-decoration: none;
-                transition: all $transition;
-                cursor: pointer;
-                overflow: hidden;
+        align-items: center;
+        padding: $space-md $space-lg;
+        color: #94a3b8;
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+        font-weight: 500;
+        font-size: 0.95rem;
 
-                .navIcon {
-                    min-width: 24px;
-                    display: flex;
-                    justify-content: center;
-                }
+        .navIcon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
 
-                .navLabel {
-                    margin-left: 12px;
-                    font-size: 0.95rem;
-                    font-weight: 500;
-                    white-space: nowrap;
-                }
+        .navLabel {
+            margin-left: 12px;
+            white-space: nowrap;
+            transition: opacity 0.2s ease;
+        }
 
-                &:hover {
-                    background: rgba(255, 255, 255, 0.05);
-                    color: white;
-                    transform: translateX(4px);
-                }
-
-                &.active {
-                    background: #3b82f6;
-                    color: white !important;
-                    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
-                }
+        &:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            
+            .navIcon {
+                transform: scale(1.1);
             }
         }
 
-        .navSpacer {
-            flex: 1;
-        }
+        &.active {
+            color: white;
+            background: $primary;
+            box-shadow: 0 8px 20px rgba($primary, 0.25);
 
-        .logoutContainer {
-            .logoutItem {
-                margin-top: 20px;
-                border-top: 1px solid rgba(255, 255, 255, 0.05);
-                padding-top: 20px;
-                border-radius: 0;
-
-                &:hover {
-                    background: rgba(248, 113, 113, 0.1);
-                    color: #f87171 !important;
-                }
+            .navIcon {
+                color: white;
             }
         }
     }
 }
 
-// ------------------------------------
-// Overlay para móvil
-// ------------------------------------
-.overlay {
-    display: none;
-    
-    @include mobile-only {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(15, 23, 42, 0.5);
-        backdrop-filter: blur(2px);
-        z-index: 90;
-        @include animation-fade-in-down(0.3s);
+.navFooter {
+    padding: $space-lg $space-md;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+    .logoutBtn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: none;
+        border: none;
+        color: #f87171;
+        padding: $space-md;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(248, 113, 113, 0.1);
+        }
     }
 }
 
 // ------------------------------------
-// Main Content
+// Main Content & Topbar
 // ------------------------------------
 .mainContent {
     flex: 1;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow-y: auto; 
-    overflow-x: hidden; // Evita scroll horizontal innecesario
-    width: 100%;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-    position: relative; // Para mejor control de capas
+    background-color: $bg-light;
+    transition: padding 0.4s ease;
+    position: relative;
 }
 
-// ------------------------------------
-// Topbar (Mobile Only as requested implicitly by prototype structure which had no topbar on desktop, but we need it for mobile toggle and user badge)
-// ------------------------------------
 .topbar {
-    height: $nav-height;
-    background: transparent;
-    border-bottom: none;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 $space-2xl;
     position: sticky;
     top: 0;
-    z-index: 10;
-    margin-top: 20px; /* para separar del techo un poco */
+    z-index: 90;
+    
+    // Glassmorphism Premium
+    background: $glass-bg-strong;
+    backdrop-filter: $blur-premium;
+    border-bottom: 1px solid $glass-border;
 
     @include mobile-only {
-        padding: 0 20px;
-        background: white;
-        margin-top: 0;
-        border-bottom: 1px solid $border-color;
+        padding: 0 $space-lg;
+        height: 65px;
     }
 }
 
-.mobileToggleBtn {
-    display: none;
-    background: none;
-    border: none;
-    color: $text-dark;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: $radius-sm;
-    transition: background-color $transition-fast;
+.topbarLeft {
+    display: flex;
+    align-items: center;
+    gap: $space-lg;
 
-    &:hover {
-        background-color: $bg-light;
+    .mobileToggleBtn {
+        display: none;
+        background: none;
+        border: none;
+        color: $text-dark;
+        cursor: pointer;
+        padding: $space-xs;
+        
+        @include mobile-only { display: flex; }
     }
 
-    @include mobile-only {
+    .breadcrumb {
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: $space-sm;
+        font-size: 0.9rem;
+
+        .breadcrumbLabel { color: $text-muted; }
+        .breadcrumbSeparator { color: $text-muted; opacity: 0.5; }
+        .breadcrumbCurrent { 
+            color: $text-dark; 
+            font-weight: 600; 
+        }
+
+        @include mobile-only { display: none; }
     }
 }
 
 .topbarRight {
     display: flex;
     align-items: center;
-    margin-left: auto;
-}
+    gap: $space-xl;
 
-.userInfo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    .topbarAction {
+        background: none;
+        border: none;
+        color: $text-light;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        padding: $space-xs;
+        transition: color 0.2s ease;
 
-    .userName {
-        font-weight: 500;
-        color: $text-dark;
+        &:hover { color: $primary; }
 
-        @include mobile-only {
-            display: none; 
+        .actionBadge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 8px;
+            height: 8px;
+            background: $primary;
+            border-radius: 50%;
+            border: 2px solid white;
         }
     }
+}
 
-    .userBadge {
-        width: 40px;
-        height: 40px;
-        background: #3b82f6;
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-xs $space-sm;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.03);
+    }
+
+    .userInfo {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+
+        .userName {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: $text-dark;
+            line-height: 1.2;
+        }
+
+        .userRole {
+            font-size: 0.75rem;
+            color: $text-muted;
+            font-weight: 500;
+        }
+
+        @include mobile-only { display: none; }
+    }
+
+    .userAvatar {
+        width: 38px;
+        height: 38px;
+        background: $primary;
         color: white;
-        border-radius: 50%;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 700;
-        font-size: 1.1rem;
-        cursor: pointer;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 10px rgba($primary, 0.2);
     }
 }
 
 // ------------------------------------
-// Page Body (Contenido)
+// Page Container (El "Marco")
 // ------------------------------------
+.pageContainer {
+    flex: 1;
+    padding: $space-lg;
+    overflow-y: auto;
+    background-color: $bg-light;
+
+    @include mobile-only {
+        padding: $space-md;
+    }
+}
+
 .pageBody {
-    padding: 40px;
-    padding-bottom: 100px; // AUMENTA ESTO para que el contenido no pegue abajo
+    background: $bg-card;
+    border-radius: 24px;
+    min-height: 100%;
+    padding: $space-2xl;
+    box-shadow: $sh-sm;
+    border: 1px solid $glass-border;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
-    min-height: calc(100vh - 100px);
+
     @include mobile-only {
-        padding: 20px;
+        padding: $space-lg;
+        border-radius: 16px;
     }
 }
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    z-index: 95;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
