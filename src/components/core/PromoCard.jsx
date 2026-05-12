@@ -42,7 +42,7 @@ const PromoCard = (className) => {
             <div className={styles.promoRight}>
                 <div className={styles.priceBox}>
                     <span className={styles.oldPrice}>Antes S/ 300</span>
-                    <span className={styles.newPrice}>S/ 120</span>
+                    <span className={styles.newPrice}>S/ 130</span>
                 </div>
                 <a
                     href="https://api.whatsapp.com/send/?phone=51930449016&text=¡Hola! Quiero aprovechar la promoción de S/ 120&type=phone_number&app_absent=0"

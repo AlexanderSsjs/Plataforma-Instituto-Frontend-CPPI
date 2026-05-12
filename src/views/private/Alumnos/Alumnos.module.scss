@@ -22,8 +22,13 @@
 
 .listaAlumnos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: $space-lg;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+        gap: $space-md;
+    }
 }
 
 .alumnoCard {
@@ -49,10 +54,20 @@
     padding-bottom: $space-md;
     border-bottom: 1px solid $border-color;
 
+    @include mobile-mini {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .headerMain {
         display: flex;
         align-items: center;
         gap: $space-md;
+
+        @include mobile-mini {
+            flex-direction: column;
+        }
     }
 
     .btnEdit {

@@ -46,7 +46,7 @@ function App() {
             <Suspense fallback={<PageLoader />}>
                 <Routes>
                     {/* =========================
-              🌐 RUTAS PÚBLICAS
+                        🌐 RUTAS PÚBLICAS
           ========================= */}
                     <Route element={<PublicLayout />}>
                         <Route index element={<Home />} />
@@ -61,18 +61,24 @@ function App() {
                     <Route path="/recuperar" element={<ForgotPass />} />
 
                     {/* =========================
-              🔐 RUTAS PRIVADAS (Protegidas)
+                        🔐 RUTAS PRIVADAS (Protegidas)
           ========================= */}
-                    <Route
+                    {/* --- GRUPO PRIVADO (Autenticación desactivada para prototipo) --- */}
+                    <Route path="/dashboard" element={<PrivateLayout />}>
+                        <Route index element={<Dashboard />} />
+                        <Route path="perfil" element={<Profile />} />
+                        {/* Asegúrate de que el componente CoursesPrivate esté importado arriba */}
+                    </Route>
+
+                    {/* <Route
                         path="/dashboard"
                         element={
                             isAuthenticated ? <PrivateLayout /> : <Navigate to="/login" replace />
                         }
                     >
-                        {/* Ruta por defecto cuando se entra a /dashboard */}
                         <Route index element={<Dashboard />} />
-                        {/* Subrutas */}
                         <Route path="perfil" element={<Profile />} />
+
                         <Route path="alumnos" element={<Alumnos />} />
                         <Route path="cursos" element={<MisCursos />} />
                         <Route path="cursos/:id" element={<DetalleCurso />} />
@@ -82,9 +88,7 @@ function App() {
                         <Route path="CursosAsignados" element={<CursosAsignados />} />
                         <Route path="/dashboard/detallealumnos/:id?" element={<DetalleAlumno />} />
                     </Route>
-                    {/* =========================
-              ❌ MANEJO DE 404
-          ========================= */}
+
                     {/* En lugar de solo redirigir, podrías mostrar una página 404 personalizada */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
