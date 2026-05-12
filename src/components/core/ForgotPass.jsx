@@ -11,17 +11,14 @@ const ForgotPass = () => {
     const navigate = useNavigate(); // 🔥 Inicializamos el hook
     const [modalConfig, setModalConfig] = useState({
         isOpen: false,
-        type: 'success', // 'success' | 'error' | 'danger'
+        type: 'success',
         title: '',
         message: '',
         icon: CheckCircle,
     });
 
-    // Función para cerrar (y redirigir solo si es éxito)
-
     const handleSubmit = (e) => {
         e.preventDefault();
-// EJEMPLO 1: ÉXITO (Success)
         setModalConfig({
             isOpen: true,
             type: 'success',
@@ -29,9 +26,9 @@ const ForgotPass = () => {
             message: 'Hemos enviado las instrucciones a tu correo institucional.',
             icon: CheckCircle,
         });
-        /* // EJEMPLO 2: EL CORREO NO EXISTE (Error / Warning)
         
-
+        
+        /* // EJEMPLO 2: EL CORREO NO EXISTE (Error / Warning)
     setModalConfig({
         isOpen: true,
         type: 'error',

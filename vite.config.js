@@ -8,7 +8,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig(() => {
     return {
         plugins: [react()],
-        // Cambiado a '/' para que las rutas apunten a la raíz de fundacionperu.org.pe
         base: '/', 
         resolve: {
             alias: {

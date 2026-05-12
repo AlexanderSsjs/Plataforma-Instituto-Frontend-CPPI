@@ -8,7 +8,6 @@ const PrivateLayout = () => {
     const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
     const location = useLocation();
 
-    // Cerrar el menú móvil cuando cambia la ruta
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
@@ -35,7 +34,6 @@ const PrivateLayout = () => {
 
     return (
         <div className={styles.dashboardWrapper}>
-            {/* 1. Sidebar Lateral */}
             <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.mobileOpen : ''} ${isDesktopCollapsed ? styles.collapsed : ''}`}>
                 <div className={styles.sidebarHeader}>
                     <Link to="/dashboard" className={styles.logoContainer}>
@@ -51,8 +49,6 @@ const PrivateLayout = () => {
                     >
                         <ChevronLeft size={18} />
                     </button>
-                    
-                    {/* Botón de cerrar solo para móvil */}
                     <button className={styles.mobileCloseBtn} onClick={toggleMobileMenu} aria-label="Cerrar menú">
                         <X size={24} />
                     </button>
@@ -85,13 +81,16 @@ const PrivateLayout = () => {
                 </nav>
             </aside>
 
+
             {/* Overlay para móvil */}
+
+
             {isMobileMenuOpen && (
                 <div className={styles.overlay} onClick={toggleMobileMenu} aria-hidden="true"></div>
             )}
 
             <div className={`${styles.mainContent} ${isDesktopCollapsed ? styles.expanded : ''}`}>
-                {/* 2. Topbar Mejorado */}
+
                 <header className={styles.topbar}>
                     <div className={styles.topbarLeft}>
                         <button className={styles.mobileToggleBtn} onClick={toggleMobileMenu} aria-label="Abrir menú">
@@ -124,12 +123,18 @@ const PrivateLayout = () => {
                     </div>
                 </header>
 
+
                 {/* 3. Contenido con Marco */}
                 <div className={styles.pageContainer}>
                     <main className={styles.pageBody}>
                         <Outlet />
                     </main>
                 </div>
+
+                <main className={styles.pageBody}>
+                    <Outlet />
+                </main>
+
             </div>
         </div>
     );

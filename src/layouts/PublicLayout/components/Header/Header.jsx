@@ -17,9 +17,9 @@ const Header = () => {
             Iniciar Sesión
         </Link>
 
-        //<a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
-        //    Iniciar Sesión
-        //</a>
+        // <a href="https://ingenierialider.org.pe/login/index.php" className={styles.btn}>
+        // Iniciar Sesión
+        // </a>
     );
 
     return (
