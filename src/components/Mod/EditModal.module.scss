@@ -1,0 +1,199 @@
+@import '../../styles/variables';
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: $space-md;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modalContainer {
+    background: $bg-card;
+    width: 100%;
+    max-width: 600px;
+    border-radius: $radius-lg;
+    box-shadow: $sh-lg;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    animation: slideUp 0.4s $ease-standard;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: $space-xl;
+    background: linear-gradient(135deg, rgba($primary, 0.05), transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid $border-color;
+
+    .titleWrapper {
+        h2 {
+            font-size: $font-size-xl;
+            color: $text-dark;
+            margin: 0 0 4px;
+            font-weight: $font-weight-bold;
+        }
+        p {
+            font-size: $font-size-sm;
+            color: $text-light;
+            margin: 0;
+        }
+    }
+
+    .closeBtn {
+        background: $bg-light;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-muted;
+        cursor: pointer;
+        transition: all $transition;
+
+        &:hover {
+            background: #ef4444;
+            color: white;
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.form {
+    padding: $space-xl;
+}
+
+.fieldsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-lg;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+
+    label {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        color: $text-dark;
+        margin-left: 4px;
+    }
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .inputIcon {
+        position: absolute;
+        left: 12px;
+        color: $primary;
+        opacity: 0.7;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        background: $bg-light;
+        border: 1px solid $border-color;
+        border-radius: $radius-md;
+        font-size: $font-size-sm;
+        color: $text-dark;
+        transition: all $transition;
+
+        &:focus {
+            outline: none;
+            border-color: $primary;
+            background: white;
+            box-shadow: 0 0 0 4px rgba($primary, 0.1);
+        }
+
+        &::placeholder {
+            color: $text-muted;
+        }
+    }
+}
+
+.footer {
+    margin-top: $space-2xl;
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-md;
+    padding-top: $space-lg;
+    border-top: 1px solid $border-color;
+
+    button {
+        padding: 10px 24px;
+        border-radius: $radius-md;
+        font-weight: $font-weight-bold;
+        cursor: pointer;
+        transition: all $transition;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btnCancel {
+        background: transparent;
+        border: 1px solid $border-color;
+        color: $text-light;
+
+        &:hover {
+            background: $bg-light;
+            color: $text-dark;
+        }
+    }
+
+    .btnSave {
+        background: $primary;
+        border: 1px solid $primary;
+        color: white;
+        box-shadow: 0 4px 12px rgba($primary, 0.2);
+
+        &:hover {
+            background: $primary-hover;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba($primary, 0.3);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

@@ -1,0 +1,284 @@
+@import '../../../styles/variables';
+
+.cursosContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    @include fade-in-up(0.1s);
+}
+
+.header {
+    h1 {
+        font-size: $font-size-3xl;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        margin-bottom: $space-xs;
+    }
+    p {
+        color: $text-light;
+        font-size: $font-size-lg;
+    }
+}
+
+.gridCursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $space-lg;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cursoCard {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+    overflow: hidden;
+    transition: all $transition;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        box-shadow: $sh-md;
+        transform: translateY(-4px);
+    }
+}
+
+.cardHeader {
+    padding: $space-lg;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .iconBox {
+        width: 48px;
+        height: 48px;
+        background: rgba($primary, 0.1);
+        color: $primary;
+        border-radius: $radius-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .progresoBadge {
+        background: $primary;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+    }
+}
+
+.cardBody {
+    padding: 0 $space-lg $space-lg;
+    flex: 1;
+
+    h3 {
+        font-size: $font-size-xl;
+        color: $text-dark;
+        margin-bottom: $space-md;
+        font-weight: $font-weight-bold;
+    }
+
+    .instructor, .horario {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        color: $text-light;
+        font-size: $font-size-sm;
+        margin-bottom: $space-sm;
+
+        svg { color: $primary; }
+    }
+
+    .progressBar {
+        height: 8px;
+        background: $bg-light;
+        border-radius: 4px;
+        margin-top: $space-lg;
+        overflow: hidden;
+
+        .progressFill {
+            height: 100%;
+            background: linear-gradient(90deg, $primary, $accent-gold);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+    }
+}
+
+.cardFooter {
+    padding: $space-lg;
+    border-top: 1px solid $border-color;
+    background: $bg-light;
+
+    .btnDetalles {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $space-sm;
+        width: 100%;
+        padding: $space-sm;
+        background: white;
+        border: 1px solid $border-color;
+        border-radius: $radius-md;
+        color: $text-dark;
+        font-weight: $font-weight-semibold;
+        text-decoration: none;
+        transition: all $transition;
+
+        &:hover {
+            border-color: $primary;
+            color: $primary;
+            background: rgba($primary, 0.05);
+        }
+    }
+}
+
+// Estilos para DetalleCurso
+.backLink {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: $primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    margin-bottom: $space-sm;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.detalleContent {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $space-xl;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
+}
+
+.infoCard {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    padding: $space-xl;
+    margin-bottom: $space-lg;
+
+    h3 {
+        font-size: $font-size-xl;
+        color: $text-dark;
+        margin-bottom: $space-lg;
+        border-bottom: 2px solid $bg-light;
+        padding-bottom: $space-sm;
+    }
+
+    p {
+        color: $text-light;
+        line-height: 1.6;
+        margin-bottom: $space-xl;
+    }
+}
+
+.metaGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-lg;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+
+    svg { color: $primary; }
+
+    .label {
+        display: block;
+        font-size: $font-size-xs;
+        color: $text-muted;
+    }
+    .value {
+        font-weight: $font-weight-semibold;
+        color: $text-dark;
+    }
+}
+
+.temarioList {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+}
+
+.temarioItem {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-sm;
+    border-radius: $radius-md;
+    background: $bg-light;
+
+    .check {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: white;
+        border: 1px solid $border-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: $font-weight-bold;
+        color: $text-muted;
+
+        &.done {
+            background: #22c55e;
+            color: white;
+            border-color: #22c55e;
+        }
+    }
+
+    span {
+        color: $text-dark;
+        font-weight: $font-weight-medium;
+    }
+}
+
+.recursosList {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+}
+
+.recursoBtn {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    padding: $space-md;
+    background: white;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    color: $text-dark;
+    cursor: pointer;
+    transition: all $transition;
+    width: 100%;
+
+    svg:last-child { margin-left: auto; color: $text-muted; }
+
+    &:hover {
+        border-color: $primary;
+        color: $primary;
+        svg:last-child { color: $primary; }
+    }
+}
