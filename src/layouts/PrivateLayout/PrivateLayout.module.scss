@@ -26,7 +26,9 @@
     &.collapsed {
         width: 80px;
 
-        .logoText, .navLabel, .logoutBtn span {
+        .logoText,
+        .navLabel,
+        .logoutBtn span {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -112,9 +114,14 @@
             box-shadow: 0 0 15px rgba($primary, 0.4);
         }
 
-        &.hideBtn { opacity: 0; visibility: hidden; }
+        &.hideBtn {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-        @include mobile-only { display: none; }
+        @include mobile-only {
+            display: none;
+        }
     }
 
     .mobileCloseBtn {
@@ -174,7 +181,7 @@
         &:hover {
             color: white;
             background: rgba(255, 255, 255, 0.05);
-            
+
             .navIcon {
                 transform: scale(1.1);
             }
@@ -238,7 +245,7 @@
     position: sticky;
     top: 0;
     z-index: 90;
-    
+
     // Glassmorphism Premium
     background: $glass-bg-strong;
     backdrop-filter: $blur-premium;
@@ -262,8 +269,10 @@
         color: $text-dark;
         cursor: pointer;
         padding: $space-xs;
-        
-        @include mobile-only { display: flex; }
+
+        @include mobile-only {
+            display: flex;
+        }
     }
 
     .breadcrumb {
@@ -272,14 +281,21 @@
         gap: $space-sm;
         font-size: 0.9rem;
 
-        .breadcrumbLabel { color: $text-muted; }
-        .breadcrumbSeparator { color: $text-muted; opacity: 0.5; }
-        .breadcrumbCurrent { 
-            color: $text-dark; 
-            font-weight: 600; 
+        .breadcrumbLabel {
+            color: $text-muted;
+        }
+        .breadcrumbSeparator {
+            color: $text-muted;
+            opacity: 0.5;
+        }
+        .breadcrumbCurrent {
+            color: $text-dark;
+            font-weight: 600;
         }
 
-        @include mobile-only { display: none; }
+        @include mobile-only {
+            display: none;
+        }
     }
 }
 
@@ -298,7 +314,9 @@
         padding: $space-xs;
         transition: color 0.2s ease;
 
-        &:hover { color: $primary; }
+        &:hover {
+            color: $primary;
+        }
 
         .actionBadge {
             position: absolute;
@@ -344,7 +362,9 @@
             font-weight: 500;
         }
 
-        @include mobile-only { display: none; }
+        @include mobile-only {
+            display: none;
+        }
     }
 
     .userAvatar {
@@ -404,6 +424,10 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,5 +1,3 @@
-@import '../../../styles/variables';
-
 // 1. Contenedor Principal (Layout de la página)
 .asistenciasContainer {
     display: flex;
@@ -34,7 +32,7 @@
     background: $bg-card;
     border-radius: $radius-lg;
     box-shadow: $sh-sm;
-    padding: $space-md; 
+    padding: $space-md;
     border: 1px solid $border-color;
     width: 100%;
     transition: box-shadow $transition;
@@ -92,7 +90,7 @@
     .textWrapper {
         display: flex;
         flex-direction: column;
-        
+
         .label {
             font-size: $font-size-xs;
             color: $text-muted;
@@ -142,11 +140,16 @@
 
     // Marcado (Verde para el profe)
     &.marcado {
-        background: rgba(34, 197, 94, 0.1); 
+        background: rgba(34, 197, 94, 0.1);
         border-color: #22c55e;
-        
-        .diaNombre { color: #166534; font-weight: $font-weight-bold; }
-        .diaIcon { color: #22c55e; }
+
+        .diaNombre {
+            color: #166534;
+            font-weight: $font-weight-bold;
+        }
+        .diaIcon {
+            color: #22c55e;
+        }
     }
 
     // Solo lectura (Para el alumno)
@@ -159,8 +162,14 @@
         }
     }
 
-    .diaIcon { color: $primary; display: flex; }
-    .diaNombre { color: $text-dark; font-size: $font-size-sm; }
+    .diaIcon {
+        color: $primary;
+        display: flex;
+    }
+    .diaNombre {
+        color: $text-dark;
+        font-size: $font-size-sm;
+    }
 }
 
 // 8. Botón Guardar

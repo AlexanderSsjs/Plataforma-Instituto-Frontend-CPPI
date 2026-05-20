@@ -1,5 +1,3 @@
-@import '../../../styles/variables';
-
 .container {
     padding: $space-lg;
     @include fade-in-up(0.2s);
@@ -7,8 +5,13 @@
 
 .header {
     margin-bottom: $space-xl;
-    h1 { font-size: $font-size-3xl; color: $text-dark; }
-    p { color: $text-light; }
+    h1 {
+        font-size: $font-size-3xl;
+        color: $text-dark;
+    }
+    p {
+        color: $text-light;
+    }
 }
 
 .bloqueSection {
@@ -49,9 +52,14 @@
         align-items: center;
         gap: $space-md;
         margin-bottom: $space-md;
-        
-        .icon { color: $primary; }
-        h3 { font-size: $font-size-lg; font-weight: $font-weight-bold; }
+
+        .icon {
+            color: $primary;
+        }
+        h3 {
+            font-size: $font-size-lg;
+            font-weight: $font-weight-bold;
+        }
     }
 
     p {
@@ -95,13 +103,18 @@
         border-radius: $radius-md;
         cursor: pointer;
         color: $text-light;
-        &:hover { color: $primary; border-color: $primary; }
+        &:hover {
+            color: $primary;
+            border-color: $primary;
+        }
     }
 }
 .modalOverlay {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
@@ -123,16 +136,25 @@
 
 .btnClose {
     position: absolute;
-    top: $space-md; right: $space-md;
-    border: none; background: none;
-    cursor: pointer; color: $text-light;
-    &:hover { color: $primary; }
+    top: $space-md;
+    right: $space-md;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $text-light;
+    &:hover {
+        color: $primary;
+    }
 }
 
 .hojaHeader {
     text-align: center;
     margin-bottom: $space-xl;
-    h2 { font-weight: $font-weight-bold; color: $text-dark; text-decoration: underline; }
+    h2 {
+        font-weight: $font-weight-bold;
+        color: $text-dark;
+        text-decoration: underline;
+    }
 }
 
 .tableWrapper {
@@ -158,17 +180,23 @@
         vertical-align: top;
         color: #333;
 
-        ul, ol {
+        ul,
+        ol {
             padding-left: $space-lg;
             margin: 0;
-            li { margin-bottom: 4px; }
+            li {
+                margin-bottom: 4px;
+            }
         }
     }
 
     .centerText {
         text-align: center;
         font-weight: bold;
-        span { font-weight: normal; font-size: 0.75rem; }
+        span {
+            font-weight: normal;
+            font-size: 0.75rem;
+        }
     }
 }
 .moduloTag {
@@ -187,9 +215,15 @@
     border-bottom: 2px solid #000;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    
-    h2 { font-size: 1.2rem; margin: 5px 0; }
-    h3 { font-size: 1rem; color: #555; }
+
+    h2 {
+        font-size: 1.2rem;
+        margin: 5px 0;
+    }
+    h3 {
+        font-size: 1rem;
+        color: #555;
+    }
 }
 
 .infoCurso {
@@ -210,15 +244,18 @@
         color: white !important;
         font-weight: bold;
     }
-    
+
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
-    ul, ol {
+    ul,
+    ol {
         margin: 0;
         padding-left: 15px;
-        li { margin-bottom: 3px; }
+        li {
+            margin-bottom: 3px;
+        }
     }
 }
 

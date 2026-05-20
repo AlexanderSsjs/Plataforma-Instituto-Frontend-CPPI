@@ -1,5 +1,3 @@
-@import '../../../styles/variables';
-
 .profileContainer {
     display: flex;
     flex-direction: column;
@@ -12,7 +10,7 @@
         color: $text-dark;
         margin-bottom: 0.5rem;
     }
-    
+
     p {
         color: $text-light;
         font-size: 1.1rem;
@@ -30,7 +28,7 @@
     height: 200px;
     background: linear-gradient(135deg, rgba($primary, 0.8), rgba($primary-hover, 0.9));
     position: relative;
-    
+
     @include mobile-only {
         height: 150px;
     }
@@ -70,7 +68,7 @@
 .avatarSection {
     margin-top: -60px;
     margin-bottom: 1rem;
-    
+
     @include mobile-only {
         margin-top: -50px;
         display: flex;

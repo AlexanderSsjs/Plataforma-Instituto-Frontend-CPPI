@@ -1,5 +1,3 @@
-@use '../../../styles/variables' as *;
-
 .container {
     padding: $space-lg;
     background-color: $bg-main;
@@ -10,7 +8,7 @@
 // --- ESTILO DEL BUSCADOR ---
 .searchBar {
     margin-bottom: $space-xl;
-    
+
     form {
         display: flex;
         gap: $space-md;
@@ -152,7 +150,8 @@
         padding-bottom: $space-xs;
     }
 
-    .statValue, .detailGroup span {
+    .statValue,
+    .detailGroup span {
         font-size: $font-size-xl;
         font-weight: $font-weight-medium;
         color: #2d3748;
@@ -199,7 +198,7 @@
     .header {
         flex-direction: column;
         text-align: center;
-        
+
         .titleRow {
             flex-direction: column;
             gap: $space-xs;

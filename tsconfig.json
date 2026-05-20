@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    /* BASE */
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": false,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+
+    /* MÓDULOS */
+    "module": "ESNext",
+    "moduleResolution": "bundler", /* Mantiene la resolución óptima para Vite */
+
+    /* JSX */
+    "jsx": "react-jsx",
+
+    /* ESTRICTO (Garantiza código seguro y tipado en el LMS) */
+    "strict": true,
+    "noUnusedLocals": true,          /* Te avisa si dejas variables declaradas sin usar */
+    "noUnusedParameters": true,      /* Te avisa si dejas parámetros de funciones sin usar */
+    "noFallthroughCasesInSwitch": true, /* Evita errores lógicos en los bloques switch */
+
+    /* IMPORTS */
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+
+    /* TIPOS GLOBALES */
+    "types": ["node", "vite/client"], /* "vite/client" soluciona de raíz el error de import.meta */
+
+    /* CONFIGURACIÓN DE VITE */
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* RENDIMIENTO */
+    "skipLibCheck": true, /* Ignora la verificación de tipos de las librerías en node_modules (acelera la compilación) */
+
+    /* ALIAS DE RUTAS */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "src",
+    "vite.config.ts" /* Incluido para que TS no te marque líneas rojas dentro del config de Vite */
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
