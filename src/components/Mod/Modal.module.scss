@@ -22,7 +22,6 @@
     animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
 
-    
     &.success {
         .iconWrapper {
             background: rgba(34, 197, 94, 0.1);
@@ -35,22 +34,22 @@
 
     &.error {
         .iconWrapper {
-            background: rgba(245, 158, 11, 0.1);
-            color: #f59e0b;
-        }
-        .submitBtn {
-            background: #f59e0b;
-        } // Ámbar/Naranja
-    }
-
-    &.danger {
-        .iconWrapper {
             background: rgba(239, 68, 68, 0.1);
             color: #ef4444;
         }
         .submitBtn {
             background: #ef4444;
         } // Rojo
+    }
+
+    &.danger {
+        .iconWrapper {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+        .submitBtn {
+            background: #f59e0b;
+        }
     }
 }
 

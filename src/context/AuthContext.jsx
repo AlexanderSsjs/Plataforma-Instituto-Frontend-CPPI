@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { authService } from '@/services/Auth/authService'; // <--- CORREGIDO CON EL NOMBRE EXACTO DEL ARCHIVO
+import { authService } from '@/services/Auth/authService';
+import apiClient from '@/services/Api/client';
 
 const AuthContext = createContext(null);
 
@@ -9,18 +10,30 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const checkSession = async () => {
-            try {
-                const token = localStorage.getItem('auth_token');
-                const savedUser = localStorage.getItem('auth_user');
+            const token = localStorage.getItem('auth_token');
 
-                if (token && savedUser) {
-                    setUser(JSON.parse(savedUser));
-                }
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                // Aseguramos de inmediato la cabecera por si el interceptor tarda en registrarse
+                apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+                // Consultamos de forma directa al backend de Laravel
+                const validatedUser = await authService.getCurrentUser();
+                setUser(validatedUser);
             } catch (error) {
-                console.error('Sesión inválida o expirada:', error);
-                logoutAction(); // Limpiamos todo si el token falló
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Error de validación asíncrona en F5:', error);
+                }
+                // Si el token falló o expiró, ejecutamos la acción de limpieza local sin bucles
+                setUser(null);
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('auth_user');
             } finally {
-                setLoading(false); // Apagamos la pantalla de carga del LMS
+                setLoading(false); // Liberamos el candado de carga de la app
             }
         };
 
@@ -29,36 +42,45 @@ export function AuthProvider({ children }) {
 
     const loginAction = async (credentials) => {
         const data = await authService.login(credentials);
-        setUser(data.user || data);
-        if (data.token) {
-            localStorage.setItem('auth_token', data.token);
+        const currentUser = data.user || data;
+        const currentToken = data.token;
+
+        setUser(currentUser);
+
+        if (currentToken) {
+            localStorage.setItem('auth_token', currentToken);
+            apiClient.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
         }
-        localStorage.setItem('auth_user', JSON.stringify(data.user || data));
-        return data.user || data;
+
+        localStorage.setItem('auth_user', JSON.stringify(currentUser));
+        return currentUser;
     };
 
     const logoutAction = async () => {
         try {
             await authService.logout();
         } catch (error) {
-            console.error('Error al notificar cierre de sesión al servidor:', error);
+            if (process.env.NODE_ENV === 'development') {
+                console.error('Error al notificar cierre de sesión al servidor:', error);
+            }
         } finally {
             setUser(null);
             localStorage.removeItem('auth_token');
             localStorage.removeItem('auth_user');
+            delete apiClient.defaults.headers.common['Authorization'];
         }
     };
 
     return (
         <AuthContext.Provider value={{ user, loading, login: loginAction, logout: logoutAction }}>
-            {/* Mientras verifica si el alumno está logueado, muestra un spinner/pantalla de carga limpia */}
             {!loading ? (
                 children
             ) : (
                 <div className="flex h-screen w-screen items-center justify-center bg-[#0f172a] text-white">
                     <div className="text-center">
+                        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-solid border-yellow-500 border-t-transparent mx-auto"></div>
                         <p className="text-xl font-semibold animate-pulse tracking-wide">
-                            Cargando plataforma...
+                            Verificando credenciales seguras...
                         </p>
                     </div>
                 </div>
@@ -67,7 +89,6 @@ export function AuthProvider({ children }) {
     );
 }
 
-// Hook personalizado para inyectar la sesión en cualquier vista de forma directa
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {

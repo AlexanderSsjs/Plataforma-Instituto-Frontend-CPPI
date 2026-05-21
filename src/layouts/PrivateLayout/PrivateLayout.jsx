@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext'; // 🔒 Importamos la autenticación real
 import {
     Menu,
     X,
@@ -8,43 +9,98 @@ import {
     BookOpen,
     LogOut,
     ChevronLeft,
-    LayoutGrid,
     Users,
     Calendar,
     ClipboardList,
     Bell,
-    Search,
 } from 'lucide-react';
 import styles from './PrivateLayout.module.scss';
 
 const PrivateLayout = () => {
+    const { user, logout } = useAuth(); // 🔏 Extraemos los datos reales del usuario y logout
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
-    const location = useLocation();
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    const timeoutRef = useRef(null);
+    // 🔒 SEGURIDAD: Cerrar sesión automático por inactividad (15 minutos)
+    const INACTIVITY_TIME = 15 * 60 * 1000;
+
+    const handleInactivityLogout = () => {
+        logout();
+        navigate('/login?reason=inactivity');
+    };
+
+    const resetInactivityTimer = () => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(handleInactivityLogout, INACTIVITY_TIME);
+    };
+
+    useEffect(() => {
+        const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+        resetInactivityTimer();
+
+        events.forEach((event) => window.addEventListener(event, resetInactivityTimer));
+
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            events.forEach((event) => window.removeEventListener(event, resetInactivityTimer));
+        };
+    }, []);
+
+    // Cerrar menú móvil al cambiar de ruta
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
+    const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+    const toggleDesktopMenu = () => setIsDesktopCollapsed(!isDesktopCollapsed);
 
-    const toggleDesktopMenu = () => {
-        setIsDesktopCollapsed(!isDesktopCollapsed);
-    };
-
-    const navLinks = [
+    // 🔏 ARQUITECTURA SEGURA: Definimos qué roles pueden ver cada enlace
+    const allNavLinks = [
         { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/dashboard/perfil', label: 'Mi Perfil', icon: User },
-        { path: '/dashboard/alumnos', label: 'Alumnos', icon: Users },
+        { path: '/dashboard/alumnos', label: 'Alumnos', icon: Users, roles: ['admin', 'teacher'] },
         { path: '/dashboard/cursos', label: 'Mis Cursos', icon: BookOpen },
-        { path: '/dashboard/Asistencias', label: 'Asistencia', icon: ClipboardList },
+        {
+            path: '/dashboard/Asistencias',
+            label: 'Asistencia',
+            icon: ClipboardList,
+            roles: ['admin', 'teacher'],
+        },
         { path: '/dashboard/horarios', label: 'Horarios', icon: Calendar },
         { path: '/dashboard/actividades', label: 'Actividades', icon: ClipboardList },
-        { path: '/dashboard/CursosAsignados', label: 'Cursos Asignados', icon: ClipboardList },
-        { path: '/dashboard/detallealumnos', label: 'Detalles Alumnos', icon: Users },
+        {
+            path: '/dashboard/CursosAsignados',
+            label: 'Cursos Asignados',
+            icon: ClipboardList,
+            roles: ['admin', 'teacher'],
+        },
+        {
+            path: '/dashboard/detallealumnos',
+            label: 'Detalles Alumnos',
+            icon: Users,
+            roles: ['admin', 'teacher'],
+        },
     ];
+
+    // 🔒 FILTRADO DE SEGURIDAD: El alumno solo ve enlaces permitidos para su rol
+    const allowedNavLinks = allNavLinks.filter((link) => {
+        if (!link.roles) return true; // Ruta pública para todos los autenticados
+        return link.roles.includes(user?.role);
+    });
+
+    // Generar iniciales seguras para el avatar
+    const getInitials = (name) => {
+        if (!name) return 'U';
+        const parts = name.split(' ');
+        return parts
+            .map((p) => p[0])
+            .join('')
+            .substring(0, 2)
+            .toUpperCase();
+    };
 
     return (
         <div className={styles.dashboardWrapper}>
@@ -68,6 +124,7 @@ const PrivateLayout = () => {
                     <button
                         className={`${styles.collapseBtn} ${isDesktopCollapsed ? styles.hideBtn : styles.showBtn}`}
                         onClick={toggleDesktopMenu}
+                        aria-label="Minimizar menú"
                     >
                         <ChevronLeft size={18} />
                     </button>
@@ -82,7 +139,8 @@ const PrivateLayout = () => {
 
                 <nav className={styles.navigation}>
                     <ul className={styles.navLinks}>
-                        {navLinks.map((link) => {
+                        {allowedNavLinks.map((link) => {
+                            // Validación exacta de ruta activa para subrutas dinámicas
                             const isActive = location.pathname === link.path;
                             return (
                                 <li key={link.path}>
@@ -93,10 +151,7 @@ const PrivateLayout = () => {
                                         <div className={styles.navIcon}>
                                             <link.icon size={20} />
                                         </div>
-                                        {!isDesktopCollapsed && (
-                                            <span className={styles.navLabel}>{link.label}</span>
-                                        )}
-                                        {isDesktopCollapsed && isMobileMenuOpen && (
+                                        {(!isDesktopCollapsed || isMobileMenuOpen) && (
                                             <span className={styles.navLabel}>{link.label}</span>
                                         )}
                                     </Link>
@@ -106,15 +161,14 @@ const PrivateLayout = () => {
                     </ul>
 
                     <div className={styles.navFooter}>
-                        <button className={styles.logoutBtn}>
+                        {/* 🔒 CORRECCIÓN: Botón funcional de cierre de sesión que ejecuta el logout seguro */}
+                        <button className={styles.logoutBtn} onClick={() => logout()}>
                             <LogOut size={20} />
                             {!isDesktopCollapsed && <span>Cerrar Sesión</span>}
                         </button>
                     </div>
                 </nav>
             </aside>
-
-            {/* Overlay para móvil */}
 
             {isMobileMenuOpen && (
                 <div className={styles.overlay} onClick={toggleMobileMenu} aria-hidden="true"></div>
@@ -134,7 +188,7 @@ const PrivateLayout = () => {
                             <span className={styles.breadcrumbLabel}>Plataforma</span>
                             <span className={styles.breadcrumbSeparator}>/</span>
                             <span className={styles.breadcrumbCurrent}>
-                                {navLinks.find((l) => l.path === location.pathname)?.label ||
+                                {allNavLinks.find((l) => l.path === location.pathname)?.label ||
                                     'Panel'}
                             </span>
                         </div>
@@ -148,17 +202,23 @@ const PrivateLayout = () => {
 
                         <div className={styles.userProfile}>
                             <div className={styles.userInfo}>
-                                <span className={styles.userName}>Alexander Ssjs</span>
-                                <span className={styles.userRole}>Alumno</span>
+                                {/* 🔒 DINÁMICO: Mostramos los datos reales provistos por Laravel */}
+                                <span className={styles.userName}>{user?.name || 'Usuario'}</span>
+                                <span className={styles.userRole}>
+                                    {user?.role === 'admin'
+                                        ? 'Administrador'
+                                        : user?.role === 'teacher'
+                                          ? 'Profesor'
+                                          : 'Alumno'}
+                                </span>
                             </div>
                             <div className={styles.userAvatar}>
-                                <span>AL</span>
+                                <span>{getInitials(user?.name)}</span>
                             </div>
                         </div>
                     </div>
                 </header>
 
-                {/* 3. Contenido con Marco */}
                 <div className={styles.pageContainer}>
                     <main className={styles.pageBody}>
                         <Outlet />

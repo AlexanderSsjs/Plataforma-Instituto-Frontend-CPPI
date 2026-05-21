@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext'; // <--- IMPORTAMOS TU AUTENTICACIÓN REAL
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 // Layouts
 import PublicLayout from './layouts/PublicLayout/PublicLayout';
 import PrivateLayout from './layouts/PrivateLayout/PrivateLayout';
-import ScrollTop from './components/common/ScrollTop'; // Corregido a mayúscula para evitar errores de TS
+import ScrollTop from './components/common/ScrollTop';
 import FormLogin from '@/views/public/FormLogin';
 import ForgotPass from '@/components/core/ForgotPass';
 
@@ -18,7 +18,7 @@ import MisCursos from './views/private/Cursos/MisCursos';
 import DetalleCurso from './views/private/Cursos/DetalleCurso';
 import Horarios from './views/private/Horarios/Horarios';
 import Actividades from './views/private/Actividades/Actividades';
-import CursosAsignados from './views/private/CursosAsignados/CursosAsignados'; // Corregido a mayúscula
+import CursosAsignados from './views/private/CursosAsignados/CursosAsignados';
 import DetalleAlumno from './views/private/detallesalumnos/detallealumno';
 
 // Lazy loading para vistas públicas
@@ -43,20 +43,39 @@ const PageLoader = () => (
     </div>
 );
 
+// 🔒 GUARDIÁN DE SEGURIDAD AVANZADO (Autenticación + Autorización + Escudo de Carga)
+const ProtectedRoute = ({ isAuthenticated, user, allowedRoles, loading }) => {
+    // ⏳ CRÍTICO: Si el contexto está ocupado verificando si el token es válido contra Laravel,
+    // congelamos la pantalla temporalmente aquí en lugar de redirigir falsamente al login.
+    if (loading) {
+        return <PageLoader />;
+    }
+
+    // 1. Validar autenticación básica
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    // 2. Validar autorización por roles (si la ruta requiere roles específicos)
+    if (allowedRoles && !allowedRoles.includes(user?.role)) {
+        return <Navigate to="/dashboard" replace />;
+    }
+
+    return <Outlet />;
+};
+
 function App() {
-    // 🔏 CAPTURAMOS EL ESTADO REAL DE LA SESIÓN DESDE TU CONTEXTO
-    const { user } = useAuth();
-    const isAuthenticated = !!user; // Si 'user' existe es true, si es null es false
+    // 🔏 Extraemos tanto el usuario como el estado de carga real del contexto
+    const { user, loading } = useAuth();
 
     return (
         <BrowserRouter>
-            {/* Cambiado para que coincida exactamente con el nombre de la importación */}
             <ScrollTop />
 
             <Suspense fallback={<PageLoader />}>
                 <Routes>
                     {/* ==========================================
-                        🌐 RUTAS PÚBLICAS (Accesibles por cualquiera)
+                        🌐 RUTAS PÚBLICAS
                        ========================================== */}
                     <Route element={<PublicLayout />}>
                         <Route index element={<Home />} />
@@ -66,39 +85,86 @@ function App() {
                         <Route path="contacto" element={<Contacto />} />
                     </Route>
 
-                    {/* Rutas de Autenticación */}
-                    {/* Si un usuario ya está logueado e intenta ir a /login, lo mandamos al dashboard directamente */}
+                    {/* Rutas de Autenticación (Dinámicas y reactivas al objeto user directo) */}
                     <Route
                         path="/login"
                         element={
-                            isAuthenticated ? <Navigate to="/dashboard" replace /> : <FormLogin />
+                            loading ? (
+                                <PageLoader />
+                            ) : user ? (
+                                <Navigate to="/dashboard" replace />
+                            ) : (
+                                <FormLogin />
+                            )
                         }
                     />
-                    <Route path="/recuperar" element={<ForgotPass />} />
+                    <Route
+                        path="/recuperar"
+                        element={
+                            loading ? (
+                                <PageLoader />
+                            ) : user ? (
+                                <Navigate to="/dashboard" replace />
+                            ) : (
+                                <ForgotPass />
+                            )
+                        }
+                    />
 
                     {/* ==========================================
-                        🔐 RUTAS PRIVADAS (Completamente Protegidas)
+                        密 RUTAS PRIVADAS (Estructura de Triple Capa)
                        ========================================== */}
+
+                    {/* 🔑 CAPA 1: Acceso Privado General (Cualquier usuario autenticado) */}
                     <Route
-                        path="/dashboard"
                         element={
-                            isAuthenticated ? <PrivateLayout /> : <Navigate to="/login" replace />
+                            <ProtectedRoute
+                                isAuthenticated={!!user} // 🔒 Evaluación reactiva directa en línea
+                                user={user}
+                                loading={loading}
+                            />
                         }
                     >
-                        <Route index element={<Dashboard />} />
-                        <Route path="perfil" element={<Profile />} />
-                        <Route path="alumnos" element={<Alumnos />} />
-                        <Route path="cursos" element={<MisCursos />} />
-                        <Route path="cursos/:id" element={<DetalleCurso />} />
-                        <Route path="asistencias" element={<Asistencias />} />
-                        <Route path="horarios" element={<Horarios />} />
-                        <Route path="actividades" element={<Actividades />} />
-                        <Route path="cursos-asignados" element={<CursosAsignados />} />
-                        <Route path="detallealumnos/:id?" element={<DetalleAlumno />} />
+                        <Route path="/dashboard" element={<PrivateLayout />}>
+                            <Route index element={<Dashboard />} />
+                            <Route path="perfil" element={<Profile />} />
+                            <Route path="cursos" element={<MisCursos />} />
+                            <Route path="cursos/:id" element={<DetalleCurso />} />
+                            <Route path="horarios" element={<Horarios />} />
+                            <Route path="actividades" element={<Actividades />} />
+
+                            {/* 🔑 CAPA 2: Rutas de Alta Sensibilidad Académica (Solo Admin y Profesores) */}
+                            <Route
+                                element={
+                                    <ProtectedRoute
+                                        isAuthenticated={!!user} // 🔒 Evaluación reactiva directa en línea
+                                        user={user}
+                                        allowedRoles={['admin', 'teacher']}
+                                        loading={loading}
+                                    />
+                                }
+                            >
+                                <Route path="alumnos" element={<Alumnos />} />
+                                <Route path="asistencias" element={<Asistencias />} />
+                                <Route path="cursos-asignados" element={<CursosAsignados />} />
+                                <Route path="detallealumnos/:id?" element={<DetalleAlumno />} />
+                            </Route>
+                        </Route>
                     </Route>
 
-                    {/* Enrutador de escape: Cualquier ruta rota redirige al Home público */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* Enrutador de escape inteligente reactivo adaptativo */}
+                    <Route
+                        path="*"
+                        element={
+                            loading ? (
+                                <PageLoader />
+                            ) : user ? (
+                                <Navigate to="/dashboard" replace />
+                            ) : (
+                                <Navigate to="/" replace />
+                            )
+                        }
+                    />
                 </Routes>
             </Suspense>
         </BrowserRouter>

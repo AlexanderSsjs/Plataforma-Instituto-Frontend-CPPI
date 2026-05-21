@@ -2,48 +2,44 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './Footer.module.scss';
 import { Link } from 'react-router-dom';
 import { AnimatedIcon } from '../../../../components/Icon/AnimatedIcon';
-import {
-    MessageCircle,
-    Phone,
-    Mail,
-    BookCheck,
-    GraduationCap,
-    Facebook,
-    Users,
-    Home,
-    ExternalLink,
-} from 'lucide-react';
-const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+import { MessageCircle, Mail, BookCheck, GraduationCap, Facebook, Users, Home } from 'lucide-react';
 
-const getWhatsAppChat = () => {
-    return 'https://wa.me/51930449016';
+const isMobileDevice = () => {
+    if (typeof navigator === 'undefined') return false;
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 };
 
-const getWhatsAppGroup = () => {
-    return 'https://chat.whatsapp.com/K3AEYyxA4wWE7sHmQeCGbS';
-};
+const getWhatsAppChat = () => 'https://wa.me/51930449016';
+const getWhatsAppGroup = () => 'https://chat.whatsapp.com/K3AEYyxA4wWE7sHmQeCGbS';
 
 const getMailLink = () => {
-    if (isMobile()) {
+    if (isMobileDevice()) {
         return 'mailto:tuportalacademico@gmail.com';
     }
-
+    // Formato sanitizado para apertura en cliente web de Gmail
     return 'https://mail.google.com/mail/?view=cm&fs=1&to=tuportalacademico@gmail.com&su=Consulta%20de%20curso&body=Hola,%20quiero%20información%20sobre...';
 };
+
 const Footer = () => {
     const footerRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         const currentFooter = footerRef.current;
-        const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), {
-            threshold: 0.1,
-        });
-
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    if (currentFooter) observer.unobserve(currentFooter); // 🔒 Evita ejecuciones cíclicas innecesarias
+                }
+            },
+            {
+                threshold: 0.1,
+            },
+        );
         if (currentFooter) {
             observer.observe(currentFooter);
         }
-
         return () => {
             if (currentFooter) {
                 observer.unobserve(currentFooter);
@@ -51,7 +47,6 @@ const Footer = () => {
             observer.disconnect();
         };
     }, []);
-
     return (
         <footer ref={footerRef} className={`${styles.footer} ${isVisible ? styles.visible : ''}`}>
             <div className={styles.grid}>
@@ -150,12 +145,10 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
+
             <div className={styles.bottom}>
                 <p>© 2026 CCIP - Todos los derechos reservados.</p>
-                <div style={{ display: 'none' }}>
-                    <p>Diseñado por Alexander Piélago Quiroz</p>
-                    <p>Contacto: 934836437</p>
-                </div>
+                {/* 🔒 CORRECCIÓN: Eliminamos el bloque oculto que fugaba tus datos personales al HTML plano */}
             </div>
         </footer>
     );

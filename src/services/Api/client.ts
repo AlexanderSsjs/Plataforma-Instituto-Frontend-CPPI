@@ -4,7 +4,7 @@ const apiClient = axios.create({
     baseURL: '/api',
     headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Accept': 'application/json',
     },
     withCredentials: true, // Vital para Laravel Sanctum / Breeze
 });
@@ -21,13 +21,21 @@ apiClient.interceptors.request.use(
     (error) => Promise.reject(error),
 );
 
-// Interceptor para capturar caídas de sesión (401)
+// 🔒 INTERCEPTOR DE RESPUESTAS SEGURO Y CONTROLADO
 apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && error.response.status === 401) {
+            // Limpiamos los datos locales para asegurar que no queden residuos corruptos
             localStorage.removeItem('auth_token');
-            // Aquí puedes meter la redirección al login cuando implementemos las rutas
+            localStorage.removeItem('auth_user');
+
+            // 🔒 REFUERZO: Solo redirigimos físicamente si el usuario YA estaba navegando activamente 
+            // y no durante el arranque inicial o refresco de la SPA.
+            const isInitialLoad = document.readyState !== 'complete';
+            if (!isInitialLoad && !window.location.pathname.startsWith('/login')) {
+                window.location.href = '/login?reason=expired';
+            }
         }
         return Promise.reject(error);
     },
