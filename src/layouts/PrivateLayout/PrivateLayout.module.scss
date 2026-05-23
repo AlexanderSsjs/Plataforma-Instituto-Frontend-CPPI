@@ -1,6 +1,3 @@
-@import '../../styles/variables';
-@import '../../styles/animations';
-
 .dashboardWrapper {
     display: flex;
     min-height: 100vh;
@@ -27,16 +24,18 @@
         width: 88px;
         overflow: hidden;
 
+        // Fade del texto + colapsar espacio para centrar íconos
         .logoText,
         .navLabel,
         .logoutBtn span {
             opacity: 0;
-            visibility: hidden;
-            width: 0;
-            margin: 0;
             pointer-events: none;
+            max-width: 0;
+            margin: 0 !important;
+            overflow: hidden;
         }
 
+        // Centrar el logo
         .logoContainer {
             justify-content: center;
             padding: 0;
@@ -47,33 +46,19 @@
             padding: 0;
         }
 
+        // Centrar íconos del nav
         .navItem {
             justify-content: center;
-            align-items: center;
-
-            padding: 0;
-            margin: 0;
-
-            width: 60px;
-            height: 60px;
-
-            margin-inline: auto;
+            padding: $space-md 0;
         }
 
-        .navLabel {
-            display: none;
-        }
-
-        .logoutBtn {
-            justify-content: center;
-            align-items: center;
-
-            padding: 0;
-
-            width: 60px;
-            height: 60px;
-
-            margin-inline: auto;
+        // Centrar ícono del logout
+        .navFooter {
+            .logoutBtn {
+                justify-content: center;
+                padding: 0;
+                gap: 0;
+            }
         }
     }
 
@@ -212,7 +197,8 @@
         .navLabel {
             margin-left: 12px;
             white-space: nowrap;
-            transition: opacity 0.2s ease;
+            overflow: hidden;
+            transition: opacity 0.3s ease;
         }
 
         &:hover {
@@ -244,6 +230,7 @@
 
     display: flex;
     justify-content: center;
+    overflow: hidden; // Asegura que nada se salga cuando el sidebar colapsa
 
     .logoutBtn {
         width: 100%;
@@ -251,6 +238,7 @@
 
         display: flex;
         align-items: center;
+        justify-content: flex-start;
         gap: 12px;
 
         background: transparent;
@@ -276,17 +264,16 @@
 
         .logoutIcon {
             min-width: 20px;
-
+            width: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         span {
             white-space: nowrap;
-            transition:
-                opacity 0.2s ease,
-                visibility 0.2s ease;
+            overflow: hidden; // Evita que el texto sobresalga
         }
 
         &:hover {
@@ -300,30 +287,9 @@
     }
 }
 
-/* =========================
- SIDEBAR COLAPSADO
-========================= */
-
-.sidebar.collapsed {
-    .navFooter {
-        padding-inline: 0;
-
-        .logoutBtn {
-            width: 60px;
-            height: 60px;
-
-            justify-content: center;
-
-            padding: 0;
-
-            margin-inline: auto;
-
-            span {
-                display: none;
-            }
-        }
-    }
-}
+/* El estado colapsado del sidebar se gestiona
+   dentro del bloque .sidebar { &.collapsed { ... } }
+   para mayor especificidad y organización. */
 
 // ------------------------------------
 // Main Content & Topbar
@@ -386,10 +352,12 @@
         .breadcrumbLabel {
             color: $text-muted;
         }
+
         .breadcrumbSeparator {
             color: $text-muted;
             opacity: 0.5;
         }
+
         .breadcrumbCurrent {
             color: $text-dark;
             font-weight: 600;
@@ -529,6 +497,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }

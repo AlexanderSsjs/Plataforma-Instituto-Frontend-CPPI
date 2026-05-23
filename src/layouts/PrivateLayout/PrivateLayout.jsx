@@ -155,7 +155,6 @@ const PrivateLayout = () => {
                 <nav className={styles.navigation}>
                     <ul className={styles.navLinks}>
                         {allowedNavLinks.map((link) => {
-                            // Validación exacta de ruta activa para subrutas dinámicas
                             const isActive = location.pathname === link.path;
                             return (
                                 <li key={link.path}>
@@ -166,9 +165,7 @@ const PrivateLayout = () => {
                                         <div className={styles.navIcon}>
                                             <link.icon size={20} />
                                         </div>
-                                        {(!isDesktopCollapsed || isMobileMenuOpen) && (
-                                            <span className={styles.navLabel}>{link.label}</span>
-                                        )}
+                                        <span className={styles.navLabel}>{link.label}</span>
                                     </Link>
                                 </li>
                             );
@@ -176,10 +173,11 @@ const PrivateLayout = () => {
                     </ul>
 
                     <div className={styles.navFooter}>
-                        {/* 🔒 CORRECCIÓN: Botón funcional de cierre de sesión que ejecuta el logout seguro */}
                         <button className={styles.logoutBtn} onClick={() => logout()}>
-                            <LogOut size={20} />
-                            {!isDesktopCollapsed && <span>Cerrar Sesión</span>}
+                            <div className={styles.logoutIcon}>
+                                <LogOut size={20} />
+                            </div>
+                            <span>Cerrar Sesión</span>
                         </button>
                     </div>
                 </nav>
