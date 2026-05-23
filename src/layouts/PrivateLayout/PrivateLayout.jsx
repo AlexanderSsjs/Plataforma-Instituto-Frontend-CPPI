@@ -107,8 +107,20 @@ const PrivateLayout = () => {
             <aside
                 className={`${styles.sidebar} ${isMobileMenuOpen ? styles.mobileOpen : ''} ${isDesktopCollapsed ? styles.collapsed : ''}`}
             >
-                <div className={styles.sidebarHeader}>
-                    <Link to="/dashboard" className={styles.logoContainer}>
+                <div
+                    className={`${styles.sidebarHeader} ${isDesktopCollapsed ? styles.isCollapsed : ''}`}
+                >
+                    <button
+                        type="button"
+                        className={styles.logoContainer}
+                        onClick={() => {
+                            if (isDesktopCollapsed) {
+                                setIsDesktopCollapsed(false);
+                            } else {
+                                navigate('/dashboard');
+                            }
+                        }}
+                    >
                         <img
                             src="/logo-transparent.png"
                             alt="CCIP Logo"
@@ -119,16 +131,20 @@ const PrivateLayout = () => {
                         >
                             CCIP
                         </span>
-                    </Link>
+                    </button>
+
+                    {!isDesktopCollapsed && (
+                        <button
+                            className={styles.collapseBtn}
+                            onClick={toggleDesktopMenu}
+                            aria-label="Minimizar menú"
+                        >
+                            <ChevronLeft size={18} />
+                        </button>
+                    )}
 
                     <button
-                        className={`${styles.collapseBtn} ${isDesktopCollapsed ? styles.hideBtn : styles.showBtn}`}
-                        onClick={toggleDesktopMenu}
-                        aria-label="Minimizar menú"
-                    >
-                        <ChevronLeft size={18} />
-                    </button>
-                    <button
+                        type="button"
                         className={styles.mobileCloseBtn}
                         onClick={toggleMobileMenu}
                         aria-label="Cerrar menú"
@@ -136,7 +152,6 @@ const PrivateLayout = () => {
                         <X size={24} />
                     </button>
                 </div>
-
                 <nav className={styles.navigation}>
                     <ul className={styles.navLinks}>
                         {allowedNavLinks.map((link) => {
