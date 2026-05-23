@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext'; // 🔒 Importamos el estado real de autenticación
 import Navbar from '../Navbar/Navbar';
 import styles from './Header.module.scss';
-import { Home, BookOpen, Users, Mail, LayoutDashboard } from 'lucide-react';
+import { Home, BookOpen, Users, Mail, LogIn } from 'lucide-react'; // Cambiado LayoutDashboard por LogIn
 
 const Header = () => {
-    const { user } = useAuth(); // 🔏 Consumimos el usuario del contexto global
-    const isAuthenticated = !!user;
-
     const navLinks = [
         { name: 'Inicio', href: '/', icon: Home },
         { name: 'Cursos', href: '/cursos', icon: BookOpen },
@@ -15,30 +11,20 @@ const Header = () => {
         { name: 'Contacto', href: '/contacto', icon: Mail },
     ];
 
-    // 🔒 CONTROL DE FLUJO SEGURO: Modifica el CTA dinámicamente si hay sesión
-    const CtaButton = () => {
-        if (isAuthenticated) {
-            return (
-                <Link to="/dashboard" className={`${styles.btn} ${styles.btnPanel}`}>
-                    <LayoutDashboard
-                        size={16}
-                        style={{
-                            marginRight: '8px',
-                            display: 'inline-block',
-                            verticalAlign: 'middle',
-                        }}
-                    />
-                    Ir al Panel
-                </Link>
-            );
-        }
-
-        return (
-            <Link to="/login" className={styles.btn}>
-                Iniciar Sesión
-            </Link>
-        );
-    };
+    // Botón estático que siempre redirige al Login
+    const CtaButton = () => (
+        <Link to="/login" className={styles.btn}>
+            <LogIn
+                size={16}
+                style={{
+                    marginRight: '8px',
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
+                }}
+            />
+            Iniciar Sesión
+        </Link>
+    );
 
     return (
         <header className={styles.header}>
@@ -50,12 +36,12 @@ const Header = () => {
                     </span>
                 </Link>
 
-                {/* El Navbar recibe el botón inteligente para vistas móviles/hamburguesa */}
+                {/* El Navbar recibe el botón para vistas móviles/hamburguesa */}
                 <Navbar links={navLinks}>
                     <CtaButton />
                 </Navbar>
 
-                {/* El contenedor de escritorio recibe el mismo botón inteligente */}
+                {/* El contenedor de escritorio recibe el mismo botón */}
                 <div className={styles.ctaDesktop}>
                     <CtaButton />
                 </div>
