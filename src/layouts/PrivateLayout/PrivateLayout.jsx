@@ -1,30 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext'; // 🔒 Importamos la autenticación real
-import {
-    Menu,
-    X,
-    LayoutDashboard,
-    User,
-    BookOpen,
-    LogOut,
-    ChevronLeft,
-    Users,
-    Calendar,
-    ClipboardList,
-    Bell,
-} from 'lucide-react';
+import { useAuth } from '@/context/AuthContext.tsx';
+import { ALL_NAV_LINKS, ROLES } from '@/config/roles';
+import { Menu, X, LogOut, ChevronLeft, Bell } from 'lucide-react';
 import styles from './PrivateLayout.module.scss';
 
 const PrivateLayout = () => {
-    const { user, logout } = useAuth(); // 🔏 Extraemos los datos reales del usuario y logout
+    const { user, logout } = useAuth();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
-    // 🔒 SEGURIDAD: Cerrar sesión automático por inactividad (15 minutos)
     const INACTIVITY_TIME = 15 * 60 * 1000;
 
     const handleInactivityLogout = () => {
@@ -49,7 +37,6 @@ const PrivateLayout = () => {
         };
     }, []);
 
-    // Cerrar menú móvil al cambiar de ruta
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
@@ -57,41 +44,12 @@ const PrivateLayout = () => {
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     const toggleDesktopMenu = () => setIsDesktopCollapsed(!isDesktopCollapsed);
 
-    // 🔏 ARQUITECTURA SEGURA: Definimos qué roles pueden ver cada enlace
-    const allNavLinks = [
-        { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-        { path: '/dashboard/perfil', label: 'Mi Perfil', icon: User },
-        { path: '/dashboard/alumnos', label: 'Alumnos', icon: Users, roles: ['admin', 'teacher'] },
-        { path: '/dashboard/cursos', label: 'Mis Cursos', icon: BookOpen },
-        {
-            path: '/dashboard/Asistencias',
-            label: 'Asistencia',
-            icon: ClipboardList,
-            roles: ['admin', 'teacher'],
-        },
-        { path: '/dashboard/horarios', label: 'Horarios', icon: Calendar },
-        { path: '/dashboard/actividades', label: 'Actividades', icon: ClipboardList },
-        {
-            path: '/dashboard/CursosAsignados',
-            label: 'Cursos Asignados',
-            icon: ClipboardList,
-            roles: ['admin', 'teacher'],
-        },
-        {
-            path: '/dashboard/detallealumnos',
-            label: 'Detalles Alumnos',
-            icon: Users,
-            roles: ['admin', 'teacher'],
-        },
-    ];
-
-    // 🔒 FILTRADO DE SEGURIDAD: El alumno solo ve enlaces permitidos para su rol
-    const allowedNavLinks = allNavLinks.filter((link) => {
-        if (!link.roles) return true; // Ruta pública para todos los autenticados
-        return link.roles.includes(user?.role);
+    // 🔒 MODIFICACIÓN 2: El filtrado ahora lee directamente de la configuración importada
+    const allowedNavLinks = ALL_NAV_LINKS.filter((link) => {
+        if (!link.roles) return true;
+        return link.roles.includes(user?.rol_id);
     });
 
-    // Generar iniciales seguras para el avatar
     const getInitials = (name) => {
         if (!name) return 'U';
         const parts = name.split(' ');
@@ -152,26 +110,32 @@ const PrivateLayout = () => {
                         <X size={24} />
                     </button>
                 </div>
-                <nav className={styles.navigation}>
-                    <ul className={styles.navLinks}>
-                        {allowedNavLinks.map((link) => {
-                            const isActive = location.pathname === link.path;
-                            return (
-                                <li key={link.path}>
-                                    <Link
-                                        to={link.path}
-                                        className={`${styles.navItem} ${isActive ? styles.active : ''}`}
-                                    >
-                                        <div className={styles.navIcon}>
-                                            <link.icon size={20} />
-                                        </div>
-                                        <span className={styles.navLabel}>{link.label}</span>
-                                    </Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
 
+                <nav className={styles.navigation}>
+                    {/* 🛠️ ENVOLTURA INTERMEDIA MÁGICA */}
+                    <div className={styles.navLinksScrollContainer}>
+                        <ul className={styles.navLinks}>
+                            {allowedNavLinks.map((link) => {
+                                const isActive = location.pathname === link.path;
+                                const IconComponent = link.icon;
+                                return (
+                                    <li key={link.path}>
+                                        <Link
+                                            to={link.path}
+                                            className={`${styles.navItem} ${isActive ? styles.active : ''}`}
+                                        >
+                                            <div className={styles.navIcon}>
+                                                <IconComponent size={20} />
+                                            </div>
+                                            <span className={styles.navLabel}>{link.label}</span>
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+
+                    {/* El footer se queda al mismo nivel, fijado abajo con flex-shrink: 0 */}
                     <div className={styles.navFooter}>
                         <button className={styles.logoutBtn} onClick={() => logout()}>
                             <div className={styles.logoutIcon}>
@@ -198,10 +162,8 @@ const PrivateLayout = () => {
                             <Menu size={24} />
                         </button>
                         <div className={styles.breadcrumb}>
-                            <span className={styles.breadcrumbLabel}>Plataforma</span>
-                            <span className={styles.breadcrumbSeparator}>/</span>
                             <span className={styles.breadcrumbCurrent}>
-                                {allNavLinks.find((l) => l.path === location.pathname)?.label ||
+                                {ALL_NAV_LINKS.find((l) => l.path === location.pathname)?.label ||
                                     'Panel'}
                             </span>
                         </div>
@@ -215,18 +177,18 @@ const PrivateLayout = () => {
 
                         <div className={styles.userProfile}>
                             <div className={styles.userInfo}>
-                                {/* 🔒 DINÁMICO: Mostramos los datos reales provistos por Laravel */}
-                                <span className={styles.userName}>{user?.name || 'Usuario'}</span>
+                                <span className={styles.userName}>{user?.email || 'Usuario'}</span>
                                 <span className={styles.userRole}>
-                                    {user?.role === 'admin'
+                                    {/* 🔒 MODIFICACIÓN 3: Evaluación limpia usando nombres semánticos */}
+                                    {user?.rol_id === ROLES.SUPERUSER
                                         ? 'Administrador'
-                                        : user?.role === 'teacher'
+                                        : user?.rol_id === ROLES.TEACHER
                                           ? 'Profesor'
                                           : 'Alumno'}
                                 </span>
                             </div>
                             <div className={styles.userAvatar}>
-                                <span>{getInitials(user?.name)}</span>
+                                <span>{getInitials(user?.email)}</span>
                             </div>
                         </div>
                     </div>

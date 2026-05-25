@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext.tsx';
 
 // Layouts
 import PublicLayout from './layouts/PublicLayout/PublicLayout';

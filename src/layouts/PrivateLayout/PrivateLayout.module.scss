@@ -19,6 +19,7 @@
     position: relative;
     z-index: 100;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
 
     &.collapsed {
         width: 88px;
@@ -76,29 +77,122 @@
         }
     }
 }
+.dashboardWrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: $bg-light;
+    overflow: hidden;
+}
+
+// ------------------------------------
+// Sidebar (Menú Lateral)
+// ------------------------------------
+.sidebar {
+    width: $sidebar-width;
+    height: 100vh;
+    background-color: #1a1c1e; // Fondo oscuro elegante
+    display: flex;
+    flex-direction: column;
+    padding: $space-lg 0 0 0; // 🛠️ CORREGIDO: 0 abajo para que el footer ensamble perfecto
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 100;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+
+    &.collapsed {
+        width: 88px;
+        overflow: hidden;
+
+        // Fade del texto + colapsar espacio para centrar íconos
+        .logoText,
+        .navLabel,
+        .logoutBtn span {
+            opacity: 0;
+            pointer-events: none;
+            max-width: 0;
+            margin: 0 !important;
+            overflow: hidden;
+        }
+
+        // Centrar el logo
+        .logoContainer {
+            justify-content: center;
+            padding: 0;
+        }
+
+        .sidebarHeader {
+            justify-content: center;
+            padding: 0;
+        }
+
+        // Centrar íconos del nav
+        .navItem {
+            justify-content: center;
+            padding: $space-md 0;
+        }
+
+        // Centrar ícono del logout
+        .navFooter {
+            .logoutBtn {
+                justify-content: center;
+                padding: 0;
+                gap: 0;
+            }
+        }
+
+        // 🛠️ CORREGIDO: Desactiva scrolls internos si el menú está encogido
+        .navLinksScrollContainer {
+            overflow: hidden !important;
+        }
+    }
+
+    @include mobile-only {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 100dvh; // 🛠️ CORREGIDO: Evita cortes por barras de navegación en celulares
+        width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+
+        // 🛠️ CORREGIDO: En móviles el menú completo se desliza con el dedo de forma unificada
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+
+        &.mobileOpen {
+            transform: translateX(0);
+        }
+    }
+}
+
 .sidebarHeader {
-    padding: 0 $space-2xl;
-    margin-bottom: $space-2xl;
+    padding: 0 $space-lg;
+    margin-bottom: $space-md + 9px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 40px;
-    transition: padding 0.3s ease; // Suaviza el cambio de padding al cerrar
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    transition: padding 0.3s ease;
 
-    // 🎯 ESTADOS CUANDO EL NAV ESTÁ CERRADO / COLAPSADO
     &.isCollapsed {
-        padding: 0; // Quitamos el padding para liberar espacio
-        justify-content: center; // Centra el logo perfectamente en el eje horizontal
+        padding: 0;
+        justify-content: center;
+
+        $this: &;
 
         .logoContainer {
-            gap: 0; // Evita espacios fantasmas si el texto oculta pero mantiene margen
+            gap: 0;
             justify-content: center;
             width: 100%;
         }
 
         .collapseBtn,
         .logoText {
-            display: none; // Oculta el texto y el botón cuando está cerrado
+            display: none;
         }
     }
 
@@ -160,12 +254,41 @@
         }
     }
 }
+
+// ------------------------------------
+// Sistema de Navegación Estructurado
+// ------------------------------------
 .navigation {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    overflow: hidden; // 🛠️ CORREGIDO: Evita fugas de cajas en Desktop
     padding: 0 $space-sm;
+
+    @include mobile-only {
+        overflow: visible; // 🛠️ CORREGIDO: Libera el flujo en móviles
+        flex: none;
+    }
+}
+
+// 🛠️ NUEVA CLASE: Contenedor con scroll inteligente aislado (Premium SaaS)
+.navLinksScrollContainer {
+    flex: 1;
+    overflow-y: auto;
+
+    // Barra de scroll ultra sutil integrada en el diseño oscuro
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+
+    @include mobile-only {
+        overflow-y: visible; // 🛠️ CORREGIDO: No dobles scrolls en celulares
+        flex: none;
+    }
 }
 
 .navLinks {
@@ -221,48 +344,44 @@
         }
     }
 }
+
 .navFooter {
-    margin-top: auto;
-
-    padding: $space-lg $space-md;
-
+    padding: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-
     display: flex;
     justify-content: center;
-    overflow: hidden; // Asegura que nada se salga cuando el sidebar colapsa
+    overflow: hidden;
+    background-color: #1a1c1e; // Mismo color sólido para tapar los enlaces que pasan detrás
+    flex-shrink: 0; // 🛠️ CORREGIDO: Evita que el footer pierda su altura fija de 56px
+
+    @include mobile-only {
+        flex-shrink: 1;
+    }
 
     .logoutBtn {
         width: 100%;
         min-height: 56px;
-
         display: flex;
         align-items: center;
         justify-content: flex-start;
         gap: 12px;
-
         background: transparent;
         border: none;
-
         color: #f87171;
-
         padding: 0 $space-md;
-
         border-radius: 14px;
-
         cursor: pointer;
-
         font-weight: 600;
         font-size: 0.95rem;
-
         transition:
             background 0.2s ease,
             color 0.2s ease,
             transform 0.2s ease;
-
         flex-shrink: 0;
 
-        .logoutIcon {
+        $this: &;
+
+        Tarjeta de Usuario en Logout icon .logoutIcon {
             min-width: 20px;
             width: 20px;
             display: flex;
@@ -273,7 +392,7 @@
 
         span {
             white-space: nowrap;
-            overflow: hidden; // Evita que el texto sobresalga
+            overflow: hidden;
         }
 
         &:hover {
@@ -286,10 +405,6 @@
         }
     }
 }
-
-/* El estado colapsado del sidebar se gestiona
-   dentro del bloque .sidebar { &.collapsed { ... } }
-   para mayor especificidad y organización. */
 
 // ------------------------------------
 // Main Content & Topbar
@@ -455,17 +570,38 @@
 // ------------------------------------
 // Page Container (El "Marco")
 // ------------------------------------
+// ------------------------------------
+// Page Container (El "Marco") - CORREGIDO
+// ------------------------------------
 .pageContainer {
     flex: 1;
     padding: $space-lg;
-    overflow-y: auto;
+    overflow-y: auto; // Mantiene tu scroll vertical para bajar en la página
+    overflow-x: auto; // 🛠️ AÑADIDO: Activa el scroll horizontal si el contenido (como la tabla) es muy ancho
     background-color: $bg-light;
+    width: 100%; // 🛠️ AÑADIDO: Fuerza a que respete los límites del ancho de la pantalla
+    box-sizing: border-box;
 
     @include mobile-only {
         padding: $space-md;
     }
+
+    // ✨ Opcional: Una barra de scroll horizontal sutil y estética para que combine con tu diseño premium
+    &::-webkit-scrollbar {
+        height: 6px; // Grosor de la barra horizontal
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        &:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+    }
 }
 
+// ------------------------------------
+// Page Body (La Tarjeta Blanca) - CORREGIDO
+// ------------------------------------
 .pageBody {
     background: $bg-card;
     border-radius: 24px;
@@ -475,15 +611,29 @@
     border: 1px solid $glass-border;
     max-width: 1400px;
     margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
+
+    // 🛠️ LAS TRES LÍNEAS MÁGICAS PARA LA TABLA RESPONSIVA:
+    width: 100%; // Fuerza a la tarjeta a respetar el ancho de la pantalla
+    box-sizing: border-box; // Evita que los paddings deformen el ancho real
+    overflow-x: auto; // 🚀 ACTIVA el scroll horizontal interno si la tabla no entra
 
     @include mobile-only {
         padding: $space-lg;
         border-radius: 16px;
     }
-}
 
+    // ✨ Scrollbar estético premium para la base de la tarjeta blanca
+    &::-webkit-scrollbar {
+        height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.08);
+        border-radius: 10px;
+        &:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+    }
+}
 .overlay {
     position: fixed;
     inset: 0;
@@ -497,7 +647,6 @@
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }

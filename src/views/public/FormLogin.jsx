@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Mail, Lock, Eye, EyeOff, AlertTriangle, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext.tsx';
 import AuthLayout from '@/components/core/AuthLayout';
 import CustomModal from '@/components/Mod/CustomModal';
 import styles from '../public/styles/FormLogin.module.scss';
