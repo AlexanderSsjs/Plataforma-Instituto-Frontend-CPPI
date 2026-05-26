@@ -5,7 +5,10 @@ import {
     Users, 
     BookOpen, 
     ClipboardList, 
-    Calendar 
+    Calendar,
+    GraduationCap,
+    UserCog,
+    Award
 } from 'lucide-react';
 
 // 🔒 1. Diccionario de Roles actualizado según tu phpMyAdmin real (Inmutable con as const)
@@ -68,5 +71,29 @@ export const ALL_NAV_LINKS: NavLink[] = [
         label: 'Detalles Alumnos', 
         icon: Users, 
         roles: [ROLES.SUPERUSER, ROLES.ADMIN, ROLES.SECRETARY, ROLES.TEACHER] 
+    },
+
+    // Gestión de Estudiantes: Solo Superuser y Admin
+    {
+        path: '/dashboard/gestion-estudiantes',
+        label: 'Gestión Estudiantes',
+        icon: GraduationCap,
+        roles: [ROLES.SUPERUSER, ROLES.ADMIN]
+    },
+
+    // Gestión de Profesores: Solo Superuser y Admin
+    {
+        path: '/dashboard/gestion-profesores',
+        label: 'Gestión Profesores',
+        icon: UserCog,
+        roles: [ROLES.SUPERUSER, ROLES.ADMIN]
+    },
+
+    // Certificados Digitales: Solo Superuser y Admin
+    {
+        path: '/dashboard/certificados',
+        label: 'Certificados',
+        icon: Award,
+        roles: [ROLES.SUPERUSER, ROLES.ADMIN]
     },
 ];

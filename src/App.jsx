@@ -20,6 +20,9 @@ import Horarios from './views/private/Horarios/Horarios';
 import Actividades from './views/private/Actividades/Actividades';
 import CursosAsignados from './views/private/CursosAsignados/CursosAsignados';
 import DetalleAlumno from './views/private/detallesalumnos/detallealumno';
+import GestionEstudiantes from './views/private/GestionEstudiantes/GestionEstudiantes';
+import GestionProfesores from './views/private/GestionProfesores/GestionProfesores';
+import Certificados from './views/private/Certificados/Certificados';
 
 // Lazy loading para vistas públicas
 const Home = lazy(() => import('./views/public/Home'));
@@ -27,6 +30,7 @@ const Nosotros = lazy(() => import('./views/public/Nosotros'));
 const Courses = lazy(() => import('./views/public/Courses'));
 const Contacto = lazy(() => import('./views/public/Contacto'));
 const Details = lazy(() => import('./views/public/Details'));
+const VerificarCertificado = lazy(() => import('./views/public/VerificarCertificado'));
 
 const PageLoader = () => (
     <div
@@ -99,6 +103,7 @@ function App() {
                         <Route path="curso/:id" element={<Details />} />
                         <Route path="nosotros" element={<Nosotros />} />
                         <Route path="contacto" element={<Contacto />} />
+                        <Route path="verificar/:codigo" element={<VerificarCertificado />} />
                     </Route>
 
                     {/* Rutas de Autenticación (Dinámicas y reactivas al objeto user directo) */}
@@ -164,6 +169,22 @@ function App() {
                                 <Route path="asistencias" element={<Asistencias />} />
                                 <Route path="cursos-asignados" element={<CursosAsignados />} />
                                 <Route path="detallealumnos/:id?" element={<DetalleAlumno />} />
+                            </Route>
+
+                            {/* 🔑 CAPA 3: Rutas exclusivas de Administración (Superuser y Admin) */}
+                            <Route
+                                element={
+                                    <ProtectedRoute
+                                        isAuthenticated={!!user}
+                                        user={user}
+                                        allowedRoles={['superuser', 'admin']}
+                                        loading={loading}
+                                    />
+                                }
+                            >
+                                <Route path="gestion-estudiantes" element={<GestionEstudiantes />} />
+                                <Route path="gestion-profesores" element={<GestionProfesores />} />
+                                <Route path="certificados" element={<Certificados />} />
                             </Route>
                         </Route>
                     </Route>

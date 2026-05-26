@@ -1,0 +1,834 @@
+// ─── CONTENEDOR PRINCIPAL ────────────────────────────────────────────────────
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    @include fade-in-up(0.1s);
+}
+
+.header {
+    margin-bottom: $space-sm;
+
+    h1 {
+        font-size: $font-size-3xl;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        margin-bottom: $space-xs;
+    }
+    p {
+        color: $text-light;
+        font-size: $font-size-md;
+    }
+}
+
+// ─── RESUMEN ─────────────────────────────────────────────────────────────────
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-md;
+
+    @include mobile-only {
+        grid-template-columns: 1fr 1fr;
+        gap: $space-sm;
+    }
+}
+
+.summaryCard {
+    background: $bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    padding: $space-md;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    box-shadow: $sh-sm;
+    transition: transform $transition;
+
+    &:hover { transform: translateY(-2px); }
+
+    .summaryIcon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .summaryInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .summaryLabel {
+            font-size: 11px;
+            color: $text-muted;
+            text-transform: uppercase;
+            font-weight: $font-weight-medium;
+        }
+        .summaryValue {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            color: $text-dark;
+        }
+    }
+
+    &.cardTotal   { border-left: 4px solid $accent-gold;  .summaryIcon { background: rgba($accent-gold, 0.1); color: $accent-gold; } }
+    &.cardActivo  { border-left: 4px solid #22c55e;        .summaryIcon { background: rgba(34,197,94,0.1);    color: #22c55e; } }
+    &.cardCursos  { border-left: 4px solid #3b82f6;        .summaryIcon { background: rgba(59,130,246,0.1);   color: #3b82f6; } }
+    &.cardAlumnos { border-left: 4px solid $primary;       .summaryIcon { background: rgba($primary, 0.1);    color: $primary; } }
+}
+
+// ─── BARRA DE ACCIONES ───────────────────────────────────────────────────────
+.actionBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-md;
+    background: $bg-card;
+    padding: $space-md;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+
+    @include mobile-only {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.searchWrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    .searchIcon {
+        position: absolute;
+        left: $space-md;
+        color: $text-muted;
+        pointer-events: none;
+    }
+
+    .searchInput {
+        width: 100%;
+        padding: 10px $space-md 10px 42px;
+        border-radius: $radius-sm;
+        border: 1px solid $border-color;
+        background: $bg-light;
+        color: $text-dark;
+        font-size: $font-size-sm;
+        outline: none;
+        transition: all $transition;
+
+        &:focus {
+            border-color: $primary;
+            background: $bg-card;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+    }
+}
+
+.tabsWrapper {
+    display: flex;
+    gap: $space-sm;
+}
+
+.tabBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px $space-md;
+    border-radius: $radius-sm;
+    background: transparent;
+    border: 1px solid transparent;
+    color: $text-light;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover { background: $bg-light; color: $text-dark; }
+
+    &.activeTab {
+        background: rgba($primary, 0.08);
+        border-color: rgba($primary, 0.2);
+        color: $primary;
+    }
+}
+
+.tabBadge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: $border-color;
+    color: $text-light;
+    font-weight: $font-weight-bold;
+
+    &.badgeActive {
+        background: rgba(34, 197, 94, 0.2);
+        color: #166534;
+    }
+}
+
+// ─── TABLA ───────────────────────────────────────────────────────────────────
+.tableWrapper {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+    overflow-x: auto;
+
+    @include mobile-only { display: none; }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+
+    th {
+        background: $bg-light;
+        padding: $space-md;
+        text-align: left;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+        border-bottom: 2px solid $border-color;
+    }
+
+    td {
+        padding: $space-md;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+        background: $bg-card;
+        font-size: $font-size-sm;
+        color: $text-dark;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: $bg-light; }
+}
+
+.centerCol { text-align: center !important; }
+
+// Celda certificado
+.certIdCell {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+}
+
+.certIconBox {
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-sm;
+    background: linear-gradient(135deg, rgba($accent-gold, 0.15), rgba($primary, 0.1));
+    border: 1px solid rgba($accent-gold, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $accent-gold;
+    flex-shrink: 0;
+}
+
+.certId {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    color: $text-dark;
+}
+
+.certCodigo {
+    font-family: monospace;
+    font-size: 10px;
+    color: $text-muted;
+    background: $bg-light;
+    border: 1px solid $border-color;
+    padding: 1px 5px;
+    border-radius: 3px;
+    width: fit-content;
+    margin-top: 2px;
+}
+
+// Celda alumno
+.alumnoCell {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+}
+
+.alumnoAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $primary, $accent-gold);
+    color: white;
+    font-weight: $font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-sm;
+    flex-shrink: 0;
+}
+
+.alumnoNombre {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    color: $text-dark;
+}
+
+.alumnoId {
+    font-size: 11px;
+    color: $text-muted;
+    font-family: monospace;
+}
+
+// Celda curso
+.cursoCell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: $font-size-sm;
+    color: $text-dark;
+
+    svg { color: $primary; flex-shrink: 0; }
+}
+
+// Nota
+.notaBadge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    background: rgba(34, 197, 94, 0.15);
+    color: #166534;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+// Fecha
+.fechaCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: $font-size-xs;
+    color: $text-light;
+
+    svg { color: $primary; }
+}
+
+// Estado
+.estadoBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: $font-weight-bold;
+    padding: 3px 9px;
+    border-radius: 12px;
+    background: rgba(34, 197, 94, 0.15);
+    color: #166534;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    white-space: nowrap;
+}
+
+// Acciones
+.actionsCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btnVer {
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-sm;
+    background: rgba($primary, 0.08);
+    border: 1px solid rgba($primary, 0.2);
+    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover { background: $primary; color: white; }
+}
+
+.btnDescargar {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: $radius-sm;
+    background: rgba($accent-gold, 0.1);
+    border: 1px solid rgba($accent-gold, 0.3);
+    color: darken(#d4a017, 10%);
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover:not(:disabled) {
+        background: $accent-gold;
+        color: white;
+        border-color: $accent-gold;
+    }
+
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+// Spinner
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+// ─── VISTA MÓVIL ─────────────────────────────────────────────────────────────
+.mobileList {
+    display: none;
+    flex-direction: column;
+    gap: $space-md;
+
+    @include mobile-only { display: flex; }
+}
+
+.mobileCard {
+    background: $bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    padding: $space-md;
+    box-shadow: $sh-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+}
+
+.mobileCardHeader {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+}
+
+.mobileCardInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobileCurso {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: $font-size-xs;
+    color: $text-light;
+    padding-left: 2px;
+}
+
+.mobileActions {
+    display: flex;
+    gap: $space-sm;
+
+    .btnVer, .btnDescargar {
+        flex: 1;
+        justify-content: center;
+        height: 36px;
+    }
+}
+
+// ─── SIN RESULTADOS ──────────────────────────────────────────────────────────
+.noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: $space-2xl $space-xl;
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+    color: $text-light;
+
+    .noResultsIcon { color: $text-muted; margin-bottom: $space-md; }
+    h3 { color: $text-dark; font-size: $font-size-lg; margin-bottom: $space-xs; }
+    p  { font-size: $font-size-sm; max-width: 400px; }
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-md;
+    @include fade-in-up(0s);
+}
+
+.modalContent {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 960px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-md $space-lg;
+    border-bottom: 1px solid $border-color;
+    background: $bg-light;
+
+    h3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: $font-size-md;
+        font-weight: $font-weight-bold;
+        color: $text-dark;
+        margin: 0;
+
+        svg { color: $accent-gold; }
+    }
+}
+
+.modalActions {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+}
+
+.btnDescargarModal {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: $radius-sm;
+    background: $accent-gold;
+    border: none;
+    color: white;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover:not(:disabled) {
+        background: darken(#d4a017, 8%);
+        transform: translateY(-1px);
+    }
+
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btnCerrar {
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-sm;
+    background: transparent;
+    border: 1px solid $border-color;
+    color: $text-muted;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover:not(:disabled) {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: #ef4444;
+        color: #ef4444;
+    }
+}
+
+.modalBody {
+    overflow-y: auto;
+    padding: $space-lg;
+    display: flex;
+    justify-content: center;
+    background: #e8e8e8;
+}
+
+.modalFooter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: $space-sm $space-lg;
+    border-top: 1px solid $border-color;
+    font-size: $font-size-xs;
+    color: $text-muted;
+    background: $bg-light;
+
+    svg { color: #22c55e; flex-shrink: 0; }
+}
+
+// ─── TEMPLATE DEL CERTIFICADO ────────────────────────────────────────────────
+.certTemplate {
+    width: 297mm;
+    min-height: 210mm;
+    background: #ffffff;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+}
+
+.certBorderOuter {
+    position: absolute;
+    inset: 10px;
+    border: 3px solid #c8a84b;
+    border-radius: 4px;
+}
+
+.certBorderInner {
+    position: absolute;
+    inset: 6px;
+    border: 1px solid #e8d5a0;
+    border-radius: 2px;
+    padding: 28px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(160deg, #fffef8 0%, #fdf8ec 50%, #fffef8 100%);
+}
+
+// Cabecera del certificado
+.certHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    border-bottom: 2px solid #c8a84b;
+    padding-bottom: 12px;
+}
+
+.certLogo {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+}
+
+.certInstituto {
+    h2 {
+        font-size: 18px;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin: 0 0 2px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-family: 'Georgia', serif;
+    }
+    p {
+        font-size: 10px;
+        color: #666;
+        margin: 0;
+        letter-spacing: 0.5px;
+    }
+}
+
+// Bloque título
+.certTitleBlock {
+    text-align: center;
+    margin-top: 4px;
+}
+
+.certOtorga {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 4px;
+}
+
+.certTitulo {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0;
+    background: linear-gradient(135deg, #c8a84b, #8b6914);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.certA {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    margin: 4px 0 0;
+}
+
+// Nombre del alumno
+.certNombreBlock {
+    text-align: center;
+    width: 100%;
+}
+
+.certNombre {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 6px;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+.certNombreLine {
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c8a84b, transparent);
+    margin: 0 auto;
+}
+
+// Cuerpo
+.certCuerpo {
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    margin: 0;
+}
+
+.certCurso {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.certDetalle {
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    margin: 0;
+    line-height: 1.6;
+
+    strong { color: #1a1a2e; }
+}
+
+// Meta (fecha y código)
+.certMeta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(200, 168, 75, 0.08);
+    border: 1px solid rgba(200, 168, 75, 0.3);
+    border-radius: 4px;
+    padding: 6px 20px;
+}
+
+.certMetaItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #666;
+
+    svg { color: #c8a84b; }
+    strong { color: #1a1a2e; }
+}
+
+// Footer (firmas + QR)
+.certFooter {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(200, 168, 75, 0.3);
+}
+
+.certFirma {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 160px;
+}
+
+.certFirmaLinea {
+    width: 140px;
+    height: 1px;
+    background: #1a1a2e;
+    margin-bottom: 4px;
+}
+
+.certFirmaNombre {
+    font-size: 10px;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-align: center;
+    margin: 0;
+}
+
+.certFirmaInst {
+    font-size: 9px;
+    color: #888;
+    text-align: center;
+    margin: 0;
+}
+
+// QR
+.certQrBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border: 1px solid rgba(200, 168, 75, 0.4);
+    border-radius: 4px;
+    background: white;
+}
+
+.certQrLabel {
+    font-size: 8px;
+    color: #888;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+// Sello
+.certSello {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 8px;
+    color: #aaa;
+    text-align: center;
+    border-top: 1px dashed rgba(200, 168, 75, 0.3);
+    padding-top: 6px;
+    width: 100%;
+    justify-content: center;
+
+    svg { color: #22c55e; flex-shrink: 0; }
+}
