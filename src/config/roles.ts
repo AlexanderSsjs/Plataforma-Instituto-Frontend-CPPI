@@ -45,7 +45,7 @@ export const ALL_NAV_LINKS: NavLink[] = [
     
     // Asistencia: Visible para gestión y docentes
     { 
-        path: '/dashboard/Asistencias', 
+        path: '/dashboard/asistencias', 
         label: 'Asistencia', 
         icon: ClipboardList, 
         roles: [ROLES.SUPERUSER, ROLES.ADMIN, ROLES.SECRETARY, ROLES.TEACHER] 
@@ -56,7 +56,7 @@ export const ALL_NAV_LINKS: NavLink[] = [
     
     // Cursos Asignados: Exclusivo de gestión superior y profesores
     { 
-        path: '/dashboard/CursosAsignados', 
+        path: '/dashboard/cursos-asignados', 
         label: 'Cursos Asignados', 
         icon: ClipboardList, 
         roles: [ROLES.SUPERUSER, ROLES.ADMIN, ROLES.TEACHER] 

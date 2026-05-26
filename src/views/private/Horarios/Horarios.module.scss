@@ -58,12 +58,23 @@
     background: $bg-light;
     font-weight: $font-weight-bold;
     color: $primary !important;
+    border-right: 1px solid $border-color;
+    vertical-align: middle;
+    padding: 0 !important;
+}
+
+.horaWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: $space-xs;
+    padding: $space-md;
+    white-space: nowrap;
     height: 100%;
-    border-right: 1px solid $border-color;
+    
+    svg {
+        flex-shrink: 0;
+    }
 }
 
 .cursoItem {

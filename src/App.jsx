@@ -57,8 +57,24 @@ const ProtectedRoute = ({ isAuthenticated, user, allowedRoles, loading }) => {
     }
 
     // 2. Validar autorización por roles (si la ruta requiere roles específicos)
-    if (allowedRoles && !allowedRoles.includes(user?.role)) {
-        return <Navigate to="/dashboard" replace />;
+    if (allowedRoles) {
+        const userRoleStr = user?.rol;
+        const userRoleId = user?.rol_id;
+        
+        // Mapeo numérico real para compatibilidad
+        const roleMap = {
+            1: 'superuser',
+            2: 'admin',
+            3: 'secretary',
+            4: 'teacher',
+            5: 'student'
+        };
+        
+        const currentRoleStr = userRoleStr || roleMap[userRoleId];
+
+        if (!allowedRoles.includes(currentRoleStr)) {
+            return <Navigate to="/dashboard" replace />;
+        }
     }
 
     return <Outlet />;
@@ -139,7 +155,7 @@ function App() {
                                     <ProtectedRoute
                                         isAuthenticated={!!user} // 🔒 Evaluación reactiva directa en línea
                                         user={user}
-                                        allowedRoles={['admin', 'teacher']}
+                                        allowedRoles={['superuser', 'admin', 'secretary', 'teacher']}
                                         loading={loading}
                                     />
                                 }
