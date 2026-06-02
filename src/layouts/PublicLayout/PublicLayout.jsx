@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import styles from './PublicLayout.module.scss';
+import ChatWidget from '@/components/chat/ChatWidget.tsx';
 
 const PublicLayout = () => {
     useEffect(() => {
@@ -18,6 +19,7 @@ const PublicLayout = () => {
             <main className={styles.main}>
                 <Outlet />
             </main>
+            <ChatWidget />
             <Footer />
         </div>
     );
