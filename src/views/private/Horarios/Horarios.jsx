@@ -30,8 +30,10 @@ const Horarios = () => {
                         {horarioData.map((row, idx) => (
                             <tr key={idx}>
                                 <td className={styles.horaCol}>
-                                    <Clock size={16} />
-                                    {row.hora}
+                                    <div className={styles.horaWrapper}>
+                                        <Clock size={16} />
+                                        <span>{row.hora}</span>
+                                    </div>
                                 </td>
                                 {dias.map(dia => (
                                     <td key={dia}>

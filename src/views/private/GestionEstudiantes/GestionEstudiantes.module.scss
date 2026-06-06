@@ -1,0 +1,572 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    @include fade-in-up(0.1s);
+}
+
+// --- ENCABEZADO ---
+.header {
+    margin-bottom: $space-sm;
+
+    h1 {
+        font-size: $font-size-3xl;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        margin-bottom: $space-xs;
+    }
+    p {
+        color: $text-light;
+        font-size: $font-size-md;
+    }
+}
+
+// --- TARJETAS DE RESUMEN ---
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-md;
+
+    @include mobile-only {
+        grid-template-columns: 1fr 1fr;
+        gap: $space-sm;
+    }
+}
+
+.summaryCard {
+    background: $bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    padding: $space-md;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    box-shadow: $sh-sm;
+    transition: transform $transition;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    .summaryIcon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .summaryInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .summaryLabel {
+            font-size: 11px;
+            color: $text-muted;
+            text-transform: uppercase;
+            font-weight: $font-weight-medium;
+        }
+
+        .summaryValue {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-bold;
+            color: $text-dark;
+        }
+    }
+
+    &.cardTotal {
+        border-left: 4px solid $primary;
+        .summaryIcon { background: rgba($primary, 0.1); color: $primary; }
+    }
+    &.cardActivo {
+        border-left: 4px solid #22c55e;
+        .summaryIcon { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    }
+    &.cardInactivo {
+        border-left: 4px solid #ef4444;
+        .summaryIcon { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    }
+    &.cardPromedio {
+        border-left: 4px solid $accent-gold;
+        .summaryIcon { background: rgba($accent-gold, 0.1); color: $accent-gold; }
+    }
+}
+
+// --- BARRA DE ACCIONES ---
+.actionBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-md;
+    background: $bg-card;
+    padding: $space-md;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+
+    @include mobile-only {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.searchWrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    .searchIcon {
+        position: absolute;
+        left: $space-md;
+        color: $text-muted;
+        pointer-events: none;
+    }
+
+    .searchInput {
+        width: 100%;
+        padding: 10px $space-md 10px 42px;
+        border-radius: $radius-sm;
+        border: 1px solid $border-color;
+        background: $bg-light;
+        color: $text-dark;
+        font-size: $font-size-sm;
+        outline: none;
+        transition: all $transition;
+
+        &:focus {
+            border-color: $primary;
+            background: $bg-card;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+    }
+}
+
+.tabsWrapper {
+    display: flex;
+    gap: $space-sm;
+
+    @include mobile-only {
+        justify-content: space-between;
+    }
+}
+
+.tabBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px $space-md;
+    border-radius: $radius-sm;
+    background: transparent;
+    border: 1px solid transparent;
+    color: $text-light;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover {
+        background: $bg-light;
+        color: $text-dark;
+    }
+
+    &.activeTab {
+        background: rgba($primary, 0.08);
+        border-color: rgba($primary, 0.2);
+        color: $primary;
+    }
+}
+
+.tabBadge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: $border-color;
+    color: $text-light;
+    font-weight: $font-weight-bold;
+
+    &.badgeActive {
+        background: rgba(34, 197, 94, 0.2);
+        color: #166534;
+    }
+    &.badgeInactive {
+        background: rgba(239, 68, 68, 0.2);
+        color: #991b1b;
+    }
+}
+
+// --- TABLA ESCRITORIO ---
+.tableWrapper {
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+    overflow-x: auto;
+
+    @include mobile-only {
+        display: none;
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+
+    th {
+        background: $bg-light;
+        padding: $space-md;
+        text-align: left;
+        color: $text-dark;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+        border-bottom: 2px solid $border-color;
+    }
+
+    td {
+        padding: $space-md;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+        background: $bg-card;
+        font-size: $font-size-sm;
+        color: $text-dark;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: $bg-light;
+    }
+}
+
+.rowInactivo td {
+    opacity: 0.75;
+}
+
+.centerCol {
+    text-align: center !important;
+}
+
+// --- CELDA ESTUDIANTE ---
+.studentInfo {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $primary, $accent-gold);
+    color: white;
+    font-weight: $font-weight-bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-md;
+    box-shadow: $sh-sm;
+    flex-shrink: 0;
+
+    &.avatarInactivo {
+        background: $text-muted;
+    }
+}
+
+.studentName {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    color: $text-dark;
+}
+
+.studentMeta {
+    font-size: 11px;
+    color: $text-light;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.studentId {
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: $font-weight-bold;
+    background: $bg-light;
+    color: $text-muted;
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid $border-color;
+}
+
+// --- CELDA CONTACTO ---
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+    color: $text-light;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        svg {
+            color: $primary;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+    }
+}
+
+// --- CELDA CURSO ---
+.cursoCell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: $font-size-sm;
+    color: $text-dark;
+
+    svg {
+        color: $primary;
+        flex-shrink: 0;
+    }
+}
+
+// --- BADGES DE NOTA ---
+.gradeBadge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+
+    &.gradePass {
+        background: rgba(34, 197, 94, 0.15);
+        color: #166534;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    &.gradeFail {
+        background: rgba(239, 68, 68, 0.15);
+        color: #991b1b;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    &.gradeNa {
+        background: $bg-light;
+        color: $text-muted;
+        border: 1px solid $border-color;
+    }
+}
+
+.gradePassText { color: #166534; font-weight: $font-weight-bold; }
+.gradeFailText { color: #991b1b; font-weight: $font-weight-bold; }
+
+// --- MINI BARRA DE PROGRESO ---
+.asistenciaCell,
+.progresoCell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 70px;
+}
+
+.asistenciaValue {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+
+    &.asistOk { color: #166534; }
+    &.asistBad { color: #991b1b; }
+}
+
+.miniBar {
+    width: 60px;
+    height: 5px;
+    background: $border-color;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.miniBarFill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+
+    &.fillOk       { background: #22c55e; }
+    &.fillBad      { background: #ef4444; }
+    &.fillProgress { background: linear-gradient(90deg, $primary, $accent-gold); }
+    &.fillInactivo { background: $text-muted; }
+}
+
+// --- BADGE ESTADO ---
+.statusBadge {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: $font-weight-bold;
+    padding: 3px 9px;
+    border-radius: 12px;
+    display: inline-block;
+
+    &.statusActive {
+        background: rgba(34, 197, 94, 0.15);
+        color: #166534;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    &.statusInactive {
+        background: rgba(239, 68, 68, 0.15);
+        color: #991b1b;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+}
+
+// --- BOTÓN VER ---
+.btnVer {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: $radius-sm;
+    background: rgba($primary, 0.08);
+    border: 1px solid rgba($primary, 0.2);
+    color: $primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    transition: all $transition;
+
+    &:hover {
+        background: $primary;
+        color: white;
+        border-color: $primary;
+    }
+}
+
+// --- VISTA MÓVIL ---
+.mobileList {
+    display: none;
+    flex-direction: column;
+    gap: $space-md;
+
+    @include mobile-only {
+        display: flex;
+    }
+}
+
+.mobileCard {
+    background: $bg-card;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    padding: $space-md;
+    box-shadow: $sh-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+
+    &.mobileCardInactivo {
+        opacity: 0.8;
+        border-style: dashed;
+    }
+}
+
+.mobileCardHeader {
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+}
+
+.mobileCardInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobileCardBody {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: $bg-light;
+    border-radius: $radius-sm;
+    border: 1px solid $border-color;
+    padding: $space-sm;
+    text-align: center;
+}
+
+.mobileMetric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-right: 1px solid $border-color;
+
+    &:last-child { border-right: none; }
+
+    span {
+        font-size: 10px;
+        color: $text-muted;
+        text-transform: uppercase;
+        font-weight: $font-weight-medium;
+    }
+
+    strong {
+        font-size: $font-size-sm;
+        color: $text-dark;
+    }
+}
+
+.mobileBtnVer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border-radius: $radius-sm;
+    background: $bg-light;
+    border: 1px solid $border-color;
+    color: $text-dark;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all $transition;
+
+    &:hover {
+        background: $primary;
+        color: white;
+        border-color: $primary;
+    }
+}
+
+// --- SIN RESULTADOS ---
+.noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: $space-2xl $space-xl;
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+    color: $text-light;
+
+    .noResultsIcon {
+        color: $text-muted;
+        margin-bottom: $space-md;
+    }
+
+    h3 {
+        color: $text-dark;
+        font-size: $font-size-lg;
+        margin-bottom: $space-xs;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        max-width: 400px;
+    }
+}

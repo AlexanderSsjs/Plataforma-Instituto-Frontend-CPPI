@@ -44,23 +44,26 @@ const EditModal = ({ isOpen, onClose, onSave, title, initialData, fields }) => {
 
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.fieldsGrid}>
-                        {fields.map((field) => (
-                            <div key={field.name} className={styles.formGroup}>
-                                <label htmlFor={field.name}>{field.label}</label>
-                                <div className={styles.inputWrapper}>
-                                    {field.icon && <field.icon className={styles.inputIcon} size={18} />}
-                                    <input
-                                        type={field.type || 'text'}
-                                        id={field.name}
-                                        name={field.name}
-                                        value={formData[field.name] || ''}
-                                        onChange={handleChange}
-                                        placeholder={field.placeholder}
-                                        required={field.required}
-                                    />
+                        {fields.map((field) => {
+                            const IconComponent = field.icon;
+                            return (
+                                <div key={field.name} className={styles.formGroup}>
+                                    <label htmlFor={field.name}>{field.label}</label>
+                                    <div className={styles.inputWrapper}>
+                                        {IconComponent && <IconComponent className={styles.inputIcon} size={18} />}
+                                        <input
+                                            type={field.type || 'text'}
+                                            id={field.name}
+                                            name={field.name}
+                                            value={formData[field.name] || ''}
+                                            onChange={handleChange}
+                                            placeholder={field.placeholder}
+                                            required={field.required}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     <footer className={styles.footer}>

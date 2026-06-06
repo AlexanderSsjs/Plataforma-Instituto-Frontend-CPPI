@@ -1,11 +1,13 @@
 .alumnosContainer {
     display: flex;
     flex-direction: column;
-    gap: $space-xl;
+    gap: $space-lg;
     @include fade-in-up(0.1s);
 }
 
 .header {
+    margin-bottom: $space-sm;
+    
     h1 {
         font-size: $font-size-3xl;
         color: $text-dark;
@@ -14,13 +16,118 @@
     }
     p {
         color: $text-light;
-        font-size: $font-size-lg;
+        font-size: $font-size-md;
     }
 }
 
+// --- BARRA DE ACCIONES (Buscador + Filtros) ---
+.actionBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-md;
+    background: $bg-card;
+    padding: $space-md;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+
+    @include mobile-only {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.searchWrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    .searchIcon {
+        position: absolute;
+        left: $space-md;
+        color: $text-muted;
+        pointer-events: none;
+    }
+
+    .searchInput {
+        width: 100%;
+        padding: 10px $space-md 10px 42px;
+        border-radius: $radius-sm;
+        border: 1px solid $border-color;
+        background: $bg-light;
+        color: $text-dark;
+        font-size: $font-size-sm;
+        outline: none;
+        transition: all $transition;
+
+        &:focus {
+            border-color: $primary;
+            background: $bg-card;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        }
+    }
+}
+
+.tabsWrapper {
+    display: flex;
+    gap: $space-sm;
+
+    @include mobile-only {
+        justify-content: space-between;
+    }
+}
+
+.tabBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px $space-md;
+    border-radius: $radius-sm;
+    background: transparent;
+    border: 1px solid transparent;
+    color: $text-light;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: all $transition;
+
+    &:hover {
+        background: $bg-light;
+        color: $text-dark;
+    }
+
+    &.activeTab {
+        background: rgba($primary, 0.08);
+        border-color: rgba($primary, 0.2);
+        color: $primary;
+    }
+}
+
+.tabBadge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: $border-color;
+    color: $text-light;
+    font-weight: $font-weight-bold;
+
+    &.badgeActive {
+        background: rgba(34, 197, 94, 0.2);
+        color: #166534;
+    }
+
+    &.badgeInactive {
+        background: rgba(239, 68, 68, 0.2);
+        color: #991b1b;
+    }
+}
+
+// --- GRIDS Y TARJETAS ---
 .listaAlumnos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: $space-lg;
 
     @include mobile-only {
@@ -35,11 +142,25 @@
     box-shadow: $sh-sm;
     padding: $space-lg;
     border: 1px solid $border-color;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    position: relative;
     transition: all $transition;
 
     &:hover {
         box-shadow: $sh-md;
         transform: translateY(-4px);
+        border-color: $accent-gold;
+    }
+
+    &.inactivoCard {
+        opacity: 0.85;
+        border-style: dashed;
+        
+        &:hover {
+            border-color: $text-muted;
+        }
     }
 }
 
@@ -47,39 +168,29 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: $space-md;
-    margin-bottom: $space-lg;
-    padding-bottom: $space-md;
+    gap: $space-sm;
     border-bottom: 1px solid $border-color;
-
-    @include mobile-mini {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+    padding-bottom: $space-md;
 
     .headerMain {
         display: flex;
         align-items: center;
         gap: $space-md;
-
-        @include mobile-mini {
-            flex-direction: column;
-        }
     }
 
     .btnEdit {
         background: $bg-light;
         border: 1px solid $border-color;
-        width: 32px;
-        height: 32px;
-        border-radius: $radius-sm;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: $text-muted;
         cursor: pointer;
         transition: all $transition;
+        flex-shrink: 0;
 
         &:hover {
             border-color: $primary;
@@ -90,38 +201,79 @@
     }
 
     .iconBox {
-        width: 48px;
-        height: 48px;
-        background-color: $bg-card;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $primary;
         box-shadow: $sh-sm;
+        flex-shrink: 0;
+
+        &.iconActive {
+            background-color: rgba($primary, 0.08);
+            color: $primary;
+        }
+
+        &.iconInactive {
+            background-color: $bg-light;
+            color: $text-muted;
+        }
     }
 
     .textWrapper {
         display: flex;
         flex-direction: column;
+        gap: 2px;
+
+        .nameRow {
+            display: flex;
+            align-items: center;
+            gap: $space-sm;
+            flex-wrap: wrap;
+        }
 
         .label {
             font-size: $font-size-xs;
             color: $text-muted;
             font-weight: $font-weight-medium;
         }
+
         .value {
-            font-size: $font-size-lg;
+            font-size: $font-size-md;
             color: $text-dark;
-            font-weight: $font-weight-semibold;
+            font-weight: $font-weight-bold;
         }
     }
 }
 
+// --- BADGES DE ESTADO ---
+.statusBadge {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: $font-weight-bold;
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+
+    &.statusActive {
+        background: rgba(34, 197, 94, 0.15);
+        color: #166534;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    &.statusInactive {
+        background: rgba(239, 68, 68, 0.15);
+        color: #991b1b;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+}
+
+// --- INFO ITEMS ---
 .alumnoInfo {
     display: flex;
     flex-direction: column;
-    gap: $space-sm;
+    gap: 6px;
 
     .infoItem {
         display: flex;
@@ -132,6 +284,154 @@
 
         svg {
             color: $primary;
+            opacity: 0.8;
+            flex-shrink: 0;
         }
+        
+        span {
+            word-break: break-all;
+        }
+    }
+}
+
+// --- METRICAS DE ESTUDIO ---
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: $bg-light;
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+    padding: $space-sm;
+    text-align: center;
+    gap: 4px;
+}
+
+.metricItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-right: 1px solid $border-color;
+
+    &:last-child {
+        border-right: none;
+    }
+}
+
+.metricLabel {
+    font-size: 10px;
+    color: $text-muted;
+    text-transform: uppercase;
+    font-weight: $font-weight-medium;
+}
+
+.metricValue {
+    font-size: $font-size-sm;
+    color: $text-dark;
+    font-weight: $font-weight-bold;
+
+    &.goodGrade {
+        color: #166534;
+    }
+    &.badGrade {
+        color: #991b1b;
+    }
+}
+
+// --- PROGRESS BAR ---
+.progressContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.progressLabel {
+    font-size: 11px;
+    color: $text-light;
+    font-weight: $font-weight-medium;
+}
+
+.progressBar {
+    height: 6px;
+    background: $border-color;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, $primary, $accent-gold);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+
+    &.fillInactive {
+        background: $text-muted;
+    }
+}
+
+// --- CARD ACTIONS (LINK) ---
+.cardActions {
+    margin-top: auto;
+    padding-top: $space-sm;
+}
+
+.btnDetalles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    border-radius: $radius-sm;
+    background: $bg-light;
+    border: 1px solid $border-color;
+    color: $text-dark;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    transition: all $transition;
+
+    &:hover {
+        background: $primary;
+        color: white;
+        border-color: $primary;
+
+        svg {
+            transform: translateX(4px);
+        }
+    }
+
+    svg {
+        transition: transform $transition;
+    }
+}
+
+// --- NO RESULTS ---
+.noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: $space-2xl $space-xl;
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    box-shadow: $sh-sm;
+    color: $text-light;
+
+    .noResultsIcon {
+        color: $text-muted;
+        margin-bottom: $space-md;
+    }
+
+    h3 {
+        color: $text-dark;
+        font-size: $font-size-lg;
+        margin-bottom: $space-xs;
+    }
+
+    p {
+        font-size: $font-size-sm;
+        max-width: 400px;
     }
 }

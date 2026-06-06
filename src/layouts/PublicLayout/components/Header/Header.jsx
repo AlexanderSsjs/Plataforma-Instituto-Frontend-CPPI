@@ -14,14 +14,6 @@ const Header = () => {
     // Botón estático que siempre redirige al Login
     const CtaButton = () => (
         <Link to="/login" className={styles.btn}>
-            <LogIn
-                size={16}
-                style={{
-                    marginRight: '8px',
-                    display: 'inline-block',
-                    verticalAlign: 'middle',
-                }}
-            />
             Iniciar Sesión
         </Link>
     );

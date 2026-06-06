@@ -1,0 +1,77 @@
+export const PROFESORES_MOCK = [
+    {
+        id: 'PRF-2026-001',
+        nombre: 'Ing. Roberto Salinas Vega',
+        especialidad: 'Gestión Pública y Administración',
+        email: 'r.salinas@cppi.edu.pe',
+        telefono: '987 123 456',
+        estado: 'Activo',
+        cursosAsignados: [
+            { id: 1, titulo: 'Gestión Pública Moderna', tipo: 'vivo', alumnos: 18, horario: 'Lun - Vie 7:00pm' },
+            { id: 4, titulo: 'Planeamiento Estratégico para el Sector Público', tipo: 'vivo', alumnos: 14, horario: 'Sáb 3:00pm' },
+            { id: 9, titulo: 'Planeamiento Estratégico', tipo: 'vivo', alumnos: 22, horario: 'Jue - Vie 8:00pm' },
+        ],
+    },
+    {
+        id: 'PRF-2026-002',
+        nombre: 'Lic. Carmen Flores Quispe',
+        especialidad: 'Presupuesto y Finanzas Públicas',
+        email: 'c.flores@cppi.edu.pe',
+        telefono: '912 345 678',
+        estado: 'Activo',
+        cursosAsignados: [
+            { id: 2, titulo: 'Presupuesto Público', tipo: 'vivo', alumnos: 20, horario: 'Mar - Jue 6:30pm' },
+            { id: 18, titulo: 'Excel Financiero', tipo: 'virtual', alumnos: 35, horario: 'Acceso 24/7' },
+        ],
+    },
+    {
+        id: 'PRF-2026-003',
+        nombre: 'CPC. Marco Huanca Torres',
+        especialidad: 'Auditoría y Control Gubernamental',
+        email: 'm.huanca@cppi.edu.pe',
+        telefono: '956 789 012',
+        estado: 'Activo',
+        cursosAsignados: [
+            { id: 3, titulo: 'Sistemas de Control Interno Gubernamental', tipo: 'vivo', alumnos: 16, horario: 'Sáb 9:00am' },
+            { id: 7, titulo: 'Auditoría Gubernamental', tipo: 'vivo', alumnos: 19, horario: 'Mar - Vie 6:00pm' },
+            { id: 8, titulo: 'Control Interno del Estado', tipo: 'vivo', alumnos: 12, horario: 'Lun - Mié 7:00pm' },
+        ],
+    },
+    {
+        id: 'PRF-2026-004',
+        nombre: 'Abg. Patricia Mendoza Ríos',
+        especialidad: 'Contrataciones y Normativa del Estado',
+        email: 'p.mendoza@cppi.edu.pe',
+        telefono: '934 567 890',
+        estado: 'Activo',
+        cursosAsignados: [
+            { id: 6, titulo: 'Contrataciones Públicas Avanzado', tipo: 'vivo', alumnos: 25, horario: 'Lun - Mié 7:30pm' },
+            { id: 11, titulo: 'Normativa del Estado Peruano', tipo: 'vivo', alumnos: 17, horario: 'Sáb - Dom 6:00pm' },
+        ],
+    },
+    {
+        id: 'PRF-2026-005',
+        nombre: 'Ing. Luis Paredes Cárdenas',
+        especialidad: 'Tecnología e Informática Aplicada',
+        email: 'l.paredes@cppi.edu.pe',
+        telefono: '945 678 901',
+        estado: 'Activo',
+        cursosAsignados: [
+            { id: 5,  titulo: 'Excel para Gestión Pública', tipo: 'vivo', alumnos: 30, horario: 'Sáb - Dom 8:00pm' },
+            { id: 13, titulo: 'Excel Básico a Avanzado', tipo: 'virtual', alumnos: 48, horario: 'Acceso 24/7' },
+            { id: 14, titulo: 'Power BI desde cero', tipo: 'virtual', alumnos: 41, horario: 'Acceso 24/7' },
+            { id: 19, titulo: 'Análisis de Datos', tipo: 'virtual', alumnos: 37, horario: 'Acceso 24/7' },
+        ],
+    },
+    {
+        id: 'PRF-2026-006',
+        nombre: 'Lic. Sandra Villanueva Cruz',
+        especialidad: 'Recursos Humanos y Gestión del Talento',
+        email: 's.villanueva@cppi.edu.pe',
+        telefono: '978 901 234',
+        estado: 'Inactivo',
+        cursosAsignados: [
+            { id: 12, titulo: 'Gestión de Recursos Humanos', tipo: 'vivo', alumnos: 0, horario: 'Mar - Vie 7:30pm' },
+        ],
+    },
+];

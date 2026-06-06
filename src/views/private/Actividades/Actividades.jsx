@@ -29,7 +29,6 @@ const Actividades = () => {
                             <span className={styles.cursoName}>{act.curso}</span>
                             <div className={styles.meta}>
                                 <div className={styles.fecha}>
-                                    <Clock size={14} />
                                     <span>Vence: {act.fecha}</span>
                                 </div>
                                 <div className={`${styles.prioridad} ${styles[act.prioridad]}`}>

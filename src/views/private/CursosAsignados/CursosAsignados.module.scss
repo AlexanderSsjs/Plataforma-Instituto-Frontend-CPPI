@@ -8,6 +8,7 @@
     h1 {
         font-size: $font-size-3xl;
         color: $text-dark;
+        font-weight: $font-weight-bold;
     }
     p {
         color: $text-light;
@@ -25,12 +26,17 @@
     padding-left: $space-md;
     margin-bottom: $space-lg;
     text-transform: uppercase;
+    font-weight: $font-weight-bold;
 }
 
 .cursosGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: $space-lg;
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
 }
 
 .cursoCard {
@@ -42,9 +48,9 @@
     box-shadow: $sh-sm;
 
     &:hover {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
         box-shadow: $sh-md;
-        border-color: rgba($primary, 0.4);
+        border-color: $accent-gold;
     }
 
     .cursoHeader {
@@ -53,26 +59,41 @@
         gap: $space-md;
         margin-bottom: $space-md;
 
-        .icon {
+        .iconWrapper {
             color: $primary;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba($primary, 0.08);
+            border-radius: 50%;
         }
+        
         h3 {
             font-size: $font-size-lg;
             font-weight: $font-weight-bold;
+            color: $text-dark;
         }
     }
+}
 
-    p {
-        color: $text-muted;
-        font-size: $font-size-sm;
-        margin-bottom: $space-lg;
-        line-height: 1.5;
-    }
+.moduloTag {
+    background: rgba($primary, 0.08);
+    color: $primary;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    display: inline-block;
+    margin-bottom: $space-md;
+    border: 1px solid rgba($primary, 0.15);
 }
 
 .acciones {
     display: flex;
     gap: $space-sm;
+    margin-top: $space-md;
 
     .btnContenido {
         flex: 1;
@@ -80,12 +101,12 @@
         align-items: center;
         justify-content: center;
         gap: $space-xs;
-        padding: $space-sm $space-md;
+        padding: 10px $space-md;
         background: $bg-light;
         border: 1px solid $border-color;
         border-radius: $radius-md;
         color: $text-dark;
-        font-weight: $font-weight-medium;
+        font-weight: $font-weight-semibold;
         cursor: pointer;
         transition: all $transition;
 
@@ -95,94 +116,158 @@
             border-color: $primary;
         }
     }
-
-    .btnIr {
-        padding: $space-sm;
-        background: transparent;
-        border: 1px solid $border-color;
-        border-radius: $radius-md;
-        cursor: pointer;
-        color: $text-light;
-        &:hover {
-            color: $primary;
-            border-color: $primary;
-        }
-    }
 }
+
+// --- MODAL: HOJA DE PROGRAMACIÓN RESPONSIVA ---
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     padding: $space-lg;
+
+    @include mobile-only {
+        padding: $space-sm;
+    }
 }
 
 .modalContent {
-    background: white;
-    width: 95%;
+    background: $bg-card;
+    color: $text-dark;
+    width: 100%;
     max-width: 1100px;
     max-height: 90vh;
     border-radius: $radius-lg;
-    padding: $space-2xl;
+    padding: $space-xl;
     position: relative;
     overflow-y: auto;
+    border: 1px solid $border-color;
+    box-shadow: $sh-lg;
+
+    @include mobile-only {
+        padding: $space-md;
+    }
 }
 
 .btnClose {
     position: absolute;
     top: $space-md;
     right: $space-md;
-    border: none;
-    background: none;
+    border: 1px solid $border-color;
+    background: $bg-light;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     color: $text-light;
+    transition: all $transition;
+    z-index: 10;
+
     &:hover {
         color: $primary;
+        border-color: $primary;
+        background: rgba($primary, 0.05);
+        transform: rotate(90deg);
     }
 }
 
 .hojaHeader {
     text-align: center;
-    margin-bottom: $space-xl;
+    border-bottom: 2px solid $primary;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+
+    .logoHoja {
+        max-height: 50px;
+        margin-bottom: $space-xs;
+        display: none; // Ocultar si no está el asset cargado, o mantener para estructura
+    }
+
     h2 {
+        font-size: 1.3rem;
+        margin: 5px 0;
         font-weight: $font-weight-bold;
         color: $text-dark;
-        text-decoration: underline;
+        letter-spacing: 0.5px;
+    }
+    
+    h3 {
+        font-size: 1rem;
+        color: $primary;
+        font-weight: $font-weight-semibold;
+    }
+}
+
+.infoCurso {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-md;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    background: $bg-light;
+    padding: $space-md;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+
+    p {
+        margin: 0;
+        color: $text-dark;
+        strong {
+            color: $primary;
+        }
+    }
+
+    @include mobile-only {
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
 }
 
 .tableWrapper {
-    border: 2px solid #333;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    overflow-x: auto;
+    margin-top: $space-md;
+    box-shadow: $sh-sm;
+    background: $bg-card;
 }
 
 .temarioTable {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;
+    min-width: 800px;
 
     th {
-        background: #b1b1b1; // Gris como el de la imagen
-        color: black;
-        border: 1px solid #333;
-        padding: $space-sm;
+        background: $primary !important;
+        color: white !important;
+        border: 1px solid $border-color;
+        padding: 12px;
         text-transform: uppercase;
+        font-weight: $font-weight-bold;
+        font-size: 11px;
+        letter-spacing: 0.5px;
     }
 
     td {
-        border: 1px solid #333;
-        padding: $space-md;
+        border: 1px solid $border-color;
+        padding: 12px;
         vertical-align: top;
-        color: #333;
+        color: $text-dark;
 
         ul,
         ol {
-            padding-left: $space-lg;
+            padding-left: 15px;
             margin: 0;
             li {
                 margin-bottom: 4px;
@@ -190,77 +275,40 @@
         }
     }
 
+    tr:nth-child(even) td {
+        background-color: rgba($bg-light, 0.4);
+    }
+
     .centerText {
         text-align: center;
         font-weight: bold;
+        color: $primary;
+        
         span {
             font-weight: normal;
-            font-size: 0.75rem;
+            font-size: 11px;
+            color: $text-light;
         }
     }
-}
-.moduloTag {
-    background: rgba($primary, 0.1);
-    color: $primary;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    display: inline-block;
-    margin-bottom: 15px;
-}
 
-.hojaHeader {
-    text-align: center;
-    border-bottom: 2px solid #000;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-
-    h2 {
-        font-size: 1.2rem;
-        margin: 5px 0;
-    }
-    h3 {
-        font-size: 1rem;
-        color: #555;
-    }
-}
-
-.infoCurso {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-    background: #f9f9f9;
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.temarioTable {
-    // Estilo Senati: Bordes negros y letras claras
-    th {
-        background: #333 !important;
-        color: white !important;
-        font-weight: bold;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    ul,
-    ol {
-        margin: 0;
-        padding-left: 15px;
-        li {
-            margin-bottom: 3px;
-        }
+    .boldText {
+        font-weight: $font-weight-semibold;
+        color: $text-dark;
     }
 }
 
 .smallList {
     font-style: italic;
     font-size: 0.8rem;
-    color: #666;
+    color: $text-light;
+}
+
+.error {
+    text-align: center;
+    padding: $space-2xl;
+    background: $bg-card;
+    border-radius: $radius-lg;
+    border: 1px solid $border-color;
+    color: $primary;
+    font-weight: $font-weight-bold;
 }
