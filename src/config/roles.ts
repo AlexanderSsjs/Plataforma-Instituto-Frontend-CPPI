@@ -10,8 +10,6 @@ import {
     UserCog,
     Award,
 } from 'lucide-react';
-
-// 🔒 1. Diccionario de Roles actualizado según tu phpMyAdmin real (Inmutable con as const)
 export const ROLES = {
     SUPERUSER: 1,
     ADMIN: 2,
@@ -30,8 +28,6 @@ export interface NavLink {
     icon: LucideIcon;
     roles?: RoleId[]; // Permite usar el nuevo tipado numérico ampliado
 }
-
-// 🧭 3. Arreglo centralizado y validado con los nuevos accesos
 export const ALL_NAV_LINKS: NavLink[] = [
     { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/dashboard/perfil', label: 'Mi Perfil', icon: User },

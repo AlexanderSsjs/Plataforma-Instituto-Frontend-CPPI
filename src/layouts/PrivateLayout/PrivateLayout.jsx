@@ -28,28 +28,21 @@ const PrivateLayout = () => {
     useEffect(() => {
         const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
         resetInactivityTimer();
-
         events.forEach((event) => window.addEventListener(event, resetInactivityTimer));
-
         return () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
             events.forEach((event) => window.removeEventListener(event, resetInactivityTimer));
         };
     }, []);
-
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
-
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     const toggleDesktopMenu = () => setIsDesktopCollapsed(!isDesktopCollapsed);
-
-    // 🔒 MODIFICACIÓN 2: El filtrado ahora lee directamente de la configuración importada
     const allowedNavLinks = ALL_NAV_LINKS.filter((link) => {
         if (!link.roles) return true;
         return link.roles.includes(user?.rol_id);
     });
-
     const getInitials = (name) => {
         if (!name) return 'U';
         const parts = name.split(' ');
