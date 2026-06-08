@@ -1,0 +1,330 @@
+@import '../../../styles/variables';
+
+.soporteContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.headerSection {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: $space-md;
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-500);
+        margin: 0;
+    }
+
+    p {
+        color: $text-light;
+        font-size: 0.95rem;
+    }
+}
+
+.soporteGrid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: $space-lg;
+
+    @include max-desktop {
+        grid-template-columns: 1fr;
+    }
+}
+
+.paneCard {
+    background: #ffffff;
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: $sh-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    text-align: left;
+
+    body.dark & {
+        background: #1e293b;
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: $text-dark;
+        margin: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding-bottom: $space-sm;
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+
+    label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: $text-dark;
+    }
+
+    input, select, textarea {
+        padding: 10px 14px;
+        border-radius: $radius-md;
+        border: 1px solid $border-color;
+        background: #ffffff;
+        color: $text-dark;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        outline: none;
+
+        body.dark & {
+            background: #0f172a;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        &:focus {
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15);
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+}
+
+.sendBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-sm;
+    background: var(--primary-500);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: $radius-md;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--primary-600);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(198, 40, 40, 0.25);
+    }
+}
+
+.messagesList {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    max-height: 550px;
+    overflow-y: auto;
+    padding-right: $space-xs;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+}
+
+.messageItem {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: $radius-md;
+    padding: $space-md;
+    background: rgba(0, 0, 0, 0.01);
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    transition: all 0.2s ease;
+
+    body.dark & {
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.02);
+        border-color: rgba(0, 0, 0, 0.1);
+
+        body.dark & {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+}
+
+.msgHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mobile-only {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $space-xs;
+    }
+}
+
+.msgTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin: 0;
+}
+
+.msgBadges {
+    display: flex;
+    gap: $space-xs;
+    align-items: center;
+}
+
+.badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+
+    &.high {
+        background: #fef2f2;
+        color: #ef4444;
+        body.dark & {
+            background: rgba(239, 68, 68, 0.2);
+        }
+    }
+    &.medium {
+        background: #fffbeb;
+        color: #f59e0b;
+        body.dark & {
+            background: rgba(245, 158, 11, 0.2);
+        }
+    }
+    &.low {
+        background: #f0fdf4;
+        color: #22c55e;
+        body.dark & {
+            background: rgba(34, 197, 94, 0.2);
+        }
+    }
+
+    &.pending {
+        border: 1px solid #d97706;
+        color: #d97706;
+    }
+
+    &.replied {
+        border: 1px solid #10b981;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+    }
+}
+
+.msgMeta {
+    font-size: 0.8rem;
+    color: $text-light;
+    display: flex;
+    gap: $space-md;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+.msgBody {
+    font-size: 0.9rem;
+    color: $text-dark;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.replyArea {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: $space-sm;
+    margin-top: $space-xs;
+    border-left: 3px solid var(--primary-500);
+
+    body.dark & {
+        background: #0f172a;
+    }
+
+    h4 {
+        margin: 0 0 4px 0;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--primary-500);
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: $text-dark;
+        line-height: 1.4;
+    }
+}
+
+.adminReplyForm {
+    display: flex;
+    gap: $space-sm;
+    margin-top: $space-sm;
+
+    input {
+        flex-grow: 1;
+        padding: 8px 12px;
+        border-radius: $radius-md;
+        border: 1px solid $border-color;
+        font-size: 0.85rem;
+
+        body.dark & {
+            background: #0f172a;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    button {
+        background: var(--primary-500);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: $radius-md;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--primary-600);
+        }
+    }
+}
+
+.emptyState {
+    text-align: center;
+    color: $text-muted;
+    padding: $space-2xl;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

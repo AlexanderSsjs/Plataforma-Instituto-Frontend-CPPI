@@ -23,6 +23,8 @@ import DetalleAlumno from './views/private/detallesalumnos/detallealumno';
 import GestionEstudiantes from './views/private/GestionEstudiantes/GestionEstudiantes';
 import GestionProfesores from './views/private/GestionProfesores/GestionProfesores';
 import Certificados from './views/private/Certificados/Certificados';
+import Promociones from './views/private/Promociones/Promociones';
+import Soporte from './views/private/Soporte/Soporte';
 
 // Lazy loading para vistas públicas
 const Home = lazy(() => import('./views/public/Home'));
@@ -153,6 +155,7 @@ function App() {
                             <Route path="cursos/:id" element={<DetalleCurso />} />
                             <Route path="horarios" element={<Horarios />} />
                             <Route path="actividades" element={<Actividades />} />
+                            <Route path="soporte" element={<Soporte />} />
 
                             {/* 🔑 CAPA 2: Rutas de Alta Sensibilidad Académica (Solo Admin y Profesores) */}
                             <Route
@@ -185,6 +188,7 @@ function App() {
                                 <Route path="gestion-estudiantes" element={<GestionEstudiantes />} />
                                 <Route path="gestion-profesores" element={<GestionProfesores />} />
                                 <Route path="certificados" element={<Certificados />} />
+                                <Route path="promociones" element={<Promociones />} />
                             </Route>
                         </Route>
                     </Route>

@@ -38,7 +38,7 @@ const Nosotros = () => {
         { 
             date: "2014", 
             title: "Fundación y Registro Oficial", 
-            desc: "Ingeniería Líder S.R.L. nace el 5 de diciembre. Inscrita en SUNARP (Partida N.º 11117191) y registrada en SUNAT con RUC 20448864139. Iniciamos consultoría avalada por el OSCE.",
+            desc: "• Atención y cobro a clientes en el área de cajas.\n• Resolución de consultas y soporte en servicio postventa.\n• Organización de productos y apoyo en campañas comerciales.\n• Manejo de POS, efectivo y medios de pago electrónicos.\n• Trabajo en equipo y cumplimiento de objetivos diarios.",
             icon: <Briefcase /> 
         },
         { 

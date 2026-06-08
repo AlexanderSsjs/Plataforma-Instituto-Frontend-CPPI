@@ -9,6 +9,8 @@ import {
     GraduationCap,
     UserCog,
     Award,
+    Percent,
+    MessageSquare,
 } from 'lucide-react';
 export const ROLES = {
     SUPERUSER: 1,
@@ -106,5 +108,20 @@ export const ALL_NAV_LINKS: NavLink[] = [
         label: 'Certificados',
         icon: Award,
         roles: [ROLES.SUPERUSER, ROLES.ADMIN],
+    },
+
+    // Promociones: Solo Superuser y Admin
+    {
+        path: '/dashboard/promociones',
+        label: 'Promociones',
+        icon: Percent,
+        roles: [ROLES.SUPERUSER, ROLES.ADMIN],
+    },
+
+    // Soporte / Contacto Admin: Visible para todos
+    {
+        path: '/dashboard/soporte',
+        label: 'Contacto Admin',
+        icon: MessageSquare,
     },
 ];
